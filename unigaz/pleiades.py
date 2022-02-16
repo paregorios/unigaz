@@ -62,10 +62,10 @@ class Pleiades(Gazetteer, Web):
         params = self._prep_params(**kwargs)
         uri = urlunparse(("https", "pleiades.stoa.org", "/search_rss", "", params, ""))
         r = self.get(uri)
-        results = list()
+        hits = list()
         data = feedparser.parse(r.text)
         for entry in data.entries:
-            results.append(
+            hits.append(
                 {
                     "id": entry.link.split("/")[-1],
                     "feature_type": entry.dc_type,
@@ -74,4 +74,13 @@ class Pleiades(Gazetteer, Web):
                     "summary": entry.description,
                 }
             )
-        return {"arguments": kwargs, "query": uri, "results": results}
+        return {"arguments": kwargs, "query": uri, "hits": hits}
+
+    def _verify_param_defaults(self, params):
+        defaults = {"review_state": "published", "portal_type": "Place"}
+        for k, v in defaults.items():
+            try:
+                params[k]
+            except KeyError:
+                params[k] = v
+        return params
