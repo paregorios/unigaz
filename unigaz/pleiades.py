@@ -57,6 +57,18 @@ class Pleiades(Gazetteer, Web):
         params = urlencode(params)
         return params
 
+    def _prep_param_searchabletext(self, value):
+        if isinstance(value, str):
+            vals = list()
+            vals.append(value)
+        else:
+            vals = value
+        vals = "+".join([norm(v) for v in vals])
+        return ("SearchableText", vals)
+
+    def _prep_param_text(self, value):
+        return self._prep_param_searchabletext(value)
+
     def _search_rss(self, **kwargs):
         """Use Pleiades RSS search interface since it gives us back structured data."""
         params = self._prep_params(**kwargs)

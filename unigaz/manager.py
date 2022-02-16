@@ -6,7 +6,7 @@ Manage the tools
 
 import logging
 from unigaz.pleiades import Pleiades
-from unigaz.web import DEFAULT_USER_AGENT
+from unigaz.web import DEFAULT_USER_AGENT, SearchParameterError
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +17,28 @@ class Manager:
         self.gazetteer_netlocs = set()
         for k, v in self.gazetteers.items():
             self.gazetteer_netlocs.add(v.web.netloc)
+
+    def search(self, gazetteer_name, args):
+        if self.supported(gazetteer_name):
+            g = self.gazetteers[gazetteer_name]
+            kwargs = {"text": set()}
+            for arg in args:
+                parts = arg.split(":")
+                if len(parts) == 1:
+                    kwargs["text"].add(parts[0])
+                elif len(parts) == 2:
+                    kwargs[parts[0]] = parts[1]
+                else:
+                    raise ValueError(f"unrecognized argument {arg}")
+            if len(kwargs["text"]) == 0:
+                kwargs.pop("text")
+            try:
+                results = g.search(**kwargs)
+            except SearchParameterError as err:
+                raise ValueError(f"search parameter error: {str(err)}")
+        else:
+            raise ValueError(f"gazetteer '{gazetteer_name}' is not supported.")
+        return results
 
     def supported(self, args):
         if not args:

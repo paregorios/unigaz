@@ -78,6 +78,13 @@ class Interpreter:
         r = getattr(self, f"_cmd_{cmd}")(parts[1:])
         return r
 
+    def _cmd_create_local(self, args):
+        """
+        Create a local gazetteer.
+            > create_local My Sites
+        """
+        
+
     def _cmd_gazetteer(self, args):
         """
         Check for gazetteer support.
@@ -157,46 +164,31 @@ class Interpreter:
             > search pleiades {keyword terms}
         """
         gname = args[0]
-        if self.manager.supported(gname):
-            g = self.manager.gazetteers[gname]
-            kwargs = {"text": set()}
-            for arg in args[1:]:
-                parts = arg.split(":")
-                if len(parts) == 1:
-                    kwargs["text"].add(parts[0])
-                elif len(parts) == 2:
-                    kwargs[parts[0]] = parts[1]
-                else:
-                    raise ArgumentError("search", f"'{arg}' in '{args}'.")
-            if len(kwargs["text"]) == 0:
-                kwargs.pop("text")
-            try:
-                results = g.search(**kwargs)
-            except SearchParameterError as err:
-                raise CommandError("search", str(err))
-            msgs = [results["query"]]
-            rows = list()
-            for i, hit in enumerate(results["hits"]):
-                rows.append(
+        try:
+            results = self.manager.search(gname, args[1:])
+        except ValueError as err:
+            raise ArgumentError("search", str(err))
+        msgs = [results["query"]]
+        rows = list()
+        for i, hit in enumerate(results["hits"]):
+            rows.append(
+                (
+                    f"{i+1}",
                     (
-                        f"{i+1}",
-                        (
-                            f"[bold]{hit['feature_type']}: "
-                            f"{hit['title']}[/bold]\n"
-                            f"[italic]{hit['uri']}[/italic]\n{hit['summary']}"
-                        ),
-                    )
-                )
-            msgs.append(
-                self._table(
-                    ("context", "summary"),
-                    rows,
-                    title=f"Search hits: {len(results['hits'])}",
+                        f"[bold]{hit['feature_type']}: "
+                        f"{hit['title']}[/bold]\n"
+                        f"[italic]{hit['uri']}[/italic]\n{hit['summary']}"
+                    ),
                 )
             )
-            return msgs
-        else:
-            raise UsageError("search", f"Gazetteer '{gname}' is not supported.")
+        msgs.append(
+            self._table(
+                ("context", "summary"),
+                rows,
+                title=f"Search hits: {len(results['hits'])}",
+            )
+        )
+        return msgs
 
     def _cmd_quit(self, args):
         """
@@ -207,13 +199,14 @@ class Interpreter:
         exit()
 
     def _table(self, columns, rows, title=None):
+        """Produce a rich table for output"""
         if title:
             t = Table(title=title, title_justify="left", leading=1)
         else:
             t = Table(leading=1)
-        colors = ["cyan", "magenta"]
+        colors = ["magenta", "cyan"]
         for i, c in enumerate(columns):
-            color = colors[(i + 1) % len(colors)]
+            color = colors[i % len(colors)]
             t.add_column(c, style=color)
         for r in rows:
             t.add_row(*r)
