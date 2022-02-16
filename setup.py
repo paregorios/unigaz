@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="unigaz"
+    name="unigaz",
     version="0.0.1",
     author="Tom Elliott",
     author_email="tom.elliott@nyu.edu",
@@ -17,6 +17,6 @@ setuptools.setup(
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "Operating System :: OS Independent",
     ],
-    install_requires=['airtight'],
-    python_requires='>=3.10.2'
+    install_requires=["airtight", "feedparser", "textnorm", "validators"],
+    python_requires=">=3.10.2",
 )
