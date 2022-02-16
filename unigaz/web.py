@@ -17,6 +17,12 @@ def norm(s: str):
     return normalize_space(normalize_unicode(s))
 
 
+class SearchParameterError(RuntimeError):
+    def __init__(self, gazetteer: str, message: str = ""):
+        self.message = f"Gazetteer '{gazetteer}': {message}"
+        super().__init__(self.message)
+
+
 class Web:
     """Base mixin for providing web-aware functionality to gazetteer classes."""
 

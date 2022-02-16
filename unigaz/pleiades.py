@@ -10,7 +10,7 @@ import feedparser
 import logging
 from textnorm import normalize_space, normalize_unicode
 from unigaz.gazetteer import Gazetteer
-from unigaz.web import Web, DEFAULT_USER_AGENT
+from unigaz.web import SearchParameterError, Web, DEFAULT_USER_AGENT
 from urllib.parse import urlencode, urlunparse
 
 logger = logging.getLogger(__name__)
@@ -50,7 +50,7 @@ class Pleiades(Gazetteer, Web):
             try:
                 cooked_k, cooked_v = getattr(self, f"_prep_param_{k.lower()}")(v)
             except AttributeError:
-                logger.warning(f"Unknown param {k}.")
+                raise SearchParameterError("pleiades", f"Unknown param '{k}':{v}.")
             else:
                 params[cooked_k] = cooked_v
         params = self._verify_param_defaults(params)

@@ -17,6 +17,6 @@ setuptools.setup(
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "Operating System :: OS Independent",
     ],
-    install_requires=["airtight", "feedparser", "textnorm", "validators"],
+    install_requires=["airtight", "feedparser", "rich", "textnorm", "validators"],
     python_requires=">=3.10.2",
 )
