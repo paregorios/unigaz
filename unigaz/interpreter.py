@@ -119,7 +119,7 @@ class Interpreter:
         rows = list()
         self.local_context = dict()
         for i, o in enumerate(content_list):
-            rows.append((f"{i+1}", f"{type(o)}: {o.title}"))
+            rows.append((f"{i+1}", f"{o.__class__.__name__}: {o.title}"))
             self.local_context[str(i + 1)] = o
         return self._table(
             title=f"{self.manager.local.title}: {len(content_list)} items",
