@@ -20,16 +20,17 @@ class Manager:
             self.gazetteer_netlocs.add(v.web.netloc)
         self.local = None
 
+    def local_accession(self, source):
+        if not self.local:
+            raise RuntimeError(f"a local gazetteer must be loaded or created first")
+        result = self.local.create_from(source)
+        return result
+
     def local_create(self, name):
         if self.local:
             raise NotImplementedError("already got one")
         self.local = Local(title=name)
         return f"Created local gazetteer with title '{self.local.title}'."
-
-    def local_accession(self, source):
-        if not self.local:
-            raise RuntimeError(f"a local gazetteer must be loaded or created first")
-        return self.local.create_from(source)
 
     def local_list(self, args):
         if not self.local:

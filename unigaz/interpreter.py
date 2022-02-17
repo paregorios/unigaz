@@ -8,6 +8,7 @@ from inspect import getdoc
 import logging
 from sqlite3 import NotSupportedError
 from rich.table import Table
+from rich.pretty import Pretty
 import shlex
 from unigaz.manager import Manager
 from unigaz.web import SearchParameterError
@@ -41,7 +42,16 @@ class Interpreter:
         self.commands = [
             "_".join(a.split("_")[2:]) for a in dir(self) if a.startswith("_cmd_")
         ]
-        aliases = {"?": "help", "g": "gazetteer", "q": "quit"}
+        aliases = {
+            "?": "help",
+            "g": "gazetteer",
+            "q": "quit",
+            "level": "log_level",
+            "debug": "log_debug",
+            "warning": "log_warning",
+            "info": "log_info",
+            "error": "log_error",
+        }
         for a, cmd in aliases.items():
             try:
                 getattr(self, f"_cmd_{cmd}")
@@ -81,52 +91,6 @@ class Interpreter:
         r = getattr(self, f"_cmd_{cmd}")(parts[1:])
         return r
 
-    def _cmd_local(self, args):
-        """
-        Work with local gazetteers
-            > local create My Sites
-              creates a new local gazetteer named 'My Sites'
-            > local accession 7
-              make a new entry in the local gazetteer on the basis of context number 7
-        """
-        real_cmd = f"_real_cmd_local_{args[0]}"
-        try:
-            return getattr(self, real_cmd)(args[1:])
-        except AttributeError:
-            raise
-            return f"Unrecognized command 'local {args[0]}'"
-
-    def _real_cmd_local_accession(self, args):
-        i = args[0]
-        try:
-            source = self.external_context[args[0]]
-        except KeyError:
-            raise ArgumentError(f"Number {args} not in external search context.")
-        return self.manager.local_accession(source)
-
-    def _real_cmd_local_create(self, args):
-        """
-        Create a local gazetteer.
-        """
-        return self.manager.local_create(" ".join(args))
-
-    def _real_cmd_local_list(self, args):
-        """
-        List contents of the local gazetteer.
-        """
-        content_list = self.manager.local_list(args)
-        content_list.sort(key=lambda o: o.sort_key)
-        rows = list()
-        self.local_context = dict()
-        for i, o in enumerate(content_list):
-            rows.append((f"{i+1}", f"{o.__class__.__name__}: {o.title}"))
-            self.local_context[str(i + 1)] = o
-        return self._table(
-            title=f"{self.manager.local.title}: {len(content_list)} items",
-            columns=["context", "summary"],
-            rows=rows,
-        )
-
     def _cmd_gazetteer(self, args):
         """
         Check for gazetteer support.
@@ -148,25 +112,6 @@ class Interpreter:
         """
         gazetteers = self.manager.supported(args)
         return self._table(("short name", "netloc"), gazetteers)
-
-    def _cmd_usage(self, args):
-        """
-        Get usage for indicated command.
-            > usage search
-        """
-        if not args:
-            raise UsageError("usage", "missing command", "> usage search")
-        cmd = args
-        try:
-            msg = getdoc(getattr(self, f"_cmd_{cmd}"))
-        except AttributeError:
-            raise ArgumentError(
-                "usage",
-                'Unrecognized command {cmd}. Try "help" to get a list of commands.',
-            )
-        else:
-            msg = "\n".join([l.strip() for l in msg.split("\n")[1:]])
-        return msg
 
     def _cmd_help(self, args):
         """
@@ -199,6 +144,109 @@ class Interpreter:
             ]
             entries.sort(key=lambda x: x[0])
             return self._table(columns=("command", "documentation"), rows=entries)
+
+    def _cmd_local(self, args):
+        """
+        Work with local gazetteers
+            > local create My Sites
+              creates a new local gazetteer named 'My Sites'
+            > local accession 7
+              make a new entry in the local gazetteer on the basis of context number 7
+        """
+        real_cmd = f"_real_cmd_local_{args[0]}"
+        try:
+            return getattr(self, real_cmd)(args[1:])
+        except AttributeError:
+            return f"Unrecognized command 'local {args[0]}'"
+
+    def _cmd_log_debug(self, args):
+        """
+        Change logging level to DEBUG
+        """
+        logging.getLogger().setLevel(level=logging.DEBUG)
+        return self._cmd_log_level(args)
+
+    def _cmd_log_error(self, args):
+        """
+        Change logging level to ERROR
+        """
+        logging.getLogger().setLevel(level=logging.ERROR)
+        return self._cmd_log_level(args)
+
+    def _cmd_log_info(self, args):
+        """
+        Change logging level to INFO
+        """
+        logging.getLogger().setLevel(level=logging.INFO)
+        return self._cmd_log_level(args)
+
+    def _cmd_log_level(self, args):
+        """
+        Get the current logging level.
+        """
+        levels = {
+            logging.DEBUG: "DEBUG",
+            logging.INFO: "INFO",
+            logging.WARNING: "WARNING",
+            logging.ERROR: "ERROR",
+        }
+        val = levels[logging.root.level]
+        return val
+
+    def _cmd_log_warning(self, args):
+        """
+        Change logging level to WARNING
+        """
+        logging.getLogger().setLevel(level=logging.WARNING)
+        return self._cmd_log_level(args)
+
+    def _cmd_raw(self, args):
+        """
+        Show raw data view of an item in a context list
+            > raw search 2
+              (shows item 2 in the current search results list)
+            > raw local 3
+              (shows item 3 in the most recent local gazetteer listing or find results list)
+        """
+        if len(args) != 2:
+            raise UsageError(
+                "raw", f"invalid number of arguments (expected 2, got {len(args)})"
+            )
+        k = args[0]
+        if k not in {"search", "local"}:
+            raise UsageError(
+                "raw", f"Invalid subcommand '{k}' (expected 'search' or 'local')"
+            )
+        elif k == "search":
+            context = self.external_context
+        elif k == "local":
+            context = self.local_context
+        i = args[1]
+        try:
+            str(int(i))
+        except ValueError:
+            raise ArgumentError(
+                "raw", "Invalid context number (expected integer, got '{i}')"
+            )
+        try:
+            v = context[i]
+        except KeyError:
+            if len(context) == 0:
+                raise ArgumentError(
+                    "raw",
+                    f"No {k} context is defined, so context number {i} is out of range.",
+                )
+            else:
+                raise ArgumentError(
+                    "raw",
+                    f"Context number {i} is out of range (current {k} context range = 1-{len(context)}.",
+                )
+        if not isinstance(v, dict):
+            try:
+                v = v.asdict()
+            except AttributeError:
+                pass
+        return Pretty(v)
 
     def _cmd_search(self, args):
         """
@@ -234,6 +282,25 @@ class Interpreter:
         )
         return msgs
 
+    def _cmd_usage(self, args):
+        """
+        Get usage for indicated command.
+            > usage search
+        """
+        if not args:
+            raise UsageError("usage", "missing command", "> usage search")
+        cmd = args
+        try:
+            msg = getdoc(getattr(self, f"_cmd_{cmd}"))
+        except AttributeError:
+            raise ArgumentError(
+                "usage",
+                'Unrecognized command {cmd}. Try "help" to get a list of commands.',
+            )
+        else:
+            msg = "\n".join([l.strip() for l in msg.split("\n")[1:]])
+        return msg
+
     def _cmd_quit(self, args):
         """
         Quit interactive interface.
@@ -241,6 +308,39 @@ class Interpreter:
             WARNING: unsaved data will be lost (use "save" first)
         """
         exit()
+
+    def _real_cmd_local_accession(self, args):
+        i = args[0]
+        try:
+            source = self.external_context[args[0]]
+        except KeyError:
+            raise ArgumentError(f"Number {args} not in external search context.")
+        result = self.manager.local_accession(source)
+        return f"Created {result.__class__.__name__} '{result.title}' from external source.'"
+
+    def _real_cmd_local_create(self, args):
+        """
+        Create a local gazetteer.
+        """
+        results = self.manager.local_create(" ".join(args))
+        return results
+
+    def _real_cmd_local_list(self, args):
+        """
+        List contents of the local gazetteer.
+        """
+        content_list = self.manager.local_list(args)
+        content_list.sort(key=lambda o: o.sort_key)
+        rows = list()
+        self.local_context = dict()
+        for i, o in enumerate(content_list):
+            rows.append((f"{i+1}", f"{o.__class__.__name__}: {o.title}"))
+            self.local_context[str(i + 1)] = o
+        return self._table(
+            title=f"{self.manager.local.title}: {len(content_list)} items",
+            columns=["context", "summary"],
+            rows=rows,
+        )
 
     def _table(self, columns, rows, title=None):
         """Produce a rich table for output"""

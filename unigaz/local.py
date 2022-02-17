@@ -162,6 +162,38 @@ class Titled:
         return slugify(self.title, separator="")
 
 
+class Described:
+    def __init__(self, **kwargs):
+        self._description = None
+        for k in ["description", "summary", "abstract"]:
+            try:
+                description = kwargs[k]
+            except KeyError:
+                continue
+            try:
+                self.description = description
+            except ValueError:
+                continue
+            else:
+                break
+
+    @property
+    def description(self):
+        return self._description
+
+    @description.setter
+    def description(self, value):
+        v = norm(value)
+        if not v:
+            raise ValueError(v)
+        else:
+            self._description = v
+
+    @description.deleter
+    def description(self):
+        self._description = None
+
+
 punct_trans = str.maketrans("", "", string.punctuation)
 
 
@@ -203,14 +235,32 @@ class Externals:
         self._externals = dict()
 
 
-class Place(Identified, Titled, Externals):
+class Dictionary:
+    def asdict(self):
+        d = dict()
+        for varname, varval in vars(self).items():
+            if varname.startswith("_"):
+                attrname = varname[1:]
+                try:
+                    attrval = getattr(self, attrname)
+                except AttributeError:
+                    d[varname] = varval
+                else:
+                    if varval == attrval:
+                        d[attrname] = attrval
+                    else:
+                        d[varname] = varval
+        return d
+
+
+class Place(Identified, Titled, Described, Externals, Indexable, Dictionary):
     def __init__(self, **kwargs):
         Identified.__init__(self, **kwargs)
         Titled.__init__(self, **kwargs)
         Externals.__init__(self, **kwargs)
 
 
-class Name(Identified, Externals, Indexable):
+class Name(Identified, Externals, Indexable, Dictionary):
     def __init__(self, **kwargs):
         Identified.__init__(self, **kwargs)
         Externals.__init__(self, **kwargs)
@@ -308,7 +358,7 @@ class Local(Gazetteer, Titled):
         if isinstance(source, dict):
             return self._create_from_dict(source)
         elif isinstance(source, str):
-            return self._create_from_str(source)
+            return self._create_from_string(source)
         elif isinstance(source, (list, tuple, set)):
             messages = list()
             for item in source:
@@ -332,10 +382,12 @@ class Local(Gazetteer, Titled):
         else:
             raise ValueError(f"Unrecognized feature type: '{ft}'")
         self.add(o)
+        return o
 
     def _create_from_string(self, source):
         n = Name(attested=source, catalog=self._catalog)
         self.add(n)
+        return o
 
     def get_by_id(self, id):
         return self._content[id]
