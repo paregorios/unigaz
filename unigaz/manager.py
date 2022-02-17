@@ -26,17 +26,15 @@ class Manager:
         self.local = Local(title=name)
         return f"Created local gazetteer with title '{self.local.title}'."
 
-    def local_accession(self, args):
+    def local_accession(self, source):
         if not self.local:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
-        raise NotImplementedError("local accession")
+        return self.local.create_from(source)
 
     def local_list(self, args):
         if not self.local:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
-        content = self.local.content
-        content = [(ident, o.title, o.sort_key) for ident, o in content]
-        return content
+        return self.local.content
 
     def search(self, gazetteer_name, args):
         if self.supported(gazetteer_name):

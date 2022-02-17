@@ -44,12 +44,12 @@ class Index:
         finally:
             self.cooked_index[cooked_key].add(value)
         try:
-            self.cooked_reverse[value]
+            self.reverse[value]
         except KeyError:
-            self.cooked_reverse[value] = set()
+            self.reverse[value] = set()
         finally:
-            self.cooked_reverse[value].add(key)
-            self.cooked_reverse[value].add(cooked_key)
+            self.reverse[value].add(key)
+            self.reverse[value].add(cooked_key)
 
     def clear(self):
         self.raw_index = dict()
@@ -297,7 +297,7 @@ class Local(Gazetteer, Titled):
 
     @property
     def content(self):
-        return [(ident, o) for ident, o in self._content.items()]
+        return list(self._content.values())
 
     def delete(self, id):
         self._content.pop(id)
@@ -320,7 +320,18 @@ class Local(Gazetteer, Titled):
             )
 
     def _create_from_dict(self, source):
-        pass
+        try:
+            ft = source["feature_type"]
+        except KeyError:
+            ft = "Place"
+        ftl = norm(ft.lower())
+        if ftl == "place":
+            o = Place(**source)
+        elif ftl == "name":
+            o = Name(**source)
+        else:
+            raise ValueError(f"Unrecognized feature type: '{ft}'")
+        self.add(o)
 
     def _create_from_string(self, source):
         n = Name(attested=source, catalog=self._catalog)

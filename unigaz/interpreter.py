@@ -67,6 +67,9 @@ class Interpreter:
 
         self.manager = Manager(user_agent="UniGazInteractive/0.1")
 
+        self.external_context = dict()
+        self.local_context = dict()
+
     def parse(self, raw_input):
         parts = shlex.split(raw_input)
         cmd = parts[0]
@@ -90,10 +93,16 @@ class Interpreter:
         try:
             return getattr(self, real_cmd)(args[1:])
         except AttributeError:
-            return f"Unrecognized command '{args[0]}'"
+            raise
+            return f"Unrecognized command 'local {args[0]}'"
 
     def _real_cmd_local_accession(self, args):
-        return self.manager.local_accession(args)
+        i = args[0]
+        try:
+            source = self.external_context[args[0]]
+        except KeyError:
+            raise ArgumentError(f"Number {args} not in external search context.")
+        return self.manager.local_accession(source)
 
     def _real_cmd_local_create(self, args):
         """
@@ -106,11 +115,16 @@ class Interpreter:
         List contents of the local gazetteer.
         """
         content_list = self.manager.local_list(args)
-        content_list.sort(key=lambda x: x[1])
+        content_list.sort(key=lambda o: o.sort_key)
+        rows = list()
+        self.local_context = dict()
+        for i, o in enumerate(content_list):
+            rows.append((f"{i+1}", f"{type(o)}: {o.title}"))
+            self.local_context[str(i + 1)] = o
         return self._table(
             title=f"{self.manager.local.title}: {len(content_list)} items",
-            columns=["title"],
-            rows=[i[1] for i in content_list],
+            columns=["context", "summary"],
+            rows=rows,
         )
 
     def _cmd_gazetteer(self, args):
@@ -198,6 +212,7 @@ class Interpreter:
             raise ArgumentError("search", str(err))
         msgs = [results["query"]]
         rows = list()
+        self.external_context = dict()
         for i, hit in enumerate(results["hits"]):
             rows.append(
                 (
@@ -209,6 +224,7 @@ class Interpreter:
                     ),
                 )
             )
+            self.external_context[str(i + 1)] = hit
         msgs.append(
             self._table(
                 ("context", "summary"),
