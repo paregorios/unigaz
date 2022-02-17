@@ -78,12 +78,40 @@ class Interpreter:
         r = getattr(self, f"_cmd_{cmd}")(parts[1:])
         return r
 
-    def _cmd_create_local(self, args):
+    def _cmd_local(self, args):
+        """
+        Work with local gazetteers
+            > local create My Sites
+              creates a new local gazetteer named 'My Sites'
+            > local accession 7
+              make a new entry in the local gazetteer on the basis of context number 7
+        """
+        real_cmd = f"_real_cmd_local_{args[0]}"
+        try:
+            return getattr(self, real_cmd)(args[1:])
+        except AttributeError:
+            return f"Unrecognized command '{args[0]}'"
+
+    def _real_cmd_local_accession(self, args):
+        return self.manager.local_accession(args)
+
+    def _real_cmd_local_create(self, args):
         """
         Create a local gazetteer.
-            > create_local My Sites
         """
-        
+        return self.manager.local_create(" ".join(args))
+
+    def _real_cmd_local_list(self, args):
+        """
+        List contents of the local gazetteer.
+        """
+        content_list = self.manager.local_list(args)
+        content_list.sort(key=lambda x: x[1])
+        return self._table(
+            title=f"{self.manager.local.title}: {len(content_list)} items",
+            columns=["title"],
+            rows=[i[1] for i in content_list],
+        )
 
     def _cmd_gazetteer(self, args):
         """

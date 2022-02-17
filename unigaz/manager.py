@@ -5,6 +5,7 @@ Manage the tools
 """
 
 import logging
+from unigaz.local import Local
 from unigaz.pleiades import Pleiades
 from unigaz.web import DEFAULT_USER_AGENT, SearchParameterError
 
@@ -17,6 +18,25 @@ class Manager:
         self.gazetteer_netlocs = set()
         for k, v in self.gazetteers.items():
             self.gazetteer_netlocs.add(v.web.netloc)
+        self.local = None
+
+    def local_create(self, name):
+        if self.local:
+            raise NotImplementedError("already got one")
+        self.local = Local(title=name)
+        return f"Created local gazetteer with title '{self.local.title}'."
+
+    def local_accession(self, args):
+        if not self.local:
+            raise RuntimeError(f"a local gazetteer must be loaded or created first")
+        raise NotImplementedError("local accession")
+
+    def local_list(self, args):
+        if not self.local:
+            raise RuntimeError(f"a local gazetteer must be loaded or created first")
+        content = self.local.content
+        content = [(ident, o.title, o.sort_key) for ident, o in content]
+        return content
 
     def search(self, gazetteer_name, args):
         if self.supported(gazetteer_name):
