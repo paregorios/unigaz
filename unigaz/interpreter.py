@@ -10,6 +10,7 @@ from sqlite3 import NotSupportedError
 from rich.table import Table
 from rich.pretty import Pretty
 import shlex
+import traceback
 from unigaz.manager import Manager
 from unigaz.web import SearchParameterError
 
@@ -200,6 +201,14 @@ class Interpreter:
         logging.getLogger().setLevel(level=logging.WARNING)
         return self._cmd_log_level(args)
 
+    def _cmd_quit(self, args):
+        """
+        Quit interactive interface.
+            > quit
+            WARNING: unsaved data will be lost (use "save" first)
+        """
+        exit()
+
     def _cmd_raw(self, args):
         """
         Show raw data view of an item in a context list
@@ -301,21 +310,13 @@ class Interpreter:
             msg = "\n".join([l.strip() for l in msg.split("\n")[1:]])
         return msg
 
-    def _cmd_quit(self, args):
-        """
-        Quit interactive interface.
-            > quit
-            WARNING: unsaved data will be lost (use "save" first)
-        """
-        exit()
-
     def _real_cmd_local_accession(self, args):
         i = args[0]
         try:
-            source = self.external_context[args[0]]
+            hit = self.external_context[args[0]]
         except KeyError:
             raise ArgumentError(f"Number {args} not in external search context.")
-        result = self.manager.local_accession(source)
+        result = self.manager.local_accession(hit)
         return f"Created {result.__class__.__name__} '{result.title}' from external source.'"
 
     def _real_cmd_local_create(self, args):
@@ -334,7 +335,8 @@ class Interpreter:
         rows = list()
         self.local_context = dict()
         for i, o in enumerate(content_list):
-            rows.append((f"{i+1}", f"{o.__class__.__name__}: {o.title}"))
+            row = (f"{i+1}", f"{o.__class__.__name__}: {o.title}\n{o.description}")
+            rows.append(row)
             self.local_context[str(i + 1)] = o
         return self._table(
             title=f"{self.manager.local.title}: {len(content_list)} items",

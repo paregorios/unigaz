@@ -5,6 +5,8 @@ Manage the tools
 """
 
 import logging
+import traceback
+from urllib.parse import urlparse
 from unigaz.local import Local
 from unigaz.pleiades import Pleiades
 from unigaz.web import DEFAULT_USER_AGENT, SearchParameterError
@@ -15,15 +17,27 @@ logger = logging.getLogger(__name__)
 class Manager:
     def __init__(self, user_agent=DEFAULT_USER_AGENT):
         self.gazetteers = {"pleiades": Pleiades(user_agent=user_agent)}
-        self.gazetteer_netlocs = set()
+        self.gazetteer_netlocs = dict()
         for k, v in self.gazetteers.items():
-            self.gazetteer_netlocs.add(v.web.netloc)
+            self.gazetteer_netlocs[v.web.netloc] = v
         self.local = None
 
-    def local_accession(self, source):
+    def local_accession(self, hit):
         if not self.local:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
-        result = self.local.create_from(source)
+        uri = hit["uri"]
+        parts = urlparse(uri)
+        g = self.gazetteer_netlocs[parts.netloc]
+        try:
+            source_data, source_uri = g.get_data(uri)
+        except Exception as err:
+            tb = traceback.format_exception(err)
+            return "\n".join(tb)
+        try:
+            result = self.local.create_from(source_data, source_uri)
+        except Exception as err:
+            tb = traceback.format_exception(err)
+            return "\n".join(tb)
         return result
 
     def local_create(self, name):
@@ -77,6 +91,8 @@ class Manager:
                 try:
                     self.gazetteers[g]
                 except KeyError:
-                    if g not in self.gazetteer_netlocs:
+                    try:
+                        self.gazetteer_netlocs[g]
+                    except KeyError:
                         return False
         return True

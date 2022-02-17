@@ -4,12 +4,15 @@
 Define local gazetteer
 """
 
+from copy import deepcopy
+import datetime
 import logging
 from slugify import slugify
 import string
 from textnorm import normalize_space, normalize_unicode
 from uuid import uuid4
 from unigaz.gazetteer import Gazetteer
+import validators
 
 logger = logging.getLogger(__name__)
 
@@ -166,6 +169,7 @@ class Described:
     def __init__(self, **kwargs):
         self._description = None
         for k in ["description", "summary", "abstract"]:
+            logger.debug(k)
             try:
                 description = kwargs[k]
             except KeyError:
@@ -175,7 +179,9 @@ class Described:
             except ValueError:
                 continue
             else:
-                break
+                if self.description:
+                    break
+        logger.debug(self.description)
 
     @property
     def description(self):
@@ -233,12 +239,48 @@ class Indexable:
 class Externals:
     def __init__(self, **kwargs):
         self._externals = dict()
+        for k in ["external", "uri", "source"]:
+            try:
+                v = kwargs[k]
+            except KeyError:
+                continue
+            if not validators.url(v):
+                continue
+            self.add_external(v, None)
+        try:
+            values = kwargs["externals"]
+        except KeyError:
+            pass
+        else:
+            self.externals = values
+
+    @property
+    def externals(self):
+        return self._externals
+
+    @externals.deleter
+    def externals(self):
+        self._externals = dict()
+
+    @externals.setter
+    def externals(self, values):
+        del self.externals
+        for v in values:
+            self.add_external(*v)
+
+    def add_external(self, uri, data):
+        if validators.url(uri):
+            self._externals[uri] = data
+        else:
+            raise ValueError(f"invalid URI: {uri}")
 
 
 class Dictionary:
     def asdict(self):
         d = dict()
         for varname, varval in vars(self).items():
+            if varname == "_catalog":
+                continue
             if varname.startswith("_"):
                 attrname = varname[1:]
                 try:
@@ -253,18 +295,76 @@ class Dictionary:
         return d
 
 
-class Place(Identified, Titled, Described, Externals, Indexable, Dictionary):
+class Journaled:
+    def __init__(self, **kwargs):
+        self._journal = dict()
+        self.add_journal_event("created", None)
+        try:
+            v = kwargs["journal_event"]
+        except KeyError:
+            pass
+        else:
+            if v:
+                self.add_journal_event(*v)
+
+    @property
+    def journal_events(self):
+        return self._journal
+
+    def add_journal_event(self, verb, source):
+        dtstamp = (
+            datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).isoformat()
+        )
+        try:
+            self._journal[dtstamp]
+        except KeyError:
+            self._journal[dtstamp] = {verb: source}
+        else:
+            self._journal[dtstamp][verb] = source
+
+    @property
+    def journal(self):
+        return self._journal
+
+    @property
+    def created(self):
+        for dtstamp, journal_entries in self._journal.items():
+            try:
+                source = journal_entries["created"]
+            except KeyError:
+                continue
+            return (dtstamp, source)
+
+    @property
+    def sources(self):
+        source_list = list()
+        for dtstamp, journal_entries in self._journal.items():
+            for verb in ["created_from", "merged_from"]:
+                try:
+                    source = journal_entries[verb]
+                except KeyError:
+                    continue
+                source_list.append(source)
+        return source_list
+
+
+class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Journaled):
     def __init__(self, **kwargs):
         Identified.__init__(self, **kwargs)
         Titled.__init__(self, **kwargs)
+        Described.__init__(self, **kwargs)
         Externals.__init__(self, **kwargs)
+        Indexable.__init__(self, **kwargs)
+        Journaled.__init__(self, **kwargs)
 
 
-class Name(Identified, Externals, Indexable, Dictionary):
+class Name(Identified, Externals, Indexable, Dictionary, Journaled):
     def __init__(self, **kwargs):
         Identified.__init__(self, **kwargs)
         Externals.__init__(self, **kwargs)
         Indexable.__init__(self, **kwargs)
+        Journaled.__init__(self, **kwargs)
+
         self._attested_form = None
         self._romanized_forms = list()
         if kwargs:
@@ -279,7 +379,7 @@ class Name(Identified, Externals, Indexable, Dictionary):
                     v = kwargs[k]
                 except KeyError:
                     continue
-                if k.starts_with("attested"):
+                if k.startswith("attested"):
                     self.attested_form = v
                 elif isinstance(v, str):
                     self.add_romanized_form(v)
@@ -353,41 +453,51 @@ class Local(Gazetteer, Titled):
         self._content.pop(id)
         self._catalog.unindex()
 
-    def create_from(self, source):
+    def create_from(self, source_data, source):
         ftype = None
-        if isinstance(source, dict):
-            return self._create_from_dict(source)
-        elif isinstance(source, str):
-            return self._create_from_string(source)
-        elif isinstance(source, (list, tuple, set)):
+        if isinstance(source_data, dict):
+            return self._create_from_dict(source_data, source)
+        elif isinstance(source_data, str):
+            return self._create_from_string(source_data, source)
+        elif isinstance(source_data, (list, tuple, set)):
             messages = list()
-            for item in source:
-                messages.append(self.create_from(item))
+            for item in source_data:
+                messages.append(self.create_from(item, source))
             return messages
         else:
             raise NotImplementedError(
-                f"create local gazetteer object from {type(source)}"
+                f"create local gazetteer object from {type(source_data)}"
             )
 
-    def _create_from_dict(self, source):
+    def _create_from_dict(self, source_data, source):
+        logger.debug("_create_from_dict")
+        journal_event = None
+        if source:
+            journal_event = ("created from", source)
         try:
-            ft = source["feature_type"]
+            ft = source_data["feature_type"]
         except KeyError:
             ft = "Place"
         ftl = norm(ft.lower())
         if ftl == "place":
-            o = Place(**source)
+            o = Place(**source_data, journal_event=journal_event)
         elif ftl == "name":
-            o = Name(**source)
+            o = Name(**source_data, journal_event=journal_event)
         else:
             raise ValueError(f"Unrecognized feature type: '{ft}'")
         self.add(o)
         return o
 
-    def _create_from_string(self, source):
-        n = Name(attested=source, catalog=self._catalog)
+    def _create_from_string(self, source_data, source):
+        logger.debug("_create_from_dict")
+        journal_event = None
+        if source:
+            journal_event = ("created from", source)
+        n = Name(
+            attested=source_data, catalog=self._catalog, journal_event=journal_event
+        )
         self.add(n)
-        return o
+        return n
 
     def get_by_id(self, id):
         return self._content[id]

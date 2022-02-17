@@ -11,7 +11,7 @@ import logging
 from textnorm import normalize_space, normalize_unicode
 from unigaz.gazetteer import Gazetteer
 from unigaz.web import SearchParameterError, Web, DEFAULT_USER_AGENT
-from urllib.parse import urlencode, urlunparse
+from urllib.parse import urlparse, urlencode, urlunparse
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +35,21 @@ class Pleiades(Gazetteer, Web):
             cache_control=False,
             expires=timedelta(hours=24),
         )
+
+    def get_data(self, uri):
+        parts = urlparse(uri)
+        path_parts = parts.path.split("/")
+        json_part = [p for p in path_parts if p == "json"]
+        if not json_part:
+            if path_parts[-1] == "":
+                path_parts[-1] = "json"
+            else:
+                path_parts.append("json")
+        json_uri = urlunparse(("https", parts.netloc, "/".join(path_parts), "", "", ""))
+        r = self.get(json_uri)
+        if r.status_code != 200:
+            r.raise_for_status()
+        return (r.json(), json_uri)
 
     def search(self, **kwargs):
         return self._search_rss(**kwargs)
