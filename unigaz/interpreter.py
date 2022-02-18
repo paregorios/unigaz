@@ -146,6 +146,44 @@ class Interpreter:
             entries.sort(key=lambda x: x[0])
             return self._table(columns=("command", "documentation"), rows=entries)
 
+    def _cmd_list(self, args):
+        """
+        List contents of collections
+            > list local
+            > list search
+        """
+        expected = ["local", "search"]
+        if len(args) > 1 or len(args) == 0 or args[0] not in expected:
+            raise ArgumentError("list", f"expected {' or '.join(expected)}, got {args}")
+        if args[0] == "local":
+            content_list = self.manager.local_list(args)
+            self.local_context = dict()
+            context = self.local_context
+            content_title = self.manager.local.title
+        elif args[0] == "search":
+            raise NotImplementedError("list search")
+        content_list.sort(key=lambda o: o.sort_key)
+        rows = list()
+        for i, o in enumerate(content_list):
+            if o.preferred_description:
+                row = (
+                    f"{i+1}",
+                    f"{o.__class__.__name__}: {o.title}\n{o.preferred_description['text']}",
+                )
+            elif o.descriptions:
+                dlist = "\n".join([d["text"] for d in o.descriptions])
+                row = (
+                    f"{i+1}",
+                    f"{o.__class__.__name__}: {o.title}\n{dlist}",
+                )
+            rows.append(row)
+            context[str(i + 1)] = o
+        return self._table(
+            title=f"{content_title}: {len(content_list)} items",
+            columns=[f"{args[0]} context", "summary"],
+            rows=rows,
+        )
+
     def _cmd_local(self, args):
         """
         Work with local gazetteers
