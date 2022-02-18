@@ -7,16 +7,21 @@ Manage the tools
 import logging
 import traceback
 from urllib.parse import urlparse
+from unigaz.edh import EDH
 from unigaz.local import Local
 from unigaz.pleiades import Pleiades
 from unigaz.web import DEFAULT_USER_AGENT, SearchParameterError
+import validators
 
 logger = logging.getLogger(__name__)
 
 
 class Manager:
     def __init__(self, user_agent=DEFAULT_USER_AGENT):
-        self.gazetteers = {"pleiades": Pleiades(user_agent=user_agent)}
+        self.gazetteers = {
+            "pleiades": Pleiades(user_agent=user_agent),
+            "edh": EDH(user_agent=user_agent),
+        }
         self.gazetteer_netlocs = dict()
         for k, v in self.gazetteers.items():
             self.gazetteer_netlocs[v.web.netloc] = v
@@ -31,8 +36,41 @@ class Manager:
         try:
             source_data, source_uri = g.get_data(uri)
         except Exception as err:
+            logger.debug("fail")
             tb = traceback.format_exception(err)
-            return "\n".join(tb)
+            print("\n".join(tb))
+            exit()
+
+        try:
+            source_data["title"]
+        except KeyError:
+            source_data["title"] = hit["title"]
+
+        v = None
+        for k in ["description", "summary", "abstract"]:
+            try:
+                v = source_data[k]
+            except KeyError:
+                continue
+            else:
+                break
+        if v is None:
+            source_data["summary"] = hit["summary"]
+
+        original = None
+        for v in source_data.values():
+            if isinstance(v, str):
+                if validators.url(v):
+                    if v == uri:
+                        original = v
+                        break
+        if original is None:
+            try:
+                source_data["externals"]
+            except KeyError:
+                source_data["externals"] = set()
+            source_data["externals"].add(uri)
+
         try:
             result = self.local.create_from(source_data, source_uri)
         except Exception as err:

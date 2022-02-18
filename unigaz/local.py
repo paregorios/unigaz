@@ -10,6 +10,7 @@ import logging
 from slugify import slugify
 import string
 from textnorm import normalize_space, normalize_unicode
+import traceback
 from uuid import uuid4
 from unigaz.gazetteer import Gazetteer
 import validators
@@ -167,37 +168,47 @@ class Titled:
 
 class Described:
     def __init__(self, **kwargs):
-        self._description = None
+        self._descriptions = list()
+        self._preferred_description = None
         for k in ["description", "summary", "abstract"]:
-            logger.debug(k)
             try:
                 description = kwargs[k]
             except KeyError:
                 continue
-            try:
-                self.description = description
-            except ValueError:
-                continue
             else:
-                if self.description:
-                    break
-        logger.debug(self.description)
+                try:
+                    source = kwargs["source"]
+                except KeyError:
+                    source = None
+                if isinstance(description, str):
+                    self.add_description(text=description, source=source)
+                elif isinstance(description, dict):
+                    try:
+                        v = description["source"]
+                    except KeyError:
+                        description["source"] = source
+                    else:
+                        if v is None:
+                            description["source"] = source
+                    self.add_description(**description)
 
     @property
-    def description(self):
-        return self._description
+    def descriptions(self):
+        return self._descriptions
 
-    @description.setter
-    def description(self, value):
-        v = norm(value)
-        if not v:
-            raise ValueError(v)
-        else:
-            self._description = v
+    @descriptions.deleter
+    def descriptions(self):
+        self._descriptions = list()
 
-    @description.deleter
-    def description(self):
-        self._description = None
+    def add_description(self, text=None, lang="und", preferred=False, source=None):
+        d = {"text": text, "lang": lang, "preferred": preferred, "source": source}
+        if preferred:
+            self._preferred_description = d
+        self._descriptions.append(d)
+
+    @property
+    def preferred_description(self):
+        return self._preferred_description
 
 
 punct_trans = str.maketrans("", "", string.punctuation)
@@ -239,20 +250,33 @@ class Indexable:
 class Externals:
     def __init__(self, **kwargs):
         self._externals = dict()
-        for k in ["external", "uri", "source"]:
+        try:
+            source = kwargs["source"]
+        except KeyError:
+            source = None
+        for k in ["external", "uri"]:
             try:
                 v = kwargs[k]
             except KeyError:
                 continue
             if not validators.url(v):
                 continue
-            self.add_external(v, None)
+            self.add_external(v, source)
         try:
             values = kwargs["externals"]
         except KeyError:
             pass
         else:
-            self.externals = values
+            if isinstance(values, str):
+                self.add_external(values, source)
+            elif isinstance(values, (list, set, tuple)):
+                for v in values:
+                    self.add_external(v, source)
+        for v in kwargs.values():
+            logger.debug(f"foo: {v}")
+            if isinstance(v, str):
+                if validators.url(v):
+                    self.add_external(v, source)
 
     @property
     def externals(self):
@@ -268,18 +292,22 @@ class Externals:
         for v in values:
             self.add_external(*v)
 
-    def add_external(self, uri, data):
+    def add_external(self, uri, source=None):
         if validators.url(uri):
-            self._externals[uri] = data
+            try:
+                self._externals[uri]
+            except KeyError:
+                self._externals[uri] = set()
         else:
             raise ValueError(f"invalid URI: {uri}")
+        self._externals[uri].add(source)
 
 
 class Dictionary:
     def asdict(self):
         d = dict()
         for varname, varval in vars(self).items():
-            if varname == "_catalog":
+            if varname in ["_catalog", "_preferred_description"]:
                 continue
             if varname.startswith("_"):
                 attrname = varname[1:]
@@ -454,7 +482,6 @@ class Local(Gazetteer, Titled):
         self._catalog.unindex()
 
     def create_from(self, source_data, source):
-        ftype = None
         if isinstance(source_data, dict):
             return self._create_from_dict(source_data, source)
         elif isinstance(source_data, str):
@@ -479,13 +506,21 @@ class Local(Gazetteer, Titled):
         except KeyError:
             ft = "Place"
         ftl = norm(ft.lower())
+        logger.debug(ftl)
         if ftl == "place":
-            o = Place(**source_data, journal_event=journal_event)
+            try:
+                o = Place(**source_data, journal_event=journal_event, source=source)
+            except Exception as err:
+                tb = traceback.format_exception(err)
+                print("\n".join(tb))
+                exit()
         elif ftl == "name":
             o = Name(**source_data, journal_event=journal_event)
         else:
             raise ValueError(f"Unrecognized feature type: '{ft}'")
+        logger.debug("adding ...")
         self.add(o)
+        logger.debug("... added")
         return o
 
     def _create_from_string(self, source_data, source):

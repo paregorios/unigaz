@@ -41,8 +41,8 @@ class Web:
                 "and pass it to the gazetter object at initialization."
             )
         headers["User-Agent"] = ua
+        web_kwargs = dict()
         if kwargs:
-            web_kwargs = dict()
             for k, v in kwargs.items():
                 if k in {"respect_robots_txt", "cache_control", "expire_after"}:
                     web_kwargs[k] = v

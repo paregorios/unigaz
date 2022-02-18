@@ -335,7 +335,17 @@ class Interpreter:
         rows = list()
         self.local_context = dict()
         for i, o in enumerate(content_list):
-            row = (f"{i+1}", f"{o.__class__.__name__}: {o.title}\n{o.description}")
+            if o.preferred_description:
+                row = (
+                    f"{i+1}",
+                    f"{o.__class__.__name__}: {o.title}\n{o.preferred_description['text']}",
+                )
+            elif o.descriptions:
+                dlist = "\n".join([d["text"] for d in o.descriptions])
+                row = (
+                    f"{i+1}",
+                    f"{o.__class__.__name__}: {o.title}\n{dlist}",
+                )
             rows.append(row)
             self.local_context[str(i + 1)] = o
         return self._table(
