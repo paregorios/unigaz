@@ -92,6 +92,34 @@ class Interpreter:
         r = getattr(self, f"_cmd_{cmd}")(parts[1:])
         return r
 
+    def _cmd_accession(self, args):
+        """
+        Accession an item from search results into local
+            > accession search 1
+        """
+        expected = ["search"]
+        if len(args) != 2 or args[0] not in expected:
+            expected = [f"'{e}'" for e in expected]
+            raise ArgumentError(
+                "accession", f"expected {' or '.join(expected)}, got {' '.join(args)}"
+            )
+        i = args[1]
+        if args[0] == "search":
+            try:
+                hit = self.external_context[i]
+            except KeyError:
+                raise ArgumentError(f"Number {i} not in external search context.")
+        result = self.manager.local_accession(hit)
+        return f"Created {result.__class__.__name__} '{result.title}' from external source.'"
+
+    def _cmd_create(self, args):
+        """
+        Create a local gazetteer.
+            > create My Sites
+        """
+        results = self.manager.local_create(" ".join(args))
+        return results
+
     def _cmd_gazetteer(self, args):
         """
         Check for gazetteer support.
@@ -154,8 +182,13 @@ class Interpreter:
         """
         expected = ["local", "search"]
         if len(args) > 1 or len(args) == 0 or args[0] not in expected:
+            expected = [f"'{e}'" for e in expected]
             raise ArgumentError("list", f"expected {' or '.join(expected)}, got {args}")
         if args[0] == "local":
+            if not self.manager.local:
+                raise CommandError(
+                    "list", "a local gazetteer must be created or loaded first"
+                )
             content_list = self.manager.local_list(args)
             self.local_context = dict()
             context = self.local_context
@@ -183,20 +216,6 @@ class Interpreter:
             columns=[f"{args[0]} context", "summary"],
             rows=rows,
         )
-
-    def _cmd_local(self, args):
-        """
-        Work with local gazetteers
-            > local create My Sites
-              creates a new local gazetteer named 'My Sites'
-            > local accession 7
-              make a new entry in the local gazetteer on the basis of context number 7
-        """
-        real_cmd = f"_real_cmd_local_{args[0]}"
-        try:
-            return getattr(self, real_cmd)(args[1:])
-        except AttributeError:
-            return f"Unrecognized command 'local {args[0]}'"
 
     def _cmd_log_debug(self, args):
         """
@@ -347,50 +366,6 @@ class Interpreter:
         else:
             msg = "\n".join([l.strip() for l in msg.split("\n")[1:]])
         return msg
-
-    def _real_cmd_local_accession(self, args):
-        i = args[0]
-        try:
-            hit = self.external_context[args[0]]
-        except KeyError:
-            raise ArgumentError(f"Number {args} not in external search context.")
-        result = self.manager.local_accession(hit)
-        return f"Created {result.__class__.__name__} '{result.title}' from external source.'"
-
-    def _real_cmd_local_create(self, args):
-        """
-        Create a local gazetteer.
-        """
-        results = self.manager.local_create(" ".join(args))
-        return results
-
-    def _real_cmd_local_list(self, args):
-        """
-        List contents of the local gazetteer.
-        """
-        content_list = self.manager.local_list(args)
-        content_list.sort(key=lambda o: o.sort_key)
-        rows = list()
-        self.local_context = dict()
-        for i, o in enumerate(content_list):
-            if o.preferred_description:
-                row = (
-                    f"{i+1}",
-                    f"{o.__class__.__name__}: {o.title}\n{o.preferred_description['text']}",
-                )
-            elif o.descriptions:
-                dlist = "\n".join([d["text"] for d in o.descriptions])
-                row = (
-                    f"{i+1}",
-                    f"{o.__class__.__name__}: {o.title}\n{dlist}",
-                )
-            rows.append(row)
-            self.local_context[str(i + 1)] = o
-        return self._table(
-            title=f"{self.manager.local.title}: {len(content_list)} items",
-            columns=["context", "summary"],
-            rows=rows,
-        )
 
     def _table(self, columns, rows, title=None):
         """Produce a rich table for output"""
