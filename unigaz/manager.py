@@ -89,6 +89,11 @@ class Manager:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
         return self.local.content
 
+    def local_merge(self, source, destination):
+        if not self.local:
+            raise RuntimeError(f"a local gazetteer must be loaded or created first")
+        return self.local.merge(source, destination)
+
     def search(self, gazetteer_name, args):
         if self.supported(gazetteer_name):
             g = self.gazetteers[gazetteer_name]

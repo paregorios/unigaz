@@ -300,7 +300,12 @@ class Externals:
                 self._externals[uri] = set()
         else:
             raise ValueError(f"invalid URI: {uri}")
-        self._externals[uri].add(source)
+        if isinstance(source, str):
+            self._externals[uri].add(source)
+        elif isinstance(source, (set, list, tuple)):
+            self._externals[uri].update(source)
+        else:
+            raise TypeError(f"source: {type(source)}")
 
 
 class Dictionary:
@@ -339,10 +344,15 @@ class Journaled:
     def journal_events(self):
         return self._journal
 
-    def add_journal_event(self, verb, source):
-        dtstamp = (
-            datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).isoformat()
-        )
+    def add_journal_event(self, verb, source, datetime_stamp=None):
+        if datetime_stamp:
+            dtstamp = datetime_stamp
+        else:
+            dtstamp = (
+                datetime.datetime.utcnow()
+                .replace(tzinfo=datetime.timezone.utc)
+                .isoformat()
+            )
         try:
             self._journal[dtstamp]
         except KeyError:
@@ -384,6 +394,37 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         Externals.__init__(self, **kwargs)
         Indexable.__init__(self, **kwargs)
         Journaled.__init__(self, **kwargs)
+
+    def add_name(self, value):
+        pass
+
+    def merge(self, source):
+        if isinstance(source, Place):
+            return self._merge_place(source)
+        elif isinstance(source, Name):
+            return self.add_name(source)
+        else:
+            raise TypeError(type(source))
+
+    def _merge_place(self, source):
+        s_created, s_origin = source.created
+        if source.title != self.title:
+            self.add_description(text=source.title, source=s_origin)
+        for sd in source.descriptions:
+            d = deepcopy(sd)
+            if sd["source"] is None:
+                d["source"] = s_origin
+            self.add_description(**d)
+        for uri, e_source in source.externals.items():
+            if e_source is None:
+                e_source = s_origin
+            self.add_external(uri, e_source)
+        for dt_stamp, events in source.journal_events.items():
+            for verb, whence in events.items():
+                if verb != "created":
+                    self.add_journal_event(verb, whence, dt_stamp)
+        self.add_journal_event("merged_from", source.title)
+        return self
 
 
 class Name(Identified, Externals, Indexable, Dictionary, Journaled):
@@ -541,3 +582,53 @@ class Local(Gazetteer, Titled):
         identifiers = self._catalog.indexes["title"].get(title)
         results = [self._content[id] for id in identifiers]
         return results
+
+    def merge(self, source, destination):
+        return destination.merge(source)
+
+    def merge_bad(self, source, destination):
+        logger.debug("bar")
+        source_ftype = source.__class__.__name__
+        destination_ftype = destination.__class__.__name__
+        if source_ftype != "Place" or destination_ftype != "Place":
+            raise NotImplementedError(
+                f"Cannot merge a {source_ftype} into a {destination_ftype}"
+            )
+        return self._merge_place2place(source, destination)
+
+    def _merge_place2place(self, source, destination):
+        logger.debug("foo")
+        for fieldname, s_val in vars(source).items():
+            if fieldname in ["_id", "_preferred_description", "_catalog", "_journal"]:
+                continue
+            try:
+                d_val = getattr(destination, fieldname)
+            except AttributeError:
+                raise RuntimeError(fieldname)
+            d_addername = f"add{fieldname}"
+            if d_addername[-1] == "s":
+                d_addername = d_addername[:-1]
+            try:
+                d_adder = getattr(destination, d_addername)
+            except AttributeError:
+                if d_addername == "add_title":
+                    d_adder = getattr(destination, "add_name")
+                else:
+                    logger.error(f"Missed {d_addername}")
+                    continue
+            logger.info(f"Got {d_addername}")
+            if isinstance(s_val, (list, set, tuple)):
+                for v in s_val:
+                    d_adder(v)
+            elif isinstance(s_val, dict):
+                try:
+                    d_adder(**s_val)
+                except TypeError:
+                    for k, v in s_val.items():
+                        if isinstance(v, (list, set, tuple)):
+                            for vv in v:
+                                d_adder(k, vv)
+                        else:
+                            d_adder(k, v)
+            else:
+                d_adder(s_val)

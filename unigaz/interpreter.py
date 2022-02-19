@@ -258,6 +258,32 @@ class Interpreter:
         logging.getLogger().setLevel(level=logging.WARNING)
         return self._cmd_log_level(args)
 
+    def _cmd_merge(self, args):
+        """
+        Merge one local item into another
+            > merge 1 2
+              (merges content of local context 1 into local context 2)
+        """
+        if not self.manager.local:
+            raise CommandError(
+                "merge",
+                "a local gazetteer must be created and populated or loaded first",
+            )
+        if len(args) != 2:
+            raise UsageError(
+                "merge",
+                f"two local gazetteer context numbers must be provided as arguments; got {args}",
+            )
+        entries = list()
+        for i in args:
+            try:
+                entries.append(self.local_context[i])
+            except KeyError:
+                raise ArgumentError(
+                    "merge", f"Number {i} not in local gazetteer context."
+                )
+        return self.manager.local_merge(*entries)
+
     def _cmd_quit(self, args):
         """
         Quit interactive interface.
