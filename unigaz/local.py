@@ -424,14 +424,22 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         Externals.__init__(self, **kwargs)
         Indexable.__init__(self, **kwargs)
         Journaled.__init__(self, **kwargs)
+        self._locations = list()
+        self._locations_grok(**kwargs)
         self._names = list()
         self._names_grok(**kwargs)
+
+    def add_location(self, value):
+        if isinstance(value, Location):
+            self._locations.append(value)
+        else:
+            raise NotImplementedError(f"add_location: {type(value)}.")
 
     def add_name(self, value):
         if isinstance(value, Name):
             self._names.append(value)
         else:
-            raise NotImplementedError("add_name")
+            raise NotImplementedError(f"add_name: {type(value)}")
 
     def merge(self, source):
         """Merge data from source object into self."""
@@ -443,6 +451,10 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
             return self.add_location(source)
         else:
             raise TypeError(type(source))
+
+    @property
+    def locations(self):
+        return self._locations
 
     @property
     def names(self):
@@ -471,6 +483,40 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         self.add_journal_event("merged_from", source.title)
         return self
 
+    def _locations_grok(self, **kwargs):
+        try:
+            source = kwargs["source"]
+        except KeyError:
+            source = None
+        locations = list()
+        if source is None:
+            return self.add_location(**kwargs)
+        else:
+            parts = urlparse(source)
+            try:
+                grokker = getattr(
+                    self,
+                    f"_locations_grok_{parts.netloc.replace('.', '_').replace('-', '_')}",
+                )
+            except KeyError:
+                pass
+            else:
+                these_locations = grokker(**kwargs)
+                for l in these_locations:
+                    l.source = source
+                locations.extend(these_locations)
+        for l in these_locations:
+            self.add_location(l)
+
+    def _locations_grok_pleiades_stoa_org(self, **kwargs):
+        # Pleiades locations
+        locations = list()
+        for pl in kwargs["locations"]:
+            n = Location(source=kwargs["source"], **pl)
+            n.add_journal_event("created from", kwargs["source"])
+            locations.append(n)
+        return locations
+
     def _names_grok(self, **kwargs):
         try:
             source = kwargs["source"]
@@ -493,10 +539,6 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
                 for n in these_names:
                     n.source = source
                 names.extend(these_names)
-
-        from pprint import pformat
-
-        logger.debug(pformat(names, indent=4))
         for n in names:
             self.add_name(n)
 
