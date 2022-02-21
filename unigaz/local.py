@@ -9,7 +9,7 @@ import datetime
 import logging
 import re
 from shapely import wkt
-from shapely.geometry import Point, LineString, Polygon, shape
+from shapely.geometry import Point, LineString, Polygon, mapping, shape
 from slugify import slugify
 import string
 from textnorm import normalize_space, normalize_unicode
@@ -353,6 +353,8 @@ class Dictionary:
             return {k: self._asdict_process(v) for k, v in value.items()}
         elif isinstance(value, Dictionary):
             return value.asdict()
+        elif isinstance(value, (Point, LineString, Polygon)):
+            return mapping(value)
         else:
             return value
         return d
