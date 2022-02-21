@@ -24,6 +24,7 @@ setuptools.setup(
         "rich",
         "textnorm",
         "validators",
+        "webiquette @ git+https://github.com/paregorios/webiquette.git",
     ],
     python_requires=">=3.10.2",
 )

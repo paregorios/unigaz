@@ -2,4 +2,3 @@
 coverage
 pytest
 pytest-cov
--e ../../W/webiquette
