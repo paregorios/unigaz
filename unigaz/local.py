@@ -7,15 +7,22 @@ Define local gazetteer
 from copy import deepcopy
 import datetime
 import logging
+import re
 from slugify import slugify
 import string
 from textnorm import normalize_space, normalize_unicode
 import traceback
 from uuid import uuid4
 from unigaz.gazetteer import Gazetteer
+from urllib.parse import urlparse
 import validators
 
 logger = logging.getLogger(__name__)
+rx_camel2snake = re.compile(r"(?<!^)(?=[A-Z])")
+
+
+def camel2snake(s):
+    return rx_camel2snake.sub("_", s).lower()
 
 
 def norm(s):
@@ -316,15 +323,29 @@ class Dictionary:
                 continue
             if varname.startswith("_"):
                 attrname = varname[1:]
-                try:
-                    attrval = getattr(self, attrname)
-                except AttributeError:
-                    d[varname] = varval
-                else:
-                    if varval == attrval:
-                        d[attrname] = attrval
-                    else:
-                        d[varname] = varval
+            else:
+                attrname = varname
+            try:
+                attrval = getattr(self, attrname)
+            except AttributeError:
+                attrval = None
+            if varval == attrval:
+                val = attrval
+            else:
+                val = varval
+            d[attrname] = self._asdict_process(val)
+        return d
+
+    def _asdict_process(self, value):
+
+        if isinstance(value, (list, set, tuple)):
+            return [self._asdict_process(v) for v in value]
+        elif isinstance(value, dict):
+            return {k: self._asdict_process(v) for k, v in value.items()}
+        elif isinstance(value, Dictionary):
+            return value.asdict()
+        else:
+            return value
         return d
 
 
@@ -394,11 +415,17 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         Externals.__init__(self, **kwargs)
         Indexable.__init__(self, **kwargs)
         Journaled.__init__(self, **kwargs)
+        self._names = list()
+        self._names_grok(**kwargs)
 
     def add_name(self, value):
-        pass
+        if isinstance(value, Name):
+            self._names.append(value)
+        else:
+            raise NotImplementedError("add_name")
 
     def merge(self, source):
+        """Merge data from source object into self."""
         if isinstance(source, Place):
             return self._merge_place(source)
         elif isinstance(source, Name):
@@ -406,7 +433,12 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         else:
             raise TypeError(type(source))
 
+    @property
+    def names(self):
+        return self._names
+
     def _merge_place(self, source):
+        """Merge data from Place(source) into self."""
         s_created, s_origin = source.created
         if source.title != self.title:
             self.add_description(text=source.title, source=s_origin)
@@ -419,12 +451,80 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
             if e_source is None:
                 e_source = s_origin
             self.add_external(uri, e_source)
+        for name in source.names:
+            self.add_name(name)
         for dt_stamp, events in source.journal_events.items():
             for verb, whence in events.items():
                 if verb != "created":
                     self.add_journal_event(verb, whence, dt_stamp)
         self.add_journal_event("merged_from", source.title)
         return self
+
+    def _names_grok(self, **kwargs):
+        try:
+            source = kwargs["source"]
+        except KeyError:
+            source = None
+        names = list()
+        if source is None:
+            return self.add_name(**kwargs)
+        else:
+            parts = urlparse(source)
+            try:
+                grokker = getattr(
+                    self,
+                    f"_names_grok_{parts.netloc.replace('.', '_').replace('-', '_')}",
+                )
+            except KeyError:
+                pass
+            else:
+                these_names = grokker(**kwargs)
+                for n in these_names:
+                    n.source = source
+                names.extend(these_names)
+
+        from pprint import pformat
+
+        logger.debug(pformat(names, indent=4))
+        for n in names:
+            self.add_name(n)
+
+    def _names_grok_edh_ub_uni_heidelberg_de(self, **kwargs):
+        # EDH names
+        names = list()
+        for k in ["findspot", "findspot_modern"]:
+            try:
+                v = kwargs[k]
+            except KeyError:
+                pass
+            else:
+                if v:
+                    n = Name()
+                    n.attested_form = v
+                    n.add_romanized_form(v)
+                    if k == "findspot_modern":
+                        n.language = "de"
+                n.add_journal_event("created_from", kwargs["source"])
+                names.append(n)
+        try:
+            v = kwargs["findspot_ancient"]
+        except KeyError:
+            pass
+        else:
+            n = Name()
+            n.add_romanized_form(v)
+            n.add_journal_event("created from", kwargs["source"])
+            names.append(n)
+        return names
+
+    def _names_grok_pleiades_stoa_org(self, **kwargs):
+        # Pleiades names
+        names = list()
+        for pn in kwargs["names"]:
+            n = Name(source=kwargs["source"], **pn)
+            n.add_journal_event("created from", kwargs["source"])
+            names.append(n)
+        return names
 
 
 class Name(Identified, Externals, Indexable, Dictionary, Journaled):
@@ -436,7 +536,14 @@ class Name(Identified, Externals, Indexable, Dictionary, Journaled):
 
         self._attested_form = None
         self._romanized_forms = list()
+        self._language = "und"
+        self.source = None
+        self.name_type = None
+        self.transcription_accuracy = None
+        self.association_certainty = None
+        self.transcription_completeness = None
         if kwargs:
+            source = kwargs["source"]
             for k in [
                 "attested_form",
                 "attested",
@@ -454,6 +561,22 @@ class Name(Identified, Externals, Indexable, Dictionary, Journaled):
                     self.add_romanized_form(v)
                 elif isinstance(v, list):
                     self.romanized_forms = v
+            for k in [
+                "language",
+                "nameType",
+                "transcriptionAccuracy",
+                "associationCertainty",
+                "transcriptionCompleteness",
+            ]:
+                try:
+                    v = kwargs[k]
+                except KeyError:
+                    continue
+                else:
+                    v = norm(v)
+                    if v:
+                        k_snake = camel2snake(k)
+                        setattr(self, k_snake, norm(v))
 
     @property
     def attested_form(self):
@@ -467,6 +590,19 @@ class Name(Identified, Externals, Indexable, Dictionary, Journaled):
     @attested_form.deleter
     def attested_form(self):
         self._attested_form = None
+
+    @property
+    def language(self):
+        return self._language
+
+    @language.setter
+    def language(self, value: str):
+        # TBD: validate language code
+        self._language = norm(value)
+
+    @language.deleter
+    def language(self):
+        self._language = "und"
 
     @property
     def romanized_forms(self):
@@ -585,50 +721,3 @@ class Local(Gazetteer, Titled):
 
     def merge(self, source, destination):
         return destination.merge(source)
-
-    def merge_bad(self, source, destination):
-        logger.debug("bar")
-        source_ftype = source.__class__.__name__
-        destination_ftype = destination.__class__.__name__
-        if source_ftype != "Place" or destination_ftype != "Place":
-            raise NotImplementedError(
-                f"Cannot merge a {source_ftype} into a {destination_ftype}"
-            )
-        return self._merge_place2place(source, destination)
-
-    def _merge_place2place(self, source, destination):
-        logger.debug("foo")
-        for fieldname, s_val in vars(source).items():
-            if fieldname in ["_id", "_preferred_description", "_catalog", "_journal"]:
-                continue
-            try:
-                d_val = getattr(destination, fieldname)
-            except AttributeError:
-                raise RuntimeError(fieldname)
-            d_addername = f"add{fieldname}"
-            if d_addername[-1] == "s":
-                d_addername = d_addername[:-1]
-            try:
-                d_adder = getattr(destination, d_addername)
-            except AttributeError:
-                if d_addername == "add_title":
-                    d_adder = getattr(destination, "add_name")
-                else:
-                    logger.error(f"Missed {d_addername}")
-                    continue
-            logger.info(f"Got {d_addername}")
-            if isinstance(s_val, (list, set, tuple)):
-                for v in s_val:
-                    d_adder(v)
-            elif isinstance(s_val, dict):
-                try:
-                    d_adder(**s_val)
-                except TypeError:
-                    for k, v in s_val.items():
-                        if isinstance(v, (list, set, tuple)):
-                            for vv in v:
-                                d_adder(k, vv)
-                        else:
-                            d_adder(k, v)
-            else:
-                d_adder(s_val)
