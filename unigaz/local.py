@@ -443,6 +443,17 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         else:
             raise NotImplementedError(f"add_name: {type(value)}")
 
+    def mapping(self, format="geojson"):
+        """Return a geojson representation of self."""
+        if format == "geojson":
+            d = {
+                "type": "FeatureCollection",
+                "features": [l.mapping() for l in self.locations],
+            }
+        else:
+            raise NotImplementedError(f"mapping format={format}")
+        return d
+
     def merge(self, source):
         """Merge data from source object into self."""
         if isinstance(source, Place):
@@ -597,6 +608,21 @@ class Location(
             self.geometry = kwargs["geometry"]
         except KeyError:
             pass
+
+    def mapping(self, format="geojson"):
+        "Return a dict serializable to the specified format"
+        try:
+            return getattr(self, f"_mapping_{format}")()
+        except AttributeError:
+            raise NotImplementedError(f"mapping format={format}")
+
+    def _mapping_geojson(self):
+        d = {
+            "type": "Feature",
+            "geometry": mapping(self.geometry),
+            "properties": {"title": self.title},
+        }
+        return d
 
     @property
     def geometry(self):

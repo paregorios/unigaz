@@ -20,6 +20,7 @@ setuptools.setup(
     install_requires=[
         "airtight",
         "feedparser",
+        "folium",
         "python-slugify",
         "rich",
         "shapely",

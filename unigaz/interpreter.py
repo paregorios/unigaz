@@ -4,15 +4,19 @@
 Interpreter to provide a clean API for interacting with ocmnponents
 """
 
+from enum import auto
+import folium
+import json
 from inspect import getdoc
 import logging
-from sqlite3 import NotSupportedError
+from tempfile import mkstemp
 from rich.table import Table
 from rich.pretty import Pretty
 import shlex
 import traceback
 from unigaz.manager import Manager
 from unigaz.web import SearchParameterError
+import webbrowser
 
 
 logger = logging.getLogger(__name__)
@@ -258,6 +262,35 @@ class Interpreter:
         logging.getLogger().setLevel(level=logging.WARNING)
         return self._cmd_log_level(args)
 
+    def _cmd_map(self, args):
+        """
+        Display a map of the indicated Place
+            > map local 2
+        """
+        o = self._context_lookup(args, "map")
+        logger.debug(f"type(o): {type(o)}")
+        m = folium.Map()
+        d = o.mapping()
+        for feature in d["features"]:
+            g = feature["geometry"]
+            if g["type"] == "Point":
+                folium.Marker(
+                    location=[c for c in reversed(g["coordinates"])],
+                    popup=feature["properties"]["title"],
+                    icon=folium.Icon(color="orange"),
+                ).add_to(m)
+
+            from pprint import pformat
+
+            logger.debug(f"json: {pformat(feature, indent=4)}")
+        fd, filepath = mkstemp(suffix=".html", text=True)
+        with open(filepath, "w", encoding="utf-8") as fp:
+            fp.write(m._repr_html_())
+        del fp
+        furi = f"file://{filepath}"
+        logger.debug(f"furi: {furi}")
+        webbrowser.open(furi, new=2, autoraise=True)
+
     def _cmd_merge(self, args):
         """
         Merge one local item into another
@@ -291,6 +324,43 @@ class Interpreter:
             WARNING: unsaved data will be lost (use "save" first)
         """
         exit()
+
+    def _context_lookup(self, args, command="_context_lookup"):
+        """Do context lookups for various commands like raw and map"""
+        if len(args) != 2:
+            raise UsageError(
+                command, f"invalid number of arguments (expected 2, got {len(args)})"
+            )
+        k = args[0]
+        if k not in {"search", "local"}:
+            raise UsageError(
+                command, f"Invalid subcommand '{k}' (expected 'search' or 'local')"
+            )
+        elif k == "search":
+            context = self.external_context
+        elif k == "local":
+            context = self.local_context
+        i = args[1]
+        try:
+            str(int(i))
+        except ValueError:
+            raise ArgumentError(
+                command, "Invalid context number (expected integer, got '{i}')"
+            )
+        try:
+            v = context[i]
+        except KeyError:
+            if len(context) == 0:
+                raise ArgumentError(
+                    command,
+                    f"No {k} context is defined, so context number {i} is out of range.",
+                )
+            else:
+                raise ArgumentError(
+                    command,
+                    f"Context number {i} is out of range (current {k} context range = 1-{len(context)}.",
+                )
+        return v
 
     def _cmd_raw(self, args):
         """
