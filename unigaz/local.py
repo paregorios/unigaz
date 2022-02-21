@@ -520,6 +520,8 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
             self.add_external(uri, e_source)
         for name in source.names:
             self.add_name(name)
+        for location in source.locations:
+            self.add_location(location)
         for dt_stamp, events in source.journal_events.items():
             for verb, whence in events.items():
                 if verb != "created":
@@ -551,6 +553,21 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
                 locations.extend(these_locations)
         for l in these_locations:
             self.add_location(l)
+
+    def _locations_grok_edh_ub_uni_heidelberg_de(self, **kwargs):
+        # EDH locations
+        keys = [k for k in kwargs.keys() if k.startswith("coordinates")]
+        locations = list()
+        for k in keys:
+            coords = kwargs[k]
+            lat, lon = [float(norm(c)) for c in coords.split(",")]
+            n = Location(
+                geometry=f"POINT({lon} {lat})",
+                title="EDH Coordinates",
+            )
+            n.add_journal_event("created from", kwargs["source"])
+            locations.append(n)
+        return locations
 
     def _locations_grok_pleiades_stoa_org(self, **kwargs):
         # Pleiades locations
@@ -642,7 +659,7 @@ class Location(
         try:
             self.accuracy_radius = kwargs["accuracy_value"]
         except KeyError:
-            pass
+            self.accuracy_radius = None
 
     def mapping(self, format="geojson"):
         "Return a dict serializable to the specified format"
