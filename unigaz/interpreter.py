@@ -12,6 +12,7 @@ import logging
 from tempfile import mkstemp
 from rich.table import Table
 from rich.pretty import Pretty
+from shapely.geometry import mapping
 import shlex
 import traceback
 from unigaz.manager import Manager
@@ -269,20 +270,35 @@ class Interpreter:
         """
         o = self._context_lookup(args, "map")
         logger.debug(f"type(o): {type(o)}")
-        m = folium.Map()
+        m = folium.Map(location=o.representative_point().coords[0])
         d = o.mapping()
         for feature in d["features"]:
             g = feature["geometry"]
             if g["type"] == "Point":
+                props = feature["properties"]
+                latlon = [c for c in reversed(g["coordinates"])]
                 folium.Marker(
-                    location=[c for c in reversed(g["coordinates"])],
-                    popup=feature["properties"]["title"],
+                    location=latlon,
+                    popup=props["title"],
                     icon=folium.Icon(color="orange"),
                 ).add_to(m)
+                if props["accuracy_radius"]:
+                    folium.Circle(
+                        radius=props["accuracy_radius"],
+                        location=latlon,
+                        popup=f"Accuracy of coordinates for {props['title']} (+/- {props['accuracy_radius']}",
+                        color="orange",
+                        fill=False,
+                    ).add_to(m)
+        boundp = o.convex_hull()
+        geo_j = json.dumps(mapping(boundp))
+        from pprint import pformat
 
-            from pprint import pformat
-
-            logger.debug(f"json: {pformat(feature, indent=4)}")
+        logger.debug(f"geo_j: {pformat(geo_j, indent=4)}")
+        folium.GeoJson(geo_j, style_function=lambda x: {"fillColor": "red"}).add_to(m)
+        bbox = o.envelope().bounds
+        logger.debug(f"bbox: {pformat(bbox, indent=4)}")
+        m.fit_bounds([(bbox[1], bbox[0]), (bbox[3], bbox[2])])
         fd, filepath = mkstemp(suffix=".html", text=True)
         with open(filepath, "w", encoding="utf-8") as fp:
             fp.write(m._repr_html_())

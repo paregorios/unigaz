@@ -7,9 +7,11 @@ Define local gazetteer
 from copy import deepcopy
 import datetime
 import logging
+from math import asin, atan2, cos, degrees, sin, pi, radians
 import re
 from shapely import wkt
 from shapely.geometry import Point, LineString, Polygon, mapping, shape
+from shapely.ops import unary_union
 from slugify import slugify
 import string
 from textnorm import normalize_space, normalize_unicode
@@ -443,6 +445,24 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         else:
             raise NotImplementedError(f"add_name: {type(value)}")
 
+    def _footprint(self, accuracy_buffer=True):
+        collection = [l.geometry for l in self.locations]
+        if accuracy_buffer:
+            collection.extend([l.accuracy_bubble for l in self.locations])
+        collection = [g for g in collection if g is not None]
+        from pprint import pformat
+
+        logger.debug(f"collection in footprint: {pformat(collection, indent=4)}")
+        return unary_union(collection)
+
+    def convex_hull(self, accuracy_buffer=True):
+        footprint = self._footprint(accuracy_buffer=accuracy_buffer)
+        return footprint.convex_hull
+
+    def envelope(self, accuracy_buffer=True):
+        footprint = self._footprint(accuracy_buffer=accuracy_buffer)
+        return footprint.envelope
+
     def mapping(self, format="geojson"):
         """Return a geojson representation of self."""
         if format == "geojson":
@@ -469,9 +489,20 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
     def locations(self):
         return self._locations
 
+    def minimum_rotated_rectangle(self, accuracy_buffer=True):
+        if accuracy_buffer:
+            footprint = self._footprint_accuracy()
+        else:
+            footprint = self._footprint()
+        return footprint.minimum_rotated_rectangle
+
     @property
     def names(self):
         return self._names
+
+    def representative_point(self):
+        footprint = self._footprint()
+        return footprint.representative_point()
 
     def _merge_place(self, source):
         """Merge data from Place(source) into self."""
@@ -608,6 +639,10 @@ class Location(
             self.geometry = kwargs["geometry"]
         except KeyError:
             pass
+        try:
+            self.accuracy_radius = kwargs["accuracy_value"]
+        except KeyError:
+            pass
 
     def mapping(self, format="geojson"):
         "Return a dict serializable to the specified format"
@@ -620,9 +655,47 @@ class Location(
         d = {
             "type": "Feature",
             "geometry": mapping(self.geometry),
-            "properties": {"title": self.title},
+            "properties": {
+                "title": self.title,
+                "accuracy_radius": self.accuracy_radius,
+            },
         }
         return d
+
+    @property
+    def accuracy_bubble(self):
+        if self.accuracy_radius is None:
+            return None
+        origin = self.geometry.representative_point()
+        origin_lon = radians(origin.x)
+        origin_lat = radians(origin.y)
+        distance = self.accuracy_radius  # meters
+        earth_radius = 6378137.0  # WGS84 mean radius
+        angular_distance = distance / earth_radius
+        termini = list()
+        bearing = 0.0
+        while True:
+            if bearing >= 2.0 * pi:
+                break
+            dest_lat = asin(
+                sin(origin_lat) * cos(angular_distance)
+                + cos(origin_lat) * sin(angular_distance) * cos(bearing)
+            )
+            dest_lon = origin_lon + atan2(
+                sin(bearing) * sin(angular_distance) * cos(origin_lat),
+                cos(angular_distance) - sin(origin_lat) * sin(dest_lat),
+            )
+            termini.append(Point(degrees(dest_lon), degrees(dest_lat)))
+            bearing += pi / 8.0
+        for t in termini:
+            logger.debug(f"terminus: {t.wkt}")
+        if isinstance(self.geometry, Point):
+            bubble = unary_union(termini).convex_hull
+        else:
+            d_dd = max([t.hausdorff_distance() for t in termini])
+            bubble = self.geometry.convex_hull.buffer(d_dd)
+        logger.debug(f"bubble: {bubble.wkt}")
+        return bubble
 
     @property
     def geometry(self):
