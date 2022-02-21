@@ -22,6 +22,7 @@ setuptools.setup(
         "feedparser",
         "python-slugify",
         "rich",
+        "shapely",
         "textnorm",
         "validators",
         "webiquette @ git+https://github.com/paregorios/webiquette.git",

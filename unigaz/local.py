@@ -8,6 +8,8 @@ from copy import deepcopy
 import datetime
 import logging
 import re
+from shapely import wkt
+from shapely.geometry import Point, LineString, Polygon, shape
 from slugify import slugify
 import string
 from textnorm import normalize_space, normalize_unicode
@@ -19,6 +21,13 @@ import validators
 
 logger = logging.getLogger(__name__)
 rx_camel2snake = re.compile(r"(?<!^)(?=[A-Z])")
+rx_shapely_wkt = re.compile(r"^(POINT|LINESTRING|POLYGON)\s*\(.+\)$")
+rx_dd_latlon = re.compile(
+    r"^(?P<latitude>(-|\+)?\d+\.\d+)\s*,?\s*(?P<longitude>(-|\+)?\d+\.\d+)$"
+)
+rx_dd_lonlat = re.compile(
+    r"^(?P<longitude>(-|\+)?\d+\.\d+)\s*,?\s*(?P<latitude>(-|\+)?\d+\.\d+)$"
+)
 
 
 def camel2snake(s):
@@ -430,6 +439,8 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
             return self._merge_place(source)
         elif isinstance(source, Name):
             return self.add_name(source)
+        elif isinstance(source, Location):
+            return self.add_location(source)
         else:
             raise TypeError(type(source))
 
@@ -525,6 +536,41 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
             n.add_journal_event("created from", kwargs["source"])
             names.append(n)
         return names
+
+
+class Location(
+    Identified, Titled, Described, Externals, Indexable, Dictionary, Journaled
+):
+    def __init__(self, **kwargs):
+        Identified.__init__(self, **kwargs)
+        Titled.__init__(self, **kwargs)
+        Described.__init__(self, **kwargs)
+        Externals.__init__(self, **kwargs)
+        Indexable.__init__(self, **kwargs)
+        Journaled.__init__(self, **kwargs)
+        self._geometry = None
+
+    @property
+    def geometry(self):
+        return self._geometry
+
+    @geometry.setter
+    def geometry(self, geometry):
+        if isinstance(geometry, (Point, LineString, Polygon)):
+            self._geometry = geometry
+        elif isinstance(geometry, dict):
+            self._geometry = shape(geometry)
+        elif isinstance(geometry, str):
+            if rx_shapely_wkt.match(geometry):
+                self._geometry = wkt.loads(geometry)
+            else:
+                raise ValueError(geometry)
+        else:
+            raise ValueError(geometry)
+
+    @geometry.deleter
+    def geometry(self):
+        self._geometry = None
 
 
 class Name(Identified, Externals, Indexable, Dictionary, Journaled):
