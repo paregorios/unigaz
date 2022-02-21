@@ -591,6 +591,10 @@ class Location(
         Indexable.__init__(self, **kwargs)
         Journaled.__init__(self, **kwargs)
         self._geometry = None
+        try:
+            self.geometry = kwargs["geometry"]
+        except KeyError:
+            pass
 
     @property
     def geometry(self):
