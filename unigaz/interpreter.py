@@ -9,7 +9,7 @@ import folium
 import json
 from inspect import getdoc
 import logging
-from tempfile import mkstemp
+from tempfile import mkstemp, TemporaryDirectory
 from rich.table import Table
 from rich.pretty import Pretty
 from shapely.geometry import mapping, Polygon
@@ -45,6 +45,7 @@ class CommandError(RuntimeError):
 
 class Interpreter:
     def __init__(self):
+        self._temp_dir = TemporaryDirectory()
         self.commands = [
             "_".join(a.split("_")[2:]) for a in dir(self) if a.startswith("_cmd_")
         ]
@@ -296,12 +297,14 @@ class Interpreter:
             from pprint import pformat
 
             logger.debug(f"geo_j: {pformat(geo_j, indent=4)}")
-            folium.GeoJson(geo_j, style_function=lambda x: {"fillColor": "red"}).add_to(
-                m
-            )
+            folium.GeoJson(
+                geo_j,
+                name="accuracy bubble",
+                style_function=lambda x: {"fillColor": "red"},
+            ).add_to(m)
         bbox = o.envelope().bounds
         m.fit_bounds([(bbox[1], bbox[0]), (bbox[3], bbox[2])])
-        fd, filepath = mkstemp(suffix=".html", text=True)
+        fd, filepath = mkstemp(suffix=".html", dir=self._temp_dir.name, text=True)
         with open(filepath, "w", encoding="utf-8") as fp:
             fp.write(m._repr_html_())
         del fp
