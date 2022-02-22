@@ -312,6 +312,7 @@ class Interpreter:
         furi = f"file://{filepath}"
         logger.debug(f"furi: {furi}")
         webbrowser.open(furi, new=2, autoraise=True)
+        return f"Opening map in default browser: {filepath}"
 
     def _cmd_merge(self, args):
         """
