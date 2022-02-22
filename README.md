@@ -208,7 +208,7 @@ Opening map in default browser: /temp/directory/somewhere/on/your/machine/xyzpdg
 
 You should see a map:
 
-<img alt="Example map of possible locations of Zucchabar from Pleiades on OpenStreetMap base map" src="data/images/map_eg.png" style="max-width: 90%; max-height: 90%">
+<img alt="Example map of possible locations of Zucchabar from Pleiades on OpenStreetMap base map" src="https://raw.githubusercontent.com/paregorios/unigaz/main/data/images/map_eg.png" style="max-width: 90%; max-height: 90%">
 
 ### Merge two places in your local gazeteer
 
