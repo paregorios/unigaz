@@ -709,7 +709,7 @@ class Location(
         if isinstance(self.geometry, Point):
             bubble = unary_union(termini).convex_hull
         else:
-            d_dd = max([t.hausdorff_distance() for t in termini])
+            d_dd = max([t.hausdorff_distance(origin) for t in termini])
             bubble = self.geometry.convex_hull.buffer(d_dd)
         logger.debug(f"bubble: {bubble.wkt}")
         return bubble

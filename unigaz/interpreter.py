@@ -12,9 +12,10 @@ import logging
 from tempfile import mkstemp, TemporaryDirectory
 from rich.table import Table
 from rich.pretty import Pretty
-from shapely.geometry import mapping, Polygon
+from shapely.geometry import mapping, Point, LineString, Polygon
 import shlex
 import traceback
+from unigaz.local import Place
 from unigaz.manager import Manager
 from unigaz.web import SearchParameterError
 import webbrowser
@@ -271,39 +272,39 @@ class Interpreter:
         """
         o = self._context_lookup(args, "map")
         logger.debug(f"type(o): {type(o)}")
-        m = folium.Map(location=o.representative_point().coords[0])
-        d = o.mapping()
-        for feature in d["features"]:
-            g = feature["geometry"]
-            if g["type"] == "Point":
-                props = feature["properties"]
-                latlon = [c for c in reversed(g["coordinates"])]
-                folium.Marker(
-                    location=latlon,
-                    popup=props["title"],
-                    icon=folium.Icon(color="orange"),
-                ).add_to(m)
-                if props["accuracy_radius"]:
-                    folium.Circle(
-                        radius=props["accuracy_radius"],
-                        location=latlon,
-                        popup=f"Accuracy of coordinates for {props['title']} (+/- {props['accuracy_radius']}",
-                        color="orange",
-                        fill=False,
+        m = folium.Map(height="72%", width="100%")
+
+        if isinstance(o, Place):
+            for location in o.locations:
+                geometry = location.geometry
+                if isinstance(geometry, Point):
+                    folium.Marker(
+                        location=(geometry.y, geometry.x),
+                        popup=location.title,
+                        icon=folium.Icon(color="orange"),
                     ).add_to(m)
+                elif isinstance(geometry, Polygon):
+                    folium.Polygon(
+                        locations=[
+                            (pair[1], pair[0]) for pair in geometry.exterior.coords
+                        ],
+                        popup=location.title,
+                        color="orange",
+                        fillColor="orange",
+                        fill=True,
+                        fillOpacity=0.5,
+                    ).add_to(m)
+
         boundp = o.convex_hull()
         if isinstance(boundp, Polygon):
-            geo_j = json.dumps(mapping(boundp))
-            from pprint import pformat
-
-            logger.debug(f"geo_j: {pformat(geo_j, indent=4)}")
-            folium.GeoJson(
-                geo_j,
-                name="accuracy bubble",
-                style_function=lambda x: {"fillColor": "red"},
+            folium.Polygon(
+                locations=[(pair[1], pair[0]) for pair in boundp.exterior.coords],
+                popup="horizontal accuracy bubble",
+                color="blue",
             ).add_to(m)
         bbox = o.envelope().bounds
-        m.fit_bounds([(bbox[1], bbox[0]), (bbox[3], bbox[2])])
+        bbox = [[bbox[1], bbox[0]], [bbox[3], bbox[2]]]
+        m.fit_bounds(bbox)
         fd, filepath = mkstemp(suffix=".html", dir=self._temp_dir.name, text=True)
         with open(filepath, "w", encoding="utf-8") as fp:
             fp.write(m._repr_html_())
