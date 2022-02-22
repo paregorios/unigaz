@@ -120,6 +120,14 @@ my sites: 0 items
 Find places of interest and accession them to the local gazetteer.
 
 ```
+> gazetteers
+┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ short name ┃ netloc                   ┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ pleiades   │ pleiades.stoa.org        │
+│            │                          │
+│ edh        │ edh.ub.uni-heidelberg.de │
+└────────────┴──────────────────────────┘
 > search pleiades zucchabar
 https://pleiades.stoa.org/search_rss?SearchableText=zucchabar&review_state=published&porta
 l_type=Place
