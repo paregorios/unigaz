@@ -127,6 +127,17 @@ class Interpreter:
         results = self.manager.local_create(" ".join(args))
         return results
 
+    def _cmd_export(self, args):
+        """
+        Export places in local gazetteer to standard file formats
+            > export json
+        """
+        if len(args) != 1:
+            raise UsageError(
+                "export", f"expected 1 argument (format), got {len(args)}: {args}"
+            )
+        return self.manager.local.export(format=args[0])
+
     def _cmd_gazetteer(self, args):
         """
         Check for gazetteer support.

@@ -6,8 +6,10 @@ Define local gazetteer
 
 from copy import deepcopy
 import datetime
+import json
 import logging
 from math import asin, atan2, cos, degrees, sin, pi, radians
+from os import sep
 import re
 from shapely import wkt
 from shapely.geometry import Point, LineString, Polygon, mapping, shape
@@ -360,6 +362,14 @@ class Dictionary:
         else:
             return value
         return d
+
+
+class DictionaryEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Dictionary):
+            return obj.asdict()
+        # Let the base class default method raise the TypeError
+        return json.JSONEncoder.default(self, obj)
 
 
 class Journaled:
@@ -920,6 +930,40 @@ class Local(Gazetteer, Titled):
         )
         self.add(n)
         return n
+
+    def export(self, format="json"):
+        """
+        Export contents of the local gazetteer.
+        """
+        try:
+            return getattr(self, f"_export_{format}")()
+        except AttributeError:
+            raise NotImplementedError(f"unsupported export format {format}")
+
+    def _export_json(self):
+        fn = f"{self._export_filename()}.json"
+        data = {"title": self.title, "content": self.content}
+        with open(fn, "w", encoding="utf-8") as fp:
+            json.dump(data, fp, ensure_ascii=False, indent=4, cls=DictionaryEncoder)
+        del fp
+        return (
+            f"Wrote {len(self.content)} entries in local gazetteer to JSON file {fn}."
+        )
+
+    def _export_filename(self):
+        dtstamp = (
+            "".join(
+                (
+                    datetime.datetime.utcnow()
+                    .replace(tzinfo=datetime.timezone.utc)
+                    .isoformat()
+                ).split(":")[0:2]
+            )
+            .replace("T", "")
+            .replace("-", "")
+        )
+        fn = "_".join((slugify(f"{self.title}", separator="_"), dtstamp))
+        return fn
 
     def get_by_id(self, id):
         return self._content[id]
