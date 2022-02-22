@@ -250,7 +250,17 @@ my sites: 2 items
 > 
 ```
 
+### Export the local gazetteer to JSON
+
+```
+> export json
+Wrote 2 entries in local gazetteer to JSON file 
+/the/directory/where/you/installed/unigaz/data/exports/my_sites_202202221915.json.
+```
+
 ### Get detailed (raw) view of a place in your local gazetteer
+
+The "raw" command lets you read on the command line the same JSON serialization used for the "export json" command:
 
 ```
 > raw local 1
