@@ -2,10 +2,12 @@
 
 Shake and bake gazetteers.
 
-## Goals
+## Goals/Principles
 
 - Mix, match, and merge from other gazetteers/datasets, both local and online
+- Be polite to web services (crawl-delay, robots.txt disallow, user agent string)
 - Save/load/import/export from the common/standard formats
+- Keep track of provenance of data
 - Don't duplicate effort with other tools
 - Free and open-source (extensible, customizable)
 - Platform-independent 
