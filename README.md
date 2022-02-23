@@ -516,9 +516,26 @@ established a veteran colony there.',
 - [x] on place accession, grok locations
 - [x] when we have locations for a place: map them (and the horizontal accuracy bubble if there is one)
 - [ ] export place, name, or entire local gazetteer to json, teixml, geojson, linked place format json, csv, markdown, html
+    - [x] export to JSON
+        - [x] gazetteer
+        - [ ] place
+    - [ ] export to GeoJSON (verify can import to QGIS)
+    - [ ] export to linked places format JSON
+    - [ ] export to markdown
+    - [ ] export to HTML
+- [ ] tests!
 - [ ] fetch and merge from externals (unless created from one of them)
 - [ ] mine more externals out of pleiades references ctype=related
 - [ ] add support for more external gazetteers
+    - [ ] nominatim (in progress, needs accession/grok support)
+    - [ ] TGAZ/China Historical GIS
+    - [ ] GeoNames
+    - [ ] Wikidata
+    - [ ] ToposText
+    - [ ] iDAI Gazetteer
+    - [ ] geo-kima
+    - [ ] Syriac Gazetteer
+    - [ ] 
 - [ ] save local gazetteer (to pickle? jsonpickle?)
 - [ ] load local gazetteer (from pickle? jsonpickle?)
 - [ ] map whole local gazetteer
