@@ -8,6 +8,7 @@ import logging
 import traceback
 from urllib.parse import urlparse
 from unigaz.edh import EDH
+from unigaz.nominatim import Nominatim
 from unigaz.local import Local
 from unigaz.pleiades import Pleiades
 from unigaz.web import DEFAULT_USER_AGENT, SearchParameterError
@@ -21,6 +22,7 @@ class Manager:
         self.gazetteers = {
             "pleiades": Pleiades(user_agent=user_agent),
             "edh": EDH(user_agent=user_agent),
+            "nominatim": Nominatim(user_agent=user_agent),
         }
         self.gazetteer_netlocs = dict()
         for k, v in self.gazetteers.items():
