@@ -586,9 +586,10 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
     def _locations_grok_www_openstreetmap_org(self, **kwargs):
         """Create locations from pre-processed OSM data"""
         locations = list()
-        loc = Location(**kwargs)
-        loc.add_journal_event("created from", kwargs["source"])
-        locations.append(loc)
+        for loc in kwargs["locations"]:
+            n = Location(source=kwargs["source"], **loc)
+            n.add_journal_event("created from", kwargs["source"])
+            locations.append(n)
         return locations
 
     def _locations_grok_pleiades_stoa_org(self, **kwargs):

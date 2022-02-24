@@ -47,11 +47,13 @@ class Nominatim(Gazetteer, Web):
             pass
         else:
             title += f": {v}"
+        locations = list()
         data["geometry_title"] = title
         if osm_type == "node":
             lat = data["lat"]
             lon = data["lon"]
-            data["geometry"] = f"POINT({lon} {lat})"
+            loc = {"title": title, "geometry": f"POINT({lon} {lat})"}
+            locations.append(loc)
         elif osm_type == "way":
             way_points = list()
             parts = urlparse(uri)
@@ -77,10 +79,13 @@ class Nominatim(Gazetteer, Web):
                 wkt = f"POLYGON(({serialized}))"
             else:
                 wkt = f"LINESTRING({serialized})"
-            logger.debug(wkt)
-            data["geometry"] = wkt
+            loc = {"title": "title", "geometry": wkt}
+            locations.append(loc)
+        elif osm_type == "relation":
+            raise NotImplementedError(osm_type)
         else:
             raise NotImplementedError(osm_type)
+        data["locations"] = locations
         return (data, data_uri)
 
     def _get_data_item(self, uri):
