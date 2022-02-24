@@ -527,7 +527,8 @@ established a veteran colony there.',
 - [ ] fetch and merge from externals (unless created from one of them)
 - [ ] mine more externals out of pleiades references ctype=related
 - [ ] add support for more external gazetteers
-    - [ ] nominatim (in progress, needs accession/grok support)
+    - [ ] nominatim (in progress)
+        - [ ] refactor to eliminate slow and clunky hierarchical serial downloads and instead use the api properly with /full see e.g. https://www.openstreetmap.org/api/0.6/relation/2783389/full.json
     - [ ] TGAZ/China Historical GIS
     - [ ] GeoNames
     - [ ] Wikidata
