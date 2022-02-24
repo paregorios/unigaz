@@ -587,7 +587,7 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         """Create locations from pre-processed OSM data"""
         locations = list()
         for loc in kwargs["locations"]:
-            n = Location(source=kwargs["source"], **loc)
+            n = Location(**loc)
             n.add_journal_event("created from", kwargs["source"])
             locations.append(n)
         return locations
@@ -673,13 +673,19 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
                 langtag = tags.language(keyparts[1])
                 if langtag:
                     n.language = langtag.format
-                    script = langtag.script.format
-                    if script == "Latn":
-                        n.add_romanized_form(osmname)
-                    else:
-                        n.add_romanized_form(
-                            slugify(osmname, separator=" ", lowercase=False)
+                    try:
+                        script = langtag.script.format
+                    except AttributeError:
+                        logger.error(
+                            f"Failed to determine script for language tag '{langtag}'"
                         )
+                    else:
+                        if script == "Latn":
+                            n.add_romanized_form(osmname)
+                        else:
+                            n.add_romanized_form(
+                                slugify(osmname, separator=" ", lowercase=False)
+                            )
             if len(n.romanized_forms) == 0:
                 slug = slugify(osmname, separator=" ", lowercase=False)
                 if slug == osmname:

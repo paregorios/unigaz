@@ -37,6 +37,34 @@ class Nominatim(Gazetteer, Web):
         )
         self.lookup_netloc = "www.openstreetmap.org"
 
+    def _parse_node_for_lonlat(self, node_data):
+        lat = node_data["lat"]
+        lon = node_data["lon"]
+        return (lon, lat)
+
+    def _parse_waypoints_from_nodelist(self, nodes):
+        base_uri = "https://www.openstreetmap.org/node"
+        way_points = list()
+        for node in nodes:
+            node_uri = f"{base_uri}/{node}"
+            node_data, node_data_uri = self._get_data_item(node_uri)
+            lon, lat = self._parse_node_for_lonlat(node_data)
+            way_points.append((lon, lat))
+        return way_points
+
+    def _serialize_waypoints_from_nodelist(self, nodes):
+        way_points = self._parse_waypoints_from_nodelist(self, nodes)
+        return self._serialize_waypoints(way_points)
+
+    def _serialize_waypoints(self, way_points):
+        serialized = [f"{wp[0]} {wp[1]}" for wp in way_points]
+        serialized = ",".join(serialized)
+        if way_points[0] == way_points[-1]:
+            wkt = f"POLYGON(({serialized}))"
+        else:
+            wkt = f"LINESTRING({serialized})"
+        return wkt
+
     def get_data(self, uri):
         data, data_uri = self._get_data_item(uri)
         osm_type = data["type"]
@@ -48,41 +76,99 @@ class Nominatim(Gazetteer, Web):
         else:
             title += f": {v}"
         locations = list()
-        data["geometry_title"] = title
         if osm_type == "node":
-            lat = data["lat"]
-            lon = data["lon"]
-            loc = {"title": title, "geometry": f"POINT({lon} {lat})"}
+            lon, lat = self._parse_node_for_lonlat(data)
+            loc = {
+                "title": title,
+                "geometry": f"POINT({lon} {lat})",
+                "source": data_uri,
+            }
             locations.append(loc)
         elif osm_type == "way":
-            way_points = list()
-            parts = urlparse(uri)
-            for node in data["nodes"]:
-                path = f"node/{node}"
-                node_uri = urlunparse(
-                    (
-                        parts.scheme,
-                        parts.netloc,
-                        path,
-                        "",
-                        "",
-                        "",
-                    )
-                )
-                node_data, node_data_uri = self._get_data_item(node_uri)
-                lat = node_data["lat"]
-                lon = node_data["lon"]
-                way_points.append((lon, lat))
-            serialized = [f"{wp[0]} {wp[1]}" for wp in way_points]
-            serialized = ",".join(serialized)
-            if way_points[0] == way_points[-1]:
-                wkt = f"POLYGON(({serialized}))"
-            else:
-                wkt = f"LINESTRING({serialized})"
-            loc = {"title": "title", "geometry": wkt}
+            nodes = [node for node in data["nodes"]]
+            loc = {
+                "title": title,
+                "geometry": self._parse_waypoints_from_nodelist(nodes),
+                "source": data_uri,
+            }
             locations.append(loc)
         elif osm_type == "relation":
-            raise NotImplementedError(osm_type)
+            for role in ["outer", "admin_centre", "label"]:
+                title_suffix = role.replace("_", " ")
+                members = [m for m in data["members"] if m["role"] == role]
+                logger.debug(f"len(members) for role {role}: {len(members)}")
+                if (
+                    len(members) == 1
+                    and members[0]["role"] in ["admin_centre", "label"]
+                    and members[0]["type"] == "node"
+                ):
+                    node_data, node_uri = self._get_data_item(
+                        f"https://www.openstreetmap.org/node/{members[0]['ref']}"
+                    )
+                    lon, lat = self._parse_node_for_lonlat(node_data)
+                    loc = {
+                        "title": f"{title_suffix} for {title} (node {members[0]['ref']})",
+                        "geometry": f"POINT({lon} {lat})",
+                        "source": node_uri,
+                    }
+                    locations.append(loc)
+                elif len(members) > 1 and len(
+                    [m for m in members if m["type"] == "node"]
+                ) == len(members):
+                    nodes = [member["ref"] for member in members]
+                    loc = {
+                        "title": f"{title_suffix} for {title} ({len(members)} nodes in outer ring)",
+                        "geometry": self._serialize_waypoints_from_nodelist(nodes),
+                        "source": data_uri,
+                    }
+                    locations.append(loc)
+                elif len(members) > 1 and len(
+                    [m for m in members if m["type"] == "way"]
+                ) == len(members):
+                    print("woop")
+                    ways = [member["ref"] for member in members]
+                    waypoints = list()
+                    for member in members:
+                        print(f"Member {member['ref']}")
+                        way_data, way_uri = self._get_data_item(
+                            f"https://www.openstreetmap.org/way/{member['ref']}"
+                        )
+                        nodes = [node for node in way_data["nodes"]]
+                        print(f"Got {len(nodes)} nodes.")
+                        waypoints.append(self._parse_waypoints_from_nodelist(nodes))
+                    continuous = True
+                    print("foo")
+                    for i, points in enumerate(waypoints):
+                        if i < len(waypoints) - 1:
+                            if points[-1] != waypoints[i + 1][-1]:
+                                continuous = False
+                                break
+                        else:
+                            if points[-1] != waypoints[0][-1]:
+                                continuous = False
+                            break
+                    print("bar")
+                    if continuous:
+                        all_waypoints = list()
+                        for points in waypoints:
+                            all_waypoints.extend(points)
+                        loc = {
+                            "title": f"{title_suffix} for {title} ({len(members)} ways in outer ring)",
+                            "geometry": self._serialize_waypoints(all_waypoints),
+                            "source": data_uri,
+                        }
+                        locations.append(loc)
+                    else:
+                        for i, points in enumerate(waypoints):
+                            loc = {
+                                "title": f"{title_suffix} for {title} (way {ways[i]})",
+                                "geometry": self._serialize_waypoints(points),
+                                "source": f"https://www.openstreetmap.org/way/{members[i]['ref']}",
+                            }
+                            locations.append(loc)
+                else:
+                    continue
+
         else:
             raise NotImplementedError(osm_type)
         data["locations"] = locations
