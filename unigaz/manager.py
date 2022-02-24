@@ -25,8 +25,15 @@ class Manager:
             "nominatim": Nominatim(user_agent=user_agent),
         }
         self.gazetteer_netlocs = dict()
-        for k, v in self.gazetteers.items():
-            self.gazetteer_netlocs[v.web.netloc] = v
+        self.gazetteer_lookup_netlocs = dict()
+        for k, g in self.gazetteers.items():
+            self.gazetteer_netlocs[g.web.netloc] = g
+            try:
+                lu = g.lookup_netloc
+            except AttributeError:
+                pass
+            else:
+                self.gazetteer_lookup_netlocs[lu] = g
         self.local = None
 
     def local_accession(self, hit):
@@ -34,7 +41,13 @@ class Manager:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
         uri = hit["uri"]
         parts = urlparse(uri)
-        g = self.gazetteer_netlocs[parts.netloc]
+        try:
+            g = self.gazetteer_netlocs[parts.netloc]
+        except KeyError:
+            try:
+                g = self.gazetteer_lookup_netlocs[parts.netloc]
+            except KeyError:
+                raise ValueError(f"Unsupported gazetteer for netloc {parts.netloc}.")
         try:
             source_data, source_uri = g.get_data(uri)
         except Exception as err:
@@ -46,7 +59,13 @@ class Manager:
         try:
             source_data["title"]
         except KeyError:
-            source_data["title"] = hit["title"]
+            try:
+                v = source_data["tags"]["name"]  # OSM
+            except KeyError:
+                source_data["title"] = hit["title"]
+            else:
+                source_data["title"] = v
+                source_data["description"] = hit["title"]
 
         v = None
         for k in ["description", "summary", "abstract"]:
@@ -119,6 +138,7 @@ class Manager:
         return results
 
     def supported(self, args):
+        """What gazetteers are supported?"""
         if not args:
             supported = list()
             for k, v in self.gazetteers.items():

@@ -21,6 +21,7 @@ setuptools.setup(
         "airtight",
         "feedparser",
         "folium",
+        "language-tags",
         "python-slugify",
         "rich",
         "shapely",

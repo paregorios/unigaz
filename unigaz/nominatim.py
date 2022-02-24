@@ -30,25 +30,21 @@ class Nominatim(Gazetteer, Web):
             self,
             netloc="nominatim.openstreetmap.org",
             user_agent=user_agent,
-            respect_robots_txt=False  # nominatim has user-agent * disallow /search, which is nuts, so since they don't respect robots.txt neither will we
-            # cache_control=False,
-            # expires=timedelta(hours=24),
+            respect_robots_txt=False,  # nominatim has user-agent * disallow /search, which is nuts, so since they don't respect robots.txt neither will we
+            accept="application/json",
+            cache_control=False,
+            expires=timedelta(hours=24),
         )
+        self.lookup_netloc = "www.openstreetmap.org"
 
     def get_data(self, uri):
         parts = urlparse(uri)
-        path_parts = parts.path.split("/")
-        json_part = [p for p in path_parts if p == "json"]
-        if not json_part:
-            if path_parts[-1] == "":
-                path_parts[-1] = "json"
-            else:
-                path_parts.append("json")
-        json_uri = urlunparse(("https", parts.netloc, "/".join(path_parts), "", "", ""))
+        path = f"/api/0.6{parts.path}"
+        json_uri = urlunparse(("https", parts.netloc, path, "", "", ""))
         r = self.get(json_uri)
         if r.status_code != 200:
             r.raise_for_status()
-        return (r.json()["items"], json_uri)
+        return (r.json()["elements"][0], json_uri)
 
     def _massage_params(self, value):
         if isinstance(value, str):

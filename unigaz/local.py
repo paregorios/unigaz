@@ -7,6 +7,7 @@ Define local gazetteer
 from copy import deepcopy
 import datetime
 import json
+from language_tags import tags
 import logging
 from math import asin, atan2, cos, degrees, sin, pi, radians
 from os import sep
@@ -580,6 +581,23 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
             locations.append(n)
         return locations
 
+    def _locations_grok_www_openstreetmap_org(self, **kwargs):
+        # OSM locations
+        locations = list()
+        osm_type = kwargs["type"]
+        if osm_type == "node":
+            lat = kwargs["lat"]
+            lon = kwargs["lon"]
+            loc = Location(
+                geometry=f"POINT({lon} {lat})",
+                title=f"OSM Node {kwargs['id']}: {kwargs['tags']['name']}",
+            )
+            loc.add_journal_event("created from", kwargs["source"])
+            locations.append(loc)
+        else:
+            logger.error(f"OSM type {osm_type} is not currently supported.")
+        return locations
+
     def _locations_grok_pleiades_stoa_org(self, **kwargs):
         # Pleiades locations
         locations = list()
@@ -630,6 +648,7 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
                     if k == "findspot_modern":
                         n.language = "de"
                 n.add_journal_event("created_from", kwargs["source"])
+                n.name_type = "geographic"
                 names.append(n)
         try:
             v = kwargs["findspot_ancient"]
@@ -638,6 +657,44 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         else:
             n = Name()
             n.add_romanized_form(v)
+            n.name_type = "geographic"
+            n.add_journal_event("created from", kwargs["source"])
+            names.append(n)
+        return names
+
+    def _names_grok_www_openstreetmap_org(self, **kwargs):
+        # OSM names
+        names = list()
+        for namekey, osmname in {
+            k: norm(v) for k, v in kwargs["tags"].items() if k.startswith("name")
+        }.items():
+            keyparts = namekey.split(":")
+            n = Name()
+            try:
+                keyparts[1]
+            except IndexError:
+                pass
+            else:
+                n.attested_form = osmname
+                langtag = tags.language(keyparts[1])
+                if langtag:
+                    n.language = langtag.format
+                    script = langtag.script.format
+                    if script == "Latn":
+                        n.add_romanized_form(osmname)
+                    else:
+                        n.add_romanized_form(
+                            slugify(osmname, separator=" ", lowercase=False)
+                        )
+            if len(n.romanized_forms) == 0:
+                slug = slugify(osmname, separator=" ", lowercase=False)
+                if slug == osmname:
+                    n.add_romanized_form(osmname)
+                    if not n.attested_form:
+                        n.attested_form = osmname
+                else:
+                    n.add_romanized_form(slug)
+            n.name_type = "geographic"
             n.add_journal_event("created from", kwargs["source"])
             names.append(n)
         return names

@@ -41,6 +41,10 @@ class Web:
                 "and pass it to the gazetter object at initialization."
             )
         headers["User-Agent"] = ua
+        try:
+            headers["accept"] = kwargs["accept"]
+        except KeyError:
+            pass
         web_kwargs = dict()
         if kwargs:
             for k, v in kwargs.items():
