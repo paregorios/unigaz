@@ -38,6 +38,52 @@ class Nominatim(Gazetteer, Web):
         self.lookup_netloc = "www.openstreetmap.org"
 
     def get_data(self, uri):
+        data, data_uri = self._get_data_item(uri)
+        osm_type = data["type"]
+        title = f"OSM {osm_type} {data['id']}"
+        try:
+            v = data["tags"]["name"]
+        except KeyError:
+            pass
+        else:
+            title += f": {v}"
+        data["geometry_title"] = title
+        if osm_type == "node":
+            lat = data["lat"]
+            lon = data["lon"]
+            data["geometry"] = f"POINT({lon} {lat})"
+        elif osm_type == "way":
+            way_points = list()
+            parts = urlparse(uri)
+            for node in data["nodes"]:
+                path = f"node/{node}"
+                node_uri = urlunparse(
+                    (
+                        parts.scheme,
+                        parts.netloc,
+                        path,
+                        "",
+                        "",
+                        "",
+                    )
+                )
+                node_data, node_data_uri = self._get_data_item(node_uri)
+                lat = node_data["lat"]
+                lon = node_data["lon"]
+                way_points.append((lon, lat))
+            serialized = [f"{wp[0]} {wp[1]}" for wp in way_points]
+            serialized = ",".join(serialized)
+            if way_points[0] == way_points[-1]:
+                wkt = f"POLYGON(({serialized}))"
+            else:
+                wkt = f"LINESTRING({serialized})"
+            logger.debug(wkt)
+            data["geometry"] = wkt
+        else:
+            raise NotImplementedError(osm_type)
+        return (data, data_uri)
+
+    def _get_data_item(self, uri):
         parts = urlparse(uri)
         path = f"/api/0.6{parts.path}"
         json_uri = urlunparse(("https", parts.netloc, path, "", "", ""))

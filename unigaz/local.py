@@ -12,8 +12,10 @@ import logging
 from math import asin, atan2, cos, degrees, sin, pi, radians
 from os import sep
 from pathlib import Path
+from pprint import pformat
 import re
 from shapely import wkt
+from shapely.errors import WKTReadingError
 from shapely.geometry import Point, LineString, Polygon, mapping, shape
 from shapely.ops import unary_union
 from slugify import slugify
@@ -582,20 +584,11 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         return locations
 
     def _locations_grok_www_openstreetmap_org(self, **kwargs):
-        # OSM locations
+        """Create locations from pre-processed OSM data"""
         locations = list()
-        osm_type = kwargs["type"]
-        if osm_type == "node":
-            lat = kwargs["lat"]
-            lon = kwargs["lon"]
-            loc = Location(
-                geometry=f"POINT({lon} {lat})",
-                title=f"OSM Node {kwargs['id']}: {kwargs['tags']['name']}",
-            )
-            loc.add_journal_event("created from", kwargs["source"])
-            locations.append(loc)
-        else:
-            logger.error(f"OSM type {osm_type} is not currently supported.")
+        loc = Location(**kwargs)
+        loc.add_journal_event("created from", kwargs["source"])
+        locations.append(loc)
         return locations
 
     def _locations_grok_pleiades_stoa_org(self, **kwargs):
@@ -724,6 +717,9 @@ class Location(
             self.geometry = kwargs["geometry"]
         except KeyError:
             pass
+        except WKTReadingError:
+            logger.error(pformat(kwargs["geometry"]))
+            raise
         try:
             self.accuracy_radius = kwargs["accuracy_value"]
         except KeyError:
