@@ -6,7 +6,9 @@ Nominatim (OpenStreetMap)
 
 from copy import deepcopy
 from datetime import timedelta
+from language_tags import tags
 import logging
+from pprint import pformat
 from textnorm import normalize_space, normalize_unicode
 from unigaz.gazetteer import Gazetteer
 from unigaz.web import SearchParameterError, Web, DEFAULT_USER_AGENT
@@ -44,57 +46,140 @@ class Nominatim(Gazetteer, Web):
 
     def _osm_grok(self, data, data_uri):
         """Parse and process OSM API output for consumption by unigaz"""
+
+        # copy and reuse all top-level values, except "elements" list
         d = dict()
-        d["source"] = data_uri
         for k, v in data.items():
             if k == "elements":
                 continue
             d[k] = v
 
-        # OSM returns elements as a single list; we need them organized by type
-        for k in ["node", "way", "relation"]:
-            if k in data_uri:
-                d["type"] = k
-            elements = [e for e in data["elements"] if e["type"] == k]
-            if len(elements) > 0:
-                d[f"{k}s"] = elements
+        # verify id and type and add source
+        d["source"] = data_uri
+        parts = urlparse(data_uri)
+        path = parts.path.split("/")
+        try:
+            path.remove("full")
+        except ValueError:
+            pass
+        id = path[-1]
+        osm_type = path[-2]
+        try:
+            v = d["id"]
+        except KeyError:
+            pass
+        else:
+            if str(v) != id:
+                raise RuntimeError(f"id mismatch")
+        d["id"] = id
+        try:
+            v = d["type"]
+        except KeyError:
+            pass
+        else:
+            if v != osm_type:
+                raise RuntimeError(f"osm_type mismatch")
+        d["type"] = osm_type
 
-        d["geometries"] = self._osm_grok_geometry(
-            d
-        )  # relations can have more than one discrete geom/loc
+        # parse "elements" list and add values for key themes/topics/attributes
+
+        # title and names
+        subtitle, names = self._osm_grok_names(data)
+        d["title"] = f"OSM {osm_type} {id}"
+        if subtitle:
+            d["title"] += f": {subtitle}"
+        d["names"] = names
+
+        # locations
+        d["locations"] = self._osm_grok_locations(data, d["type"])
+
+        # tags2uris etc.
 
         return d
 
-    def _osm_grok_geometry(self, data):
-        return getattr(self, f"_osm_grok_geometry_{data['type']}")(data)
+    def _osm_grok_locations(self, data, osm_type):
+        # OSM returns elements as a single list; we need them organized by type
+        elements_by_type = dict()
+        for k in ["node", "way", "relation"]:
+            elements = [e for e in data["elements"] if e["type"] == k]
+            if len(elements) > 0:
+                elements_by_type[f"{k}s"] = elements
+        locations = getattr(self, f"_osm_grok_locations_{osm_type}")(elements_by_type)
+        return locations
 
-    def _osm_grok_geometry_node(self, data):
-        node = data["nodes"][0]
-        data["title"] = self._osm_grok_geometry_title(node)
-        data["lon"], data["lat"] = self._parse_node_for_lonlat(node)
-        return data
+    def _osm_grok_locations_node(self, elements_by_type):
+        location = dict()
+        node = elements_by_type["nodes"][0]
+        subtitle = self._osm_grok_title_name([node])
+        location["title"] = f"OSM Location "
+        if subtitle:
+            location["title"] += f"of {subtitle} "
+        location["title"] += f"(node {node['id']})"
+        lon, lat = self._parse_node_for_lonlat(node)
+        location["geometry"] = f"POINT({lon} {lat})"
+        return [location]
 
-    def _osm_grok_geometry_way(self, data):
+    def _osm_grok_locations_way(self, data):
         pass
 
-    def _osm_grok_geometry_relation(self, data):
+    def _osm_grok_locations_relation(self, data):
         pass
 
-    def _osm_grok_geometry_title(self, element):
-        name_keys = ["name", "name:en"]
-        name_keys.extend([k for k in element["tags"].keys() if k.startswith("name")])
-        name = None
-        for name_key in name_keys:
-            try:
-                name = element["tags"][name_key]
-            except KeyError:
-                continue
-            else:
-                break
-        title = f"OSM {element['type']} {element['id']}"
-        if name:
-            title += f": {name}"
+    def _osm_grok_title_name(self, elements):
+        tagged = [e for e in elements if "tags" in e.keys()]
+        title_keys = ["name", "name:en"]
+        title = None
+        for e in tagged:
+            for title_key in title_keys:
+                try:
+                    title = e["tags"][title_key]
+                except KeyError:
+                    continue
+                else:
+                    break
         return title
+
+    def _osm_grok_names(self, data):
+        elements = [e for e in data["elements"] if "tags" in e.keys()]
+        names_by_key = dict()
+        for e in elements:
+            name_keys = ["name", "name:en"]
+            name_keys.extend(
+                [
+                    k
+                    for k in e["tags"].keys()
+                    if k.startswith("name") and k not in name_keys
+                ]
+            )
+            name = None
+            for name_key in name_keys:
+                try:
+                    name = e["tags"][name_key]
+                except KeyError:
+                    continue
+                else:
+                    try:
+                        names_by_key[name_key]
+                    except KeyError:
+                        names_by_key[name_key] = set()
+                    else:
+                        names_by_key[name_key].add(name)
+        names = list()
+        title_name = None
+        for k, vv in names_by_key.items():
+            for v in vv:
+                nv = norm(v)
+                if k == "name" and not title_name:
+                    title_name = nv
+                if k == "name:en" and not title_name:
+                    title_name = nv
+                name = {"value": nv}
+                keyparts = k.split(":")
+                if len(keyparts) == 2:
+                    langtag = tags.language(keyparts[1])
+                    if langtag:
+                        name["language"] = langtag.format
+        return title_name, names
 
     def _parse_node_for_lonlat(self, node_data):
         lat = node_data["lat"]
