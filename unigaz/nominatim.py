@@ -91,23 +91,25 @@ class Nominatim(Gazetteer, Web):
         d["names"] = names
 
         # locations
-        d["locations"] = self._osm_grok_locations(data, d["type"])
+        d["locations"] = self._osm_grok_locations(data, d["id"], d["type"])
 
         # tags2uris etc.
 
         return d
 
-    def _osm_grok_locations(self, data, osm_type):
+    def _osm_grok_locations(self, data, id, osm_type):
         # OSM returns elements as a single list; we need them organized by type
         elements_by_type = dict()
         for k in ["node", "way", "relation"]:
             elements = [e for e in data["elements"] if e["type"] == k]
             if len(elements) > 0:
                 elements_by_type[f"{k}s"] = elements
-        locations = getattr(self, f"_osm_grok_locations_{osm_type}")(elements_by_type)
+        locations = getattr(self, f"_osm_grok_locations_{osm_type}")(
+            elements_by_type, parent_id=id
+        )
         return locations
 
-    def _osm_grok_locations_node(self, elements_by_type):
+    def _osm_grok_locations_node(self, elements_by_type, **kwargs):
         location = dict()
         node = elements_by_type["nodes"][0]
         subtitle = self._osm_grok_title_name([node])
@@ -119,8 +121,28 @@ class Nominatim(Gazetteer, Web):
         location["geometry"] = f"POINT({lon} {lat})"
         return [location]
 
-    def _osm_grok_locations_way(self, data):
-        pass
+    def _osm_grok_locations_way(self, elements_by_type, parent_id):
+        location = dict()
+        subtitle = self._osm_grok_title_name(elements_by_type["ways"])
+        location["title"] = f"OSM Location "
+        if subtitle:
+            location["title"] += f"of {subtitle} "
+        waypoint_nodes = dict()
+        for node in elements_by_type["nodes"]:
+            waypoint_nodes[node["id"]] = node
+        waypoints = list()
+        the_way = elements_by_type["ways"][0]
+        for node_id in the_way["nodes"]:
+            waypoints.append(waypoint_nodes[node_id])
+        waypoints = [self._parse_node_for_lonlat(wp) for wp in waypoints]
+        if waypoints[0][0] == waypoints[-1][0] and waypoints[0][1] == waypoints[-1][1]:
+            geo = "POLYGON"
+        else:
+            geo = "LINESTRING"
+        coords = ",".join([f"{wp[0]} {wp[1]}" for wp in waypoints])
+        location["geometry"] = f"{geo}({coords})"
+        location["title"] += f"(way {parent_id})"
+        return [location]
 
     def _osm_grok_locations_relation(self, data):
         pass
