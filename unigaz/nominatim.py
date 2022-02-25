@@ -144,8 +144,55 @@ class Nominatim(Gazetteer, Web):
         location["title"] += f"(way {parent_id})"
         return [location]
 
-    def _osm_grok_locations_relation(self, data):
-        pass
+    def _osm_grok_locations_relation(self, elements_by_type, **kwargs):
+        locations = list()
+        the_relation = elements_by_type["relations"][0]
+        for member in the_relation["members"]:
+            context = deepcopy(elements_by_type)
+            osm_type = member["type"]
+            context[osm_type] = [
+                e for e in elements_by_type[f"{osm_type}s"] if e["id"] == member["ref"]
+            ]
+            member_locations = getattr(self, f"_osm_grok_locations_{osm_type}")(
+                context, parent_id=member["ref"]
+            )
+            location = member_locations[0]
+            try:
+                role = member["role"]
+            except KeyError:
+                pass
+            else:
+                title = location["title"]
+                if role == "admin_centre":
+                    parts = title.split(":")
+                    if len(parts) == 2:
+                        title = ": ".join(
+                            (
+                                parts[0],
+                                f"Administrative center of {normalize_space(parts[1])}",
+                            )
+                        )
+                    else:
+                        title += f" (administrative center)"
+                    location["title"] = title
+                elif role == "label":
+                    parts = title.split(":")
+                    if len(parts) == 2:
+                        title = ": ".join(
+                            (
+                                parts[0],
+                                f"Central point of {normalize_space(parts[1])}",
+                            )
+                        )
+                    else:
+                        title += f" (central point)"
+                    location["title"] = title
+                elif role == "outer":
+                    location["description"] = "outer boundary"
+                else:
+                    logger.warning(f"Unsupported relation role for location: '{role}'")
+            locations.append(location)
+        return locations
 
     def _osm_grok_title_name(self, elements):
         tagged = [e for e in elements if "tags" in e.keys()]
@@ -171,6 +218,13 @@ class Nominatim(Gazetteer, Web):
                     k
                     for k in e["tags"].keys()
                     if k.startswith("name") and k not in name_keys
+                ]
+            )
+            name_keys.extend(
+                [
+                    k
+                    for k in e["tags"].keys()
+                    if k.startswith("long_name") and k not in name_keys
                 ]
             )
             name = None

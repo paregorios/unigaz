@@ -118,10 +118,11 @@ class TestData:
         uri = "https://www.openstreetmap.org/relation/2783389"
         data, data_uri = g._get_data_item(uri)
         groked = g._osm_grok(data, data_uri)
+        assert groked["id"] == "2783389"
         assert groked["type"] == "relation"
         assert groked["attribution"] == "http://www.openstreetmap.org/copyright"
-        assert len(groked["relations"]) == 1
-        assert len(groked["ways"]) + len(groked["nodes"]) >= 1
+        assert groked["title"] == "OSM relation 2783389: Miliana"
+        assert len(groked["locations"]) == 4
 
 
 # class TestSearch:
