@@ -342,12 +342,13 @@ class Externals:
                 self._externals[uri] = set()
         else:
             raise ValueError(f"invalid URI: {uri}")
-        if isinstance(source, str):
-            self._externals[uri].add(source)
-        elif isinstance(source, (set, list, tuple)):
-            self._externals[uri].update(source)
-        else:
-            raise TypeError(f"source: {type(source)}")
+        if source:
+            if isinstance(source, str):
+                self._externals[uri].add(source)
+            elif isinstance(source, (set, list, tuple)):
+                self._externals[uri].update(source)
+            else:
+                raise TypeError(f"source: {type(source)}")
 
 
 class Dictionary:
