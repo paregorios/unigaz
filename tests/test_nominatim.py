@@ -88,7 +88,7 @@ class TestData:
         g = Nominatim(user_agent="UnigazTester/0.0")
         subtitle, names = g._osm_grok_names(d)
         assert subtitle == "Miliana"
-        assert len(names) == 7
+        assert len(names) == 5
 
     def test_grok_node(self):
         g = Nominatim(user_agent="UnigazTester/0.0")
