@@ -59,7 +59,40 @@ class Nominatim(Gazetteer, Web):
             if len(elements) > 0:
                 d[f"{k}s"] = elements
 
+        d["geometries"] = self._osm_grok_geometry(
+            d
+        )  # relations can have more than one discrete geom/loc
+
         return d
+
+    def _osm_grok_geometry(self, data):
+        return getattr(self, f"_osm_grok_geometry_{data['type']}")(data)
+
+    def _osm_grok_geometry_node(self, data):
+        node = data["nodes"][0]
+        data["title"] = self._osm_grok_geometry_title(node)
+
+    def _osm_grok_geometry_way(self, data):
+        pass
+
+    def _osm_grok_geometry_relation(self, data):
+        pass
+
+    def _osm_grok_geometry_title(self, element):
+        name_keys = ["name", "name:en"]
+        name_keys.extend([k for k in element["tags"].keys() if k.startswith("name")])
+        name = None
+        for name_key in name_keys:
+            try:
+                name = element["tags"][name_key]
+            except KeyError:
+                continue
+            else:
+                break
+        title = f"OSM {element['type']} {element['id']}"
+        if name:
+            title += f": {name}"
+        return title
 
     def _parse_node_for_lonlat(self, node_data):
         lat = node_data["lat"]

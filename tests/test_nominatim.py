@@ -57,6 +57,7 @@ class TestData:
         groked = g._osm_grok(data, data_uri)
         assert groked["type"] == "node"
         assert groked["attribution"] == "http://www.openstreetmap.org/copyright"
+        assert groked["title"] == "OSM node 3028201605: Miliana"
         assert len(groked["nodes"]) == 1
 
     def test_grok_way(self):
