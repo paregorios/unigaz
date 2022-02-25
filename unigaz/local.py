@@ -7,12 +7,15 @@ Define local gazetteer
 from copy import deepcopy
 import datetime
 import json
+from language_tags import tags
 import logging
 from math import asin, atan2, cos, degrees, sin, pi, radians
 from os import sep
 from pathlib import Path
 from pprint import pformat
+import py3langid as langid
 import re
+import regex
 from shapely import wkt
 from shapely.errors import WKTReadingError
 from shapely.geometry import Point, LineString, Polygon, mapping, shape
@@ -35,6 +38,13 @@ rx_dd_latlon = re.compile(
 rx_dd_lonlat = re.compile(
     r"^(?P<longitude>(-|\+)?\d+\.\d+)\s*,?\s*(?P<latitude>(-|\+)?\d+\.\d+)$"
 )
+rx_latin_script = regex.compile(r"^\p{IsLatin}+$")
+
+
+def is_latin_script(s: str):
+    if rx_latin_script.match(s):
+        return True
+    return False
 
 
 def camel2snake(s):
@@ -224,7 +234,16 @@ class Described:
         self._descriptions = list()
 
     def add_description(self, text=None, lang="und", preferred=False, source=None):
-        d = {"text": text, "lang": lang, "preferred": preferred, "source": source}
+        nl = norm(lang)
+        if nl in ["und", ""]:
+            langtag, prob = langid.classify(text)
+            if (langtag == "la" and is_latin_script(text)) or langtag != "la":
+                language = tags.language(langtag).format
+            elif langtag == "la":
+                language = "und"
+        else:
+            language = tags.language(nl).format
+        d = {"text": text, "lang": language, "preferred": preferred, "source": source}
         if preferred:
             self._preferred_description = d
         self._descriptions.append(d)
