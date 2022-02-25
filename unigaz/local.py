@@ -7,7 +7,6 @@ Define local gazetteer
 from copy import deepcopy
 import datetime
 import json
-from language_tags import tags
 import logging
 from math import asin, atan2, cos, degrees, sin, pi, radians
 from os import sep
@@ -548,24 +547,30 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
             source = kwargs["source"]
         except KeyError:
             source = None
-        locations = list()
-        if source is None:
-            return self.add_location(**kwargs)
-        else:
+
+        try:
+            locations = kwargs["locations"]
+        except KeyError:
             parts = urlparse(source)
             try:
                 grokker = getattr(
                     self,
                     f"_locations_grok_{parts.netloc.replace('.', '_').replace('-', '_')}",
                 )
-            except KeyError:
-                pass
+            except AttributeError:
+                logger.error(
+                    f"No support for locations grok in local for {parts.netloc}"
+                )
             else:
-                these_locations = grokker(**kwargs)
-                for l in these_locations:
-                    l.source = source
-                locations.extend(these_locations)
-        for l in these_locations:
+                locations = grokker(**kwargs)
+                for l in locations:
+                    try:
+                        l["source"]
+                    except KeyError:
+                        l["source"] = source
+        else:
+            locations = [Location(**loc) for loc in locations]
+        for l in locations:
             self.add_location(l)
 
     def _locations_grok_edh_ub_uni_heidelberg_de(self, **kwargs):
@@ -579,15 +584,6 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
                 geometry=f"POINT({lon} {lat})",
                 title="EDH Coordinates",
             )
-            n.add_journal_event("created from", kwargs["source"])
-            locations.append(n)
-        return locations
-
-    def _locations_grok_www_openstreetmap_org(self, **kwargs):
-        """Create locations from pre-processed OSM data"""
-        locations = list()
-        for loc in kwargs["locations"]:
-            n = Location(**loc)
             n.add_journal_event("created from", kwargs["source"])
             locations.append(n)
         return locations
@@ -606,25 +602,29 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
             source = kwargs["source"]
         except KeyError:
             source = None
-        names = list()
-        if source is None:
-            return self.add_name(**kwargs)
-        else:
+
+        try:
+            names = kwargs["names"]
+        except KeyError:
             parts = urlparse(source)
             try:
                 grokker = getattr(
                     self,
                     f"_names_grok_{parts.netloc.replace('.', '_').replace('-', '_')}",
                 )
-            except KeyError:
-                pass
+            except AttributeError:
+                logger.error(f"No support for names grok in local for {parts.netloc}")
             else:
-                these_names = grokker(**kwargs)
-                for n in these_names:
-                    n.source = source
-                names.extend(these_names)
-        for n in names:
-            self.add_name(n)
+                names = grokker(**kwargs)
+                for n in names:
+                    try:
+                        n["source"]
+                    except KeyError:
+                        n["source"] = source
+        else:
+            names = [Name(**n) for n in names]
+        for name in names:
+            self.add_name(name)
 
     def _names_grok_edh_ub_uni_heidelberg_de(self, **kwargs):
         # EDH names
@@ -651,49 +651,6 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         else:
             n = Name()
             n.add_romanized_form(v)
-            n.name_type = "geographic"
-            n.add_journal_event("created from", kwargs["source"])
-            names.append(n)
-        return names
-
-    def _names_grok_www_openstreetmap_org(self, **kwargs):
-        # OSM names
-        names = list()
-        for namekey, osmname in {
-            k: norm(v) for k, v in kwargs["tags"].items() if k.startswith("name")
-        }.items():
-            keyparts = namekey.split(":")
-            n = Name()
-            try:
-                keyparts[1]
-            except IndexError:
-                pass
-            else:
-                n.attested_form = osmname
-                langtag = tags.language(keyparts[1])
-                if langtag:
-                    n.language = langtag.format
-                    try:
-                        script = langtag.script.format
-                    except AttributeError:
-                        logger.error(
-                            f"Failed to determine script for language tag '{langtag}'"
-                        )
-                    else:
-                        if script == "Latn":
-                            n.add_romanized_form(osmname)
-                        else:
-                            n.add_romanized_form(
-                                slugify(osmname, separator=" ", lowercase=False)
-                            )
-            if len(n.romanized_forms) == 0:
-                slug = slugify(osmname, separator=" ", lowercase=False)
-                if slug == osmname:
-                    n.add_romanized_form(osmname)
-                    if not n.attested_form:
-                        n.attested_form = osmname
-                else:
-                    n.add_romanized_form(slug)
             n.name_type = "geographic"
             n.add_journal_event("created from", kwargs["source"])
             names.append(n)
@@ -967,7 +924,11 @@ class Local(Gazetteer, Titled):
         logger.debug(ftl)
         if ftl == "place":
             try:
-                o = Place(**source_data, journal_event=journal_event, source=source)
+                try:
+                    source_data["source"]
+                except KeyError:
+                    source_data["source"] = source
+                o = Place(**source_data, journal_event=journal_event)
             except Exception as err:
                 tb = traceback.format_exception(err)
                 print("\n".join(tb))

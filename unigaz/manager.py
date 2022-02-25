@@ -5,6 +5,7 @@ Manage the tools
 """
 
 import logging
+from pprint import pprint
 import traceback
 from urllib.parse import urlparse
 from unigaz.edh import EDH
@@ -59,13 +60,12 @@ class Manager:
         try:
             source_data["title"]
         except KeyError:
-            try:
-                v = source_data["tags"]["name"]  # OSM
-            except KeyError:
-                source_data["title"] = hit["title"]
-            else:
-                source_data["title"] = v
-                source_data["description"] = hit["title"]
+            logger.warning(
+                f"No title found in data, so using title from search result."
+            )
+            source_data["title"] = hit["title"]
+        else:
+            source_data["description"] = hit["title"]
 
         v = None
         for k in ["description", "summary", "abstract"]:
@@ -76,21 +76,20 @@ class Manager:
             else:
                 break
         if v is None:
+            logger.warning(
+                f"No summary/description found in data, so using content from search result."
+            )
             source_data["summary"] = hit["summary"]
 
-        original = None
+        try:
+            source_data["externals"]
+        except KeyError:
+            source_data["externals"] = set()
+        source_data["externals"].add(uri)
         for v in source_data.values():
             if isinstance(v, str):
                 if validators.url(v):
-                    if v == uri:
-                        original = v
-                        break
-        if original is None:
-            try:
-                source_data["externals"]
-            except KeyError:
-                source_data["externals"] = set()
-            source_data["externals"].add(uri)
+                    source_data["externals"].add(v)
 
         try:
             result = self.local.create_from(source_data, source_uri)

@@ -88,6 +88,7 @@ class TestData:
         g = Nominatim(user_agent="UnigazTester/0.0")
         subtitle, names = g._osm_grok_names(d)
         assert subtitle == "Miliana"
+        assert len(names) == 7
 
     def test_grok_node(self):
         g = Nominatim(user_agent="UnigazTester/0.0")
@@ -131,7 +132,7 @@ class TestData:
         assert groked["title"] == "OSM relation 2783389: Miliana"
         assert len(groked["locations"]) == 4
         assert len(groked["externals"]) == 2
-        externals = sorted(groked["externals"])
+        externals = sorted(list(groked["externals"]))
         assert externals == [
             "https://fr.wikipedia.org/wiki/Miliana",
             "https://www.wikidata.org/wiki/Q48468",

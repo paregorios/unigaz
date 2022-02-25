@@ -9,6 +9,9 @@ from datetime import timedelta
 from language_tags import tags
 import logging
 from pprint import pformat, pprint
+import py3langid as langid
+import regex
+from slugify import slugify
 from textnorm import normalize_space, normalize_unicode
 from unigaz.gazetteer import Gazetteer
 from unigaz.web import SearchParameterError, Web, DEFAULT_USER_AGENT
@@ -24,6 +27,15 @@ def type_check(what, value, sought_type):
 
 def norm(s: str):
     return normalize_space(normalize_unicode(s))
+
+
+rx_latin_script = regex.compile(r"^\p{IsLatin}+$")
+
+
+def is_latin_script(s: str):
+    if rx_latin_script.match(s):
+        return True
+    return False
 
 
 class Nominatim(Gazetteer, Web):
@@ -43,6 +55,7 @@ class Nominatim(Gazetteer, Web):
         """Get and process OSM data from the OSM API for the given URI"""
         data, data_uri = self._get_data_item(uri)
         groked = self._osm_grok(data, data_uri)
+        return groked, data_uri
 
     def _osm_grok(self, data, data_uri):
         """Parse and process OSM API output for consumption by unigaz"""
@@ -119,7 +132,7 @@ class Nominatim(Gazetteer, Web):
                     else:
                         base_uri = base
                 externals.add("/".join((base_uri, value)))
-        return list(externals)
+        return externals
 
     def _osm_grok_locations(self, data, id, osm_type):
         # OSM returns elements as a single list; we need them organized by type
@@ -235,7 +248,8 @@ class Nominatim(Gazetteer, Web):
     def _osm_grok_names(self, data):
         elements = [e for e in data["elements"] if "tags" in e.keys()]
         names_by_key = dict()
-        for e in elements:
+        elements_by_key = dict()
+        for i, e in enumerate(elements):
             name_keys = ["name", "name:en"]
             name_keys.extend(
                 [
@@ -264,22 +278,89 @@ class Nominatim(Gazetteer, Web):
                         names_by_key[name_key] = set()
                     finally:
                         names_by_key[name_key].add(name)
+                    try:
+                        elements_by_key[name_key]
+                    except KeyError:
+                        elements_by_key[name_key] = set()
+                    finally:
+                        elements_by_key[name_key].add(i)
+
         names = list()
         title_name = None
         for k, vv in names_by_key.items():
+            element = elements[elements_by_key[k].pop()]  # just use the first one
             for v in vv:
                 nv = norm(v)
                 if k == "name" and title_name is None:
                     title_name = nv
                 if k == "name:en" and title_name is None:
                     title_name = nv
-                name = {"value": nv}
+                name = {
+                    "language": "und",
+                    "romanized": list(),
+                    "source": f"https://www.openstreetmap.org/api/0.6/{element['type']}/{element['id']}",
+                }
+                if is_latin_script(nv):
+                    name["romanized"].append(nv)
+                else:
+                    name["attested"] = nv
+                slug = slugify(nv, separator=" ", lowercase=False)
+                if slug and slug not in name["romanized"]:
+                    name["romanized"].append(slug)
                 keyparts = k.split(":")
                 if len(keyparts) == 2:
                     langtag = tags.language(keyparts[1])
                     if langtag:
                         name["language"] = langtag.format
-        return (title_name, names)
+                if name["language"] == "und":
+                    lang, prob = langid.classify(nv)
+                    name["language"] = tags.language(lang).format
+                try:
+                    name["attested"]
+                except KeyError:
+                    if len(name["romanized"]) == 1 and name["language"] == "en":
+                        name["attested"] = nv
+                    elif len(name["romanized"]) > 1:
+                        name["attested"] = nv
+                names.append(name)
+        normalization = dict()
+        for i, name in enumerate(names):
+            try:
+                name["attested"]
+            except KeyError:
+                key = f"{name['language']}_{name['romanized'][0]}"
+            else:
+                key = f"{name['language']}_{name['attested'].lower()}"
+            try:
+                normalization[key]
+            except KeyError:
+                normalization[key] = set()
+            finally:
+                normalization[key].add(i)
+        normalized = list()
+        for key, indices in normalization.items():
+            new_name = {"romanized": list()}
+            for i in indices:
+                name = names[i]
+                for k in ["attested", "romanized", "language", "source"]:
+                    try:
+                        v = name[k]
+                    except KeyError:
+                        continue
+                    else:
+                        if k == "romanized":
+                            for rv in v:
+                                if rv not in new_name[k]:
+                                    new_name[k].append(rv)
+                        else:
+                            new_name[k] = v
+            if len(new_name["romanized"]) == 0:
+                logger.error(
+                    f"Failed romanization for name {new_name['attested']} ({tags.language(new_name['language']).description})"
+                )
+            else:
+                normalized.append(new_name)
+        return (title_name, normalized)
 
     def _parse_node_for_lonlat(self, node_data):
         lat = node_data["lat"]
