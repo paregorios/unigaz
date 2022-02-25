@@ -37,6 +37,9 @@ class Nominatim(Gazetteer, Web):
         )
         self.lookup_netloc = "www.openstreetmap.org"
 
+    def get_data(self, uri):
+        pass
+
     def _parse_node_for_lonlat(self, node_data):
         lat = node_data["lat"]
         lon = node_data["lon"]
@@ -65,7 +68,7 @@ class Nominatim(Gazetteer, Web):
             wkt = f"LINESTRING({serialized})"
         return wkt
 
-    def get_data(self, uri):
+    def get_datafoo(self, uri):
         data, data_uri = self._get_data_item(uri)
         osm_type = data["type"]
         title = f"OSM {osm_type} {data['id']}"
@@ -177,11 +180,13 @@ class Nominatim(Gazetteer, Web):
     def _get_data_item(self, uri):
         parts = urlparse(uri)
         path = f"/api/0.6{parts.path}"
+        if "way" in path or "relation" in path:
+            path += "/full"
         json_uri = urlunparse(("https", parts.netloc, path, "", "", ""))
         r = self.get(json_uri)
         if r.status_code != 200:
             r.raise_for_status()
-        return (r.json()["elements"][0], json_uri)
+        return (r.json(), json_uri)
 
     def _massage_params(self, value):
         if isinstance(value, str):
