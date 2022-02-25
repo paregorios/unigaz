@@ -50,6 +50,45 @@ class TestData:
         assert len([e for e in j["elements"] if e["type"] == "way"]) > 1
         assert len([e for e in j["elements"] if e["type"] == "relation"]) == 1
 
+    def test_grok_subtitle(self):
+        d = {
+            "version": "0.6",
+            "generator": "CGImap 0.8.6 (2119652 spike-07.openstreetmap.org)",
+            "copyright": "OpenStreetMap and contributors",
+            "attribution": "http://www.openstreetmap.org/copyright",
+            "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+            "elements": [
+                {
+                    "type": "node",
+                    "id": 3028201605,
+                    "lat": 36.3047698,
+                    "lon": 2.226821,
+                    "timestamp": "2020-10-11T21:29:40Z",
+                    "version": 19,
+                    "changeset": 92314435,
+                    "user": "Vejoson",
+                    "uid": 11422772,
+                    "tags": {
+                        "name": "Miliana",
+                        "name:ar": "مليانة",
+                        "name:ber": "ⵎⴻⵍⵢⴰⵏⴰ",
+                        "name:en": "Miliana",
+                        "name:es": "Miliana",
+                        "name:fr": "Miliana",
+                        "name:kab": "Tamelyant",
+                        "place": "town",
+                        "population": "44201",
+                        "postal_code": "44003",
+                        "wikidata": "Q48468",
+                        "wikipedia": "fr:Miliana",
+                    },
+                }
+            ],
+        }
+        g = Nominatim(user_agent="UnigazTester/0.0")
+        subtitle, names = g._osm_grok_names(d)
+        assert subtitle == "Miliana"
+
     def test_grok_node(self):
         g = Nominatim(user_agent="UnigazTester/0.0")
         uri = "https://www.openstreetmap.org/node/3028201605"

@@ -8,7 +8,7 @@ from copy import deepcopy
 from datetime import timedelta
 from language_tags import tags
 import logging
-from pprint import pformat
+from pprint import pformat, pprint
 from textnorm import normalize_space, normalize_unicode
 from unigaz.gazetteer import Gazetteer
 from unigaz.web import SearchParameterError, Web, DEFAULT_USER_AGENT
@@ -162,16 +162,16 @@ class Nominatim(Gazetteer, Web):
                         names_by_key[name_key]
                     except KeyError:
                         names_by_key[name_key] = set()
-                    else:
+                    finally:
                         names_by_key[name_key].add(name)
         names = list()
         title_name = None
         for k, vv in names_by_key.items():
             for v in vv:
                 nv = norm(v)
-                if k == "name" and not title_name:
+                if k == "name" and title_name is None:
                     title_name = nv
-                if k == "name:en" and not title_name:
+                if k == "name:en" and title_name is None:
                     title_name = nv
                 name = {"value": nv}
                 keyparts = k.split(":")
@@ -179,7 +179,7 @@ class Nominatim(Gazetteer, Web):
                     langtag = tags.language(keyparts[1])
                     if langtag:
                         name["language"] = langtag.format
-        return title_name, names
+        return (title_name, names)
 
     def _parse_node_for_lonlat(self, node_data):
         lat = node_data["lat"]
