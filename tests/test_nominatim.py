@@ -22,7 +22,7 @@ class TestInit:
         assert p.web.netloc == "nominatim.openstreetmap.org"
 
 
-class TestGetDataItem:
+class TestData:
     def test_get_node_json(self):
         g = Nominatim(user_agent="UnigazTester/0.0")
         uri = "https://www.openstreetmap.org/node/3028201605"
@@ -49,6 +49,35 @@ class TestGetDataItem:
         assert len([e for e in j["elements"] if e["type"] == "node"]) > 1
         assert len([e for e in j["elements"] if e["type"] == "way"]) > 1
         assert len([e for e in j["elements"] if e["type"] == "relation"]) == 1
+
+    def test_grok_node(self):
+        g = Nominatim(user_agent="UnigazTester/0.0")
+        uri = "https://www.openstreetmap.org/node/3028201605"
+        data, data_uri = g._get_data_item(uri)
+        groked = g._osm_grok(data, data_uri)
+        assert groked["type"] == "node"
+        assert groked["attribution"] == "http://www.openstreetmap.org/copyright"
+        assert len(groked["nodes"]) == 1
+
+    def test_grok_way(self):
+        g = Nominatim(user_agent="UnigazTester/0.0")
+        uri = "https://www.openstreetmap.org/way/51016872"
+        data, data_uri = g._get_data_item(uri)
+        groked = g._osm_grok(data, data_uri)
+        assert groked["type"] == "way"
+        assert groked["attribution"] == "http://www.openstreetmap.org/copyright"
+        assert len(groked["ways"]) == 1
+        assert len(groked["nodes"]) > 1
+
+    def test_grok_relation(self):
+        g = Nominatim(user_agent="UnigazTester/0.0")
+        uri = "https://www.openstreetmap.org/relation/2783389"
+        data, data_uri = g._get_data_item(uri)
+        groked = g._osm_grok(data, data_uri)
+        assert groked["type"] == "relation"
+        assert groked["attribution"] == "http://www.openstreetmap.org/copyright"
+        assert len(groked["relations"]) == 1
+        assert len(groked["ways"]) + len(groked["nodes"]) >= 1
 
 
 # class TestSearch:

@@ -38,7 +38,28 @@ class Nominatim(Gazetteer, Web):
         self.lookup_netloc = "www.openstreetmap.org"
 
     def get_data(self, uri):
-        pass
+        """Get and process OSM data from the OSM API for the given URI"""
+        data, data_uri = self._get_data_item(uri)
+        groked = self._osm_grok(data, data_uri)
+
+    def _osm_grok(self, data, data_uri):
+        """Parse and process OSM API output for consumption by unigaz"""
+        d = dict()
+        d["source"] = data_uri
+        for k, v in data.items():
+            if k == "elements":
+                continue
+            d[k] = v
+
+        # OSM returns elements as a single list; we need them organized by type
+        for k in ["node", "way", "relation"]:
+            if k in data_uri:
+                d["type"] = k
+            elements = [e for e in data["elements"] if e["type"] == k]
+            if len(elements) > 0:
+                d[f"{k}s"] = elements
+
+        return d
 
     def _parse_node_for_lonlat(self, node_data):
         lat = node_data["lat"]
@@ -178,6 +199,7 @@ class Nominatim(Gazetteer, Web):
         return (data, data_uri)
 
     def _get_data_item(self, uri):
+        """Get structured OSM data from the OSM API for the given URI"""
         parts = urlparse(uri)
         path = f"/api/0.6{parts.path}"
         if "way" in path or "relation" in path:
