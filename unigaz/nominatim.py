@@ -94,8 +94,32 @@ class Nominatim(Gazetteer, Web):
         d["locations"] = self._osm_grok_locations(data, d["id"], d["type"])
 
         # tags2uris etc.
+        d["externals"] = self._osm_grok_externals(data)
 
         return d
+
+    def _osm_grok_externals(self, data):
+        externals = set()
+        supported = {
+            "wikidata": "https://www.wikidata.org/wiki",
+            "wikipedia": "https://{prefix}.wikipedia.org/wiki",
+        }
+        tagged_elements = [e for e in data["elements"] if "tags" in e.keys()]
+        for e in tagged_elements:
+            for key, base in supported.items():
+                try:
+                    v = e["tags"][key]
+                except KeyError:
+                    continue
+                else:
+                    value = norm(v)
+                    if "{" in base:
+                        prefix, value = value.split(":")
+                        base_uri = base.format(prefix=prefix)
+                    else:
+                        base_uri = base
+                externals.add("/".join((base_uri, value)))
+        return list(externals)
 
     def _osm_grok_locations(self, data, id, osm_type):
         # OSM returns elements as a single list; we need them organized by type

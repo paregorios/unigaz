@@ -100,6 +100,12 @@ class TestData:
         assert groked["title"] == "OSM node 3028201605: Miliana"
         assert len(groked["locations"]) == 1
         assert groked["locations"][0]["geometry"] == "POINT(2.226821 36.3047698)"
+        assert len(groked["externals"]) == 2
+        externals = sorted(groked["externals"])
+        assert externals == [
+            "https://fr.wikipedia.org/wiki/Miliana",
+            "https://www.wikidata.org/wiki/Q48468",
+        ]
 
     def test_grok_way(self):
         g = Nominatim(user_agent="UnigazTester/0.0")
@@ -112,6 +118,7 @@ class TestData:
         assert groked["title"] == "OSM way 51016872: Miliana"
         assert len(groked["locations"]) == 1
         assert groked["locations"][0]["geometry"].startswith("POLYGON")
+        assert len(groked["externals"]) == 0
 
     def test_grok_relation(self):
         g = Nominatim(user_agent="UnigazTester/0.0")
@@ -123,6 +130,12 @@ class TestData:
         assert groked["attribution"] == "http://www.openstreetmap.org/copyright"
         assert groked["title"] == "OSM relation 2783389: Miliana"
         assert len(groked["locations"]) == 4
+        assert len(groked["externals"]) == 2
+        externals = sorted(groked["externals"])
+        assert externals == [
+            "https://fr.wikipedia.org/wiki/Miliana",
+            "https://www.wikidata.org/wiki/Q48468",
+        ]
 
 
 # class TestSearch:
