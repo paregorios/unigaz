@@ -677,17 +677,27 @@ class Location(
         Indexable.__init__(self, **kwargs)
         Journaled.__init__(self, **kwargs)
         self._geometry = None
-        try:
-            self.geometry = kwargs["geometry"]
-        except KeyError:
-            pass
-        except WKTReadingError:
-            logger.error(pformat(kwargs["geometry"]))
-            raise
-        try:
-            self.accuracy_radius = kwargs["accuracy_value"]
-        except KeyError:
-            self.accuracy_radius = None
+        if kwargs:
+            try:
+                kwargs["journal_event"]
+            except KeyError:
+                try:
+                    source = kwargs["source"]
+                except KeyError:
+                    pass
+                else:
+                    self.add_journal_event("created from", source)
+            try:
+                self.geometry = kwargs["geometry"]
+            except KeyError:
+                pass
+            except WKTReadingError:
+                logger.error(pformat(kwargs["geometry"]))
+                raise
+            try:
+                self.accuracy_radius = kwargs["accuracy_value"]
+            except KeyError:
+                self.accuracy_radius = None
 
     def mapping(self, format="geojson"):
         "Return a dict serializable to the specified format"
@@ -775,13 +785,20 @@ class Name(Identified, Externals, Indexable, Dictionary, Journaled):
         self._attested_form = None
         self._romanized_forms = list()
         self._language = "und"
-        self.source = None
         self.name_type = None
         self.transcription_accuracy = None
         self.association_certainty = None
         self.transcription_completeness = None
         if kwargs:
-            source = kwargs["source"]
+            try:
+                kwargs["journal_event"]
+            except KeyError:
+                try:
+                    source = kwargs["source"]
+                except KeyError:
+                    pass
+                else:
+                    self.add_journal_event("created from", source)
             for k in [
                 "attested_form",
                 "attested",
@@ -914,20 +931,21 @@ class Local(Gazetteer, Titled):
     def _create_from_dict(self, source_data, source):
         logger.debug("_create_from_dict")
         journal_event = None
-        if source:
-            journal_event = ("created from", source)
+        try:
+            source_data["source"]
+        except KeyError:
+            if source:
+                journal_event = ("created from", source)
+                source_data["source"] = source
+        else:
+            journal_event = ("created from", source_data["source"])
         try:
             ft = source_data["feature_type"]
         except KeyError:
             ft = "Place"
         ftl = norm(ft.lower())
-        logger.debug(ftl)
         if ftl == "place":
             try:
-                try:
-                    source_data["source"]
-                except KeyError:
-                    source_data["source"] = source
                 o = Place(**source_data, journal_event=journal_event)
             except Exception as err:
                 tb = traceback.format_exception(err)

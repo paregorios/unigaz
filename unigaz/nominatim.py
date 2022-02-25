@@ -67,8 +67,9 @@ class Nominatim(Gazetteer, Web):
                 continue
             d[k] = v
 
-        # verify id and type and add source
+        # verify id and type and add source and feature type
         d["source"] = data_uri
+        d["feature_type"] = "Place"
         parts = urlparse(data_uri)
         path = parts.path.split("/")
         try:
@@ -144,6 +145,15 @@ class Nominatim(Gazetteer, Web):
         locations = getattr(self, f"_osm_grok_locations_{osm_type}")(
             elements_by_type, parent_id=id
         )
+        for location in locations:
+            try:
+                location["source"]
+            except KeyError:
+                location[
+                    "source"
+                ] = f"https://www.openstreetmap.org/api/0.6/{osm_type}/{id}"
+                if osm_type in ["way", "relation"]:
+                    location["source"] += "/full"
         return locations
 
     def _osm_grok_locations_node(self, elements_by_type, **kwargs):
@@ -172,12 +182,11 @@ class Nominatim(Gazetteer, Web):
         for node_id in the_way["nodes"]:
             waypoints.append(waypoint_nodes[node_id])
         waypoints = [self._parse_node_for_lonlat(wp) for wp in waypoints]
-        if waypoints[0][0] == waypoints[-1][0] and waypoints[0][1] == waypoints[-1][1]:
-            geo = "POLYGON"
-        else:
-            geo = "LINESTRING"
         coords = ",".join([f"{wp[0]} {wp[1]}" for wp in waypoints])
-        location["geometry"] = f"{geo}({coords})"
+        if waypoints[0][0] == waypoints[-1][0] and waypoints[0][1] == waypoints[-1][1]:
+            location["geometry"] = f"POLYGON(({coords}))"
+        else:
+            location["geometry"] = f"LINESTRING({coords})"
         location["title"] += f"(way {parent_id})"
         return [location]
 
