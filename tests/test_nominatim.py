@@ -94,12 +94,12 @@ class TestData:
         uri = "https://www.openstreetmap.org/node/3028201605"
         data, data_uri = g._get_data_item(uri)
         groked = g._osm_grok(data, data_uri)
+        assert groked["id"] == "3028201605"
         assert groked["type"] == "node"
         assert groked["attribution"] == "http://www.openstreetmap.org/copyright"
         assert groked["title"] == "OSM node 3028201605: Miliana"
-        assert len(groked["nodes"]) == 1
-        # assert groked["lon"] == 2.226821
-        # assert groked["lat"] == 36.3047698
+        assert len(groked["locations"]) == 1
+        assert groked["locations"][0]["geometry"] == "POINT(2.226821 36.3047698)"
 
     def test_grok_way(self):
         g = Nominatim(user_agent="UnigazTester/0.0")
