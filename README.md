@@ -528,7 +528,8 @@ established a veteran colony there.',
 - [ ] mine more externals out of pleiades references ctype=related
 - [ ] add support for more external gazetteers
     - [ ] nominatim (in progress)
-        - [ ] refactor to eliminate slow and clunky hierarchical serial downloads and instead use the api properly with /full see e.g. https://www.openstreetmap.org/api/0.6/relation/2783389/full.json
+        - [x] refactor to eliminate slow and clunky hierarchical serial downloads and instead use the api properly with /full
+        - [ ] clean up what the refactoring broke for pleiades and EDH imports (i.e., move grok to the gazetteer classes and add tests)
     - [ ] TGAZ/China Historical GIS
     - [ ] GeoNames
     - [ ] Wikidata
@@ -536,7 +537,9 @@ established a veteran colony there.',
     - [ ] iDAI Gazetteer
     - [ ] geo-kima
     - [ ] Syriac Gazetteer
-    - [ ] 
+    - [ ] AdriAtlas
+    - [ ] FastiOnline
+    - [ ]
 - [ ] save local gazetteer (to pickle? jsonpickle?)
 - [ ] load local gazetteer (from pickle? jsonpickle?)
 - [ ] map whole local gazetteer
