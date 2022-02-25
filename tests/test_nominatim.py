@@ -59,6 +59,8 @@ class TestData:
         assert groked["attribution"] == "http://www.openstreetmap.org/copyright"
         assert groked["title"] == "OSM node 3028201605: Miliana"
         assert len(groked["nodes"]) == 1
+        assert groked["lon"] == 2.226821
+        assert groked["lat"] == 36.3047698
 
     def test_grok_way(self):
         g = Nominatim(user_agent="UnigazTester/0.0")

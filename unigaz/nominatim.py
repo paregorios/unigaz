@@ -71,6 +71,8 @@ class Nominatim(Gazetteer, Web):
     def _osm_grok_geometry_node(self, data):
         node = data["nodes"][0]
         data["title"] = self._osm_grok_geometry_title(node)
+        data["lon"], data["lat"] = self._parse_node_for_lonlat(node)
+        return data
 
     def _osm_grok_geometry_way(self, data):
         pass
