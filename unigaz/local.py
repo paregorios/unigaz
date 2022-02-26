@@ -314,11 +314,6 @@ class Externals:
             elif isinstance(values, (list, set, tuple)):
                 for v in values:
                     self.add_external(v, source)
-        for v in kwargs.values():
-            logger.debug(f"foo: {v}")
-            if isinstance(v, str):
-                if validators.url(v):
-                    self.add_external(v, source)
 
     @property
     def externals(self):
@@ -593,21 +588,6 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
         for l in locations:
             self.add_location(l)
 
-    def _locations_grok_edh_ub_uni_heidelberg_de(self, **kwargs):
-        # EDH locations
-        keys = [k for k in kwargs.keys() if k.startswith("coordinates")]
-        locations = list()
-        for k in keys:
-            coords = kwargs[k]
-            lat, lon = [float(norm(c)) for c in coords.split(",")]
-            n = Location(
-                geometry=f"POINT({lon} {lat})",
-                title="EDH Coordinates",
-            )
-            n.add_journal_event("created from", kwargs["source"])
-            locations.append(n)
-        return locations
-
     def _locations_grok_pleiades_stoa_org(self, **kwargs):
         # Pleiades locations
         locations = list()
@@ -645,36 +625,6 @@ class Place(Identified, Titled, Described, Externals, Indexable, Dictionary, Jou
             names = [Name(**n) for n in names]
         for name in names:
             self.add_name(name)
-
-    def _names_grok_edh_ub_uni_heidelberg_de(self, **kwargs):
-        # EDH names
-        names = list()
-        for k in ["findspot", "findspot_modern"]:
-            try:
-                v = kwargs[k]
-            except KeyError:
-                pass
-            else:
-                if v:
-                    n = Name()
-                    n.attested_form = v
-                    n.add_romanized_form(v)
-                    if k == "findspot_modern":
-                        n.language = "de"
-                n.add_journal_event("created_from", kwargs["source"])
-                n.name_type = "geographic"
-                names.append(n)
-        try:
-            v = kwargs["findspot_ancient"]
-        except KeyError:
-            pass
-        else:
-            n = Name()
-            n.add_romanized_form(v)
-            n.name_type = "geographic"
-            n.add_journal_event("created from", kwargs["source"])
-            names.append(n)
-        return names
 
     def _names_grok_pleiades_stoa_org(self, **kwargs):
         # Pleiades names

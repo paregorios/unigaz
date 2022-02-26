@@ -85,11 +85,11 @@ class Manager:
             source_data["externals"]
         except KeyError:
             source_data["externals"] = set()
+            for v in source_data.values():
+                if isinstance(v, str):
+                    if validators.url(v):
+                        source_data["externals"].add(v)
         source_data["externals"].add(uri)
-        for v in source_data.values():
-            if isinstance(v, str):
-                if validators.url(v):
-                    source_data["externals"].add(v)
 
         try:
             result = self.local.create_from(source_data, source_uri)
