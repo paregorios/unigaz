@@ -285,8 +285,6 @@ class Interpreter:
         logger.debug(f"type(o): {type(o)}")
         m = folium.Map(height="72%", width="100%")
 
-        colors = ["red", "green", "brown", "orange"]
-        colori = 0
         if isinstance(o, Place):
             for location in o.locations:
                 geometry = location.geometry
@@ -301,7 +299,7 @@ class Interpreter:
                     folium.PolyLine(
                         locations=[(pair[1], pair[0]) for pair in geometry.coords],
                         popup=location.title,
-                        color=colors[colori],
+                        color="orange",
                     ).add_to(m)
                 elif isinstance(geometry, Polygon):
                     folium.Polygon(
@@ -312,7 +310,6 @@ class Interpreter:
                         fill=True,
                         fillOpacity=0.5,
                     ).add_to(m)
-                colori += 1
 
         boundp = o.convex_hull()
         if isinstance(boundp, Polygon):
