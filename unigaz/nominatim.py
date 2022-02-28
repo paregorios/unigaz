@@ -196,7 +196,7 @@ class Nominatim(Gazetteer, Web):
         for member in the_relation["members"]:
             context = deepcopy(elements_by_type)
             osm_type = member["type"]
-            context[osm_type] = [
+            context[f"{osm_type}s"] = [
                 e for e in elements_by_type[f"{osm_type}s"] if e["id"] == member["ref"]
             ]
             member_locations = getattr(self, f"_osm_grok_locations_{osm_type}")(
@@ -459,19 +459,15 @@ class Nominatim(Gazetteer, Web):
                 elif len(members) > 1 and len(
                     [m for m in members if m["type"] == "way"]
                 ) == len(members):
-                    print("woop")
                     ways = [member["ref"] for member in members]
                     waypoints = list()
                     for member in members:
-                        print(f"Member {member['ref']}")
                         way_data, way_uri = self._get_data_item(
                             f"https://www.openstreetmap.org/way/{member['ref']}"
                         )
                         nodes = [node for node in way_data["nodes"]]
-                        print(f"Got {len(nodes)} nodes.")
                         waypoints.append(self._parse_waypoints_from_nodelist(nodes))
                     continuous = True
-                    print("foo")
                     for i, points in enumerate(waypoints):
                         if i < len(waypoints) - 1:
                             if points[-1] != waypoints[i + 1][-1]:
@@ -481,7 +477,6 @@ class Nominatim(Gazetteer, Web):
                             if points[-1] != waypoints[0][-1]:
                                 continuous = False
                             break
-                    print("bar")
                     if continuous:
                         all_waypoints = list()
                         for points in waypoints:
@@ -585,8 +580,6 @@ class Nominatim(Gazetteer, Web):
             if r.status_code != 200:
                 r.raise_for_status()
             data = r.json()
-            from pprint import pformat
-
             logger.debug(f"data: {pformat(data, indent=4)}")
             for entry in data:
                 hit = {

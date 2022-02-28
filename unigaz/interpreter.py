@@ -9,12 +9,12 @@ import folium
 import json
 from inspect import getdoc
 import logging
-from tempfile import mkstemp, TemporaryDirectory
+from pprint import pformat
 from rich.table import Table
 from rich.pretty import Pretty
 from shapely.geometry import mapping, Point, LineString, Polygon
 import shlex
-import traceback
+from tempfile import mkstemp, TemporaryDirectory
 from unigaz.local import Place
 from unigaz.manager import Manager
 from unigaz.web import SearchParameterError
@@ -285,6 +285,8 @@ class Interpreter:
         logger.debug(f"type(o): {type(o)}")
         m = folium.Map(height="72%", width="100%")
 
+        colors = ["red", "green", "brown", "orange"]
+        colori = 0
         if isinstance(o, Place):
             for location in o.locations:
                 geometry = location.geometry
@@ -294,17 +296,23 @@ class Interpreter:
                         popup=location.title,
                         icon=folium.Icon(color="orange"),
                     ).add_to(m)
+                elif isinstance(geometry, LineString):
+                    print(f"Polyline! {pformat(list(geometry.coords), indent=1)}")
+                    folium.PolyLine(
+                        locations=[(pair[1], pair[0]) for pair in geometry.coords],
+                        popup=location.title,
+                        color=colors[colori],
+                    ).add_to(m)
                 elif isinstance(geometry, Polygon):
                     folium.Polygon(
-                        locations=[
-                            (pair[1], pair[0]) for pair in geometry.exterior.coords
-                        ],
+                        locations=[(pair[1], pair[0]) for pair in geometry.coords],
                         popup=location.title,
                         color="orange",
                         fillColor="orange",
                         fill=True,
                         fillOpacity=0.5,
                     ).add_to(m)
+                colori += 1
 
         boundp = o.convex_hull()
         if isinstance(boundp, Polygon):

@@ -131,6 +131,13 @@ class TestData:
         assert groked["attribution"] == "http://www.openstreetmap.org/copyright"
         assert groked["title"] == "OSM relation 2783389: Miliana"
         assert len(groked["locations"]) == 4
+        geometries = [loc["geometry"] for loc in groked["locations"]]
+        for i, geo in enumerate(geometries):
+            if i < len(geometries) - 1:
+                assert geo != geometries[i + 1]
+            else:
+                assert geo != geometries[0]
+
         assert len(groked["externals"]) == 2
         externals = sorted(list(groked["externals"]))
         assert externals == [
