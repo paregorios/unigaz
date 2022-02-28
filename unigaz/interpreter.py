@@ -295,7 +295,6 @@ class Interpreter:
                         icon=folium.Icon(color="orange"),
                     ).add_to(m)
                 elif isinstance(geometry, LineString):
-                    print(f"Polyline! {pformat(list(geometry.coords), indent=1)}")
                     folium.PolyLine(
                         locations=[(pair[1], pair[0]) for pair in geometry.coords],
                         popup=location.title,
