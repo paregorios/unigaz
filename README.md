@@ -530,6 +530,8 @@ established a veteran colony there.',
     - [ ] nominatim (in progress)
         - [x] refactor to eliminate slow and clunky hierarchical serial downloads and instead use the api properly with /full
         - [ ] clean up what the refactoring broke for pleiades and EDH imports (i.e., move grok to the gazetteer classes and add tests)
+            - [x] refactor EDH
+            - [ ] refactor Pleiades
     - [ ] TGAZ/China Historical GIS
     - [ ] GeoNames
     - [ ] Wikidata
