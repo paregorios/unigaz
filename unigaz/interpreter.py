@@ -306,9 +306,9 @@ class Interpreter:
                         locations=[(pair[1], pair[0]) for pair in geometry.coords],
                         popup=location.title,
                         color="orange",
-                        fillColor="orange",
+                        fill_color="orange",
                         fill=True,
-                        fillOpacity=0.5,
+                        fill_opacity=0.5,
                     ).add_to(m)
 
         boundp = o.convex_hull()
@@ -317,6 +317,8 @@ class Interpreter:
                 locations=[(pair[1], pair[0]) for pair in boundp.exterior.coords],
                 popup="horizontal accuracy bubble",
                 color="blue",
+                opacity=0.6,
+                dash_array="10 10",
             ).add_to(m)
         bbox = o.envelope().bounds
         bbox = [[bbox[1], bbox[0]], [bbox[3], bbox[2]]]
