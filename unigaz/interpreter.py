@@ -281,6 +281,8 @@ class Interpreter:
         Display a map of the indicated Place
             > map local 2
         """
+        if args[0] != "local":
+            raise ArgumentError("map", "Mapping search results is unsupported.")
         o = self._context_lookup(args, "map")
         logger.debug(f"type(o): {type(o)}")
         m = folium.Map(height="72%", width="100%")
