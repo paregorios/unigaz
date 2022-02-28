@@ -4,6 +4,7 @@
 GeoNames
 """
 
+from bs4 import BeautifulSoup
 from copy import deepcopy
 from datetime import timedelta
 import logging
@@ -29,12 +30,13 @@ class GeoNames(Gazetteer, Web):
     def __init__(self, user_agent=DEFAULT_USER_AGENT):
         Web.__init__(
             self,
-            netloc="api.geonames.org",
+            netloc="secure.geonames.org",
             user_agent=user_agent,
             respect_robots_txt=False,  # geonames has user-agent * disallow /search, which is nuts, so since they don't respect robots.txt neither will we
             # cache_control=False,
             # expires=timedelta(hours=24),
         )
+        self.lookup_netloc = "www.geonames.org"
 
     def get_data(self, uri):
         parts = urlparse(uri)
@@ -49,7 +51,7 @@ class GeoNames(Gazetteer, Web):
         r = self.get(json_uri)
         if r.status_code != 200:
             r.raise_for_status()
-        groked = self._edh_grok(r.json(), json_uri)
+        groked = self._geonames_grok(r.json(), json_uri)
         return (groked, json_uri)
 
     def _geonames_grok(self, data, data_uri):
@@ -203,8 +205,8 @@ class GeoNames(Gazetteer, Web):
         hits = list()
         uri = urlunparse(
             (
-                "http",
-                "api.geonames.org",
+                "https",
+                "secure.geonames.org",
                 "searchJSON",
                 "",
                 params,

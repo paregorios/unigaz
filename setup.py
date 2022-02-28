@@ -19,9 +19,11 @@ setuptools.setup(
     ],
     install_requires=[
         "airtight",
+        "beautifulsoup4",
         "feedparser",
         "folium",
         "language-tags",
+        "lxml",
         "py3langid",
         "python-slugify",
         "regex",
