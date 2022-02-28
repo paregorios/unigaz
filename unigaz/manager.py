@@ -9,6 +9,7 @@ from pprint import pprint
 import traceback
 from urllib.parse import urlparse
 from unigaz.edh import EDH
+from unigaz.geonames import GeoNames
 from unigaz.nominatim import Nominatim
 from unigaz.local import Local
 from unigaz.pleiades import Pleiades
@@ -21,9 +22,10 @@ logger = logging.getLogger(__name__)
 class Manager:
     def __init__(self, user_agent=DEFAULT_USER_AGENT):
         self.gazetteers = {
-            "pleiades": Pleiades(user_agent=user_agent),
             "edh": EDH(user_agent=user_agent),
+            "geonames": GeoNames(user_agent=user_agent),
             "nominatim": Nominatim(user_agent=user_agent),
+            "pleiades": Pleiades(user_agent=user_agent),
         }
         self.gazetteer_netlocs = dict()
         self.gazetteer_lookup_netlocs = dict()
