@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Interpreter to provide a clean API for interacting with ocmnponents
+Interpreter to provide a clean API for interacting with components
 """
 
 from enum import auto
