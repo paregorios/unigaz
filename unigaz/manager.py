@@ -57,15 +57,17 @@ class Manager:
             print("\n".join(tb))
             exit()
 
+        additional_description = None
         try:
-            source_data["title"]
+            source_title = source_data["title"]
         except KeyError:
             logger.warning(
                 f"No title found in data, so using title from search result."
             )
             source_data["title"] = hit["title"]
         else:
-            source_data["description"] = hit["title"]
+            if source_title != hit["title"]:
+                additional_description = hit["title"]
 
         v = None
         for k in ["description", "summary", "abstract"]:
@@ -96,6 +98,8 @@ class Manager:
         except Exception as err:
             tb = traceback.format_exception(err)
             return "\n".join(tb)
+        if additional_description:
+            result.add_description(additional_description, source=uri)
         return result
 
     def local_create(self, name):
