@@ -68,10 +68,14 @@ class GeoNames(Gazetteer, Web):
                 "",
             )
         )
-        groked = self._geonames_grok(data_uri, id_part)
+        r = self.get(data_uri)
+        if r.status_code != 200:
+            r.raise_for_status()
+        data = r.json()
+        groked = self._geonames_grok(data, data_uri, id_part)
         return (groked, data_uri)
 
-    def _geonames_grok(self, data_uri, geoid):
+    def _geonames_grok(self, data, data_uri, geoid):
         """Parse and process GeoNames API output for consumption by unigaz"""
 
         d = dict()
@@ -83,34 +87,41 @@ class GeoNames(Gazetteer, Web):
             geoid
         )  # different uri needed for complete name data
         # d["title"] = self._geonames_grok_title(d["names"])  just let search do it
-        d["locations"] = list()
-        d["externals"] = set()
-        # d["locations"] = self._edh_grok_locations(item)
-        # d["externals"] = self._edh_grok_externals(item)
-        #
+        d["locations"] = self._geonames_grok_locations(data, data_uri)
+        d["externals"] = self._geonames_grok_externals(data)
         return d
 
     def _geonames_grok_externals(self, data):
         externals = set()
-        keys = [k for k in data.keys() if "uri" in k]
-        for k in keys:
-            v = normalize_space(data[k])
-            if validators.url(v):
-                externals.add(v)
+        try:
+            v = data["wikipediaURL"]
+        except KeyError:
+            pass
+        else:
+            if v:
+                if validators.url(v):
+                    externals.add(v)
+        for c in data["alternateNames"]:
+            try:
+                lang = c["lang"]
+            except KeyError:
+                continue
+            else:
+                if lang == "link":
+                    v = c["name"]
+                    if v:
+                        if validators.url(v):
+                            externals.add(v)
         return externals
 
-    def _geonames_grok_locations(self, data):
-        keys = [k for k in data.keys() if k.startswith("coordinates")]
+    def _geonames_grok_locations(self, data, source):
         locations = list()
-        for k in keys:
-            coords = data[k]
-            lat, lon = [float(norm(c)) for c in coords.split(",")]
-            loc = {
-                "geometry": f"POINT({lon} {lat})",
-                "title": "EDH Coordinates",
-                "source": f"https://edh.ub.uni-heidelberg.de/edh/geographie/{data['id']}/json",
-            }
-            locations.append(loc)
+        loc = {
+            "geometry": f"POINT({data['lng']} {data['lat']})",
+            "title": "GeoNames Coordinates",
+            "source": source,
+        }
+        locations.append(loc)
         return locations
 
     def _geonames_grok_names(self, geoid):
