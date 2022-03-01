@@ -539,6 +539,7 @@ established a veteran colony there.',
     - [ ] Syriac Gazetteer
     - [ ] AdriAtlas
     - [ ] FastiOnline
+    - [ ] Chronique
     - [ ]
 - [ ] save local gazetteer (to pickle? jsonpickle?)
 - [ ] load local gazetteer (from pickle? jsonpickle?)
