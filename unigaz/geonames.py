@@ -158,7 +158,6 @@ class GeoNames(Gazetteer, Web):
             if slug:
                 n["romanized"].add(slug)
             if c["locale"]:
-                pprint(c, indent=4)
                 lang = tags.language(c["locale"])
                 n["language"] = lang.format
                 if n["attested"]:
