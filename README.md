@@ -527,13 +527,14 @@ established a veteran colony there.',
 - [ ] fetch and merge from externals (unless created from one of them)
 - [ ] mine more externals out of pleiades references ctype=related
 - [ ] add support for more external gazetteers
-    - [x] nominatim (in progress)
+    - [x] nominatim
         - [x] refactor to eliminate slow and clunky hierarchical serial downloads and instead use the api properly with /full
         - [x] clean up what the refactoring broke for pleiades and EDH imports (i.e., move grok to the gazetteer classes and add tests)
             - [x] refactor EDH
             - [x] refactor Pleiades
     - [ ] TGAZ/China Historical GIS
-    - [ ] GeoNames
+    - [ ] GeoNames (in progress)
+        - [ ] Lacks location and externals parsing
     - [ ] Wikidata
     - [ ] ToposText
     - [ ] iDAI Gazetteer

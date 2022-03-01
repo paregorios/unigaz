@@ -784,6 +784,8 @@ class Name(Identified, Externals, Indexable, Dictionary, Journaled):
                     self.attested_form = v
                 elif isinstance(v, str):
                     self.add_romanized_form(v)
+                elif isinstance(v, set):
+                    self.romanized_forms = list(v)
                 elif isinstance(v, list):
                     self.romanized_forms = v
             for k in [

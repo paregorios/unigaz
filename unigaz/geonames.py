@@ -4,10 +4,13 @@
 GeoNames
 """
 
-from bs4 import BeautifulSoup
 from copy import deepcopy
 from datetime import timedelta
+from language_tags import tags
 import logging
+from pprint import pformat, pprint
+import regex
+from slugify import slugify
 from textnorm import normalize_space, normalize_unicode
 from unigaz.gazetteer import Gazetteer
 from unigaz.web import SearchParameterError, Web, DEFAULT_USER_AGENT
@@ -26,6 +29,15 @@ def norm(s: str):
     return normalize_space(normalize_unicode(s))
 
 
+rx_latin_script = regex.compile(r"^\p{IsLatin}+$")
+
+
+def is_latin_script(s: str):
+    if rx_latin_script.match(s):
+        return True
+    return False
+
+
 class GeoNames(Gazetteer, Web):
     def __init__(self, user_agent=DEFAULT_USER_AGENT):
         Web.__init__(
@@ -39,35 +51,43 @@ class GeoNames(Gazetteer, Web):
         self.lookup_netloc = "www.geonames.org"
 
     def get_data(self, uri):
+        # gonna have to override web functionality in order to get javascript rendered
+        # https://requests-cache.readthedocs.io/en/stable/user_guide/compatibility.html
+        # https://theautomatic.net/2019/01/19/scraping-data-from-javascript-webpage-python/
         parts = urlparse(uri)
         path_parts = parts.path.split("/")
-        json_part = [p for p in path_parts if p == "json"]
-        if not json_part:
-            if path_parts[-1] == "":
-                path_parts[-1] = "json"
-            else:
-                path_parts.append("json")
-        json_uri = urlunparse(("https", parts.netloc, "/".join(path_parts), "", "", ""))
-        r = self.get(json_uri)
-        if r.status_code != 200:
-            r.raise_for_status()
-        groked = self._geonames_grok(r.json(), json_uri)
-        return (groked, json_uri)
+        id_part = str(int(path_parts[1]))
+        # https://www.geonames.org/getJSON?id=2491911
+        data_uri = urlunparse(
+            (
+                "https",
+                "www.geonames.org",
+                f"getJSON",
+                "",
+                urlencode({"id": id_part}),
+                "",
+            )
+        )
+        groked = self._geonames_grok(data_uri, id_part)
+        return (groked, data_uri)
 
-    def _geonames_grok(self, data, data_uri):
+    def _geonames_grok(self, data_uri, geoid):
         """Parse and process GeoNames API output for consumption by unigaz"""
 
         d = dict()
-        item = data["items"]
-
         d["source"] = data_uri
         d["feature_type"] = "Place"
-        d["id"] = item["id"]
-        d["title"] = self._edh_title(item)
-        d["names"] = self._edh_grok_names(item)
-        d["locations"] = self._edh_grok_locations(item)
-        d["externals"] = self._edh_grok_externals(item)
+        d["id"] = geoid
 
+        d["names"] = self._geonames_grok_names(
+            geoid
+        )  # different uri needed for complete name data
+        # d["title"] = self._geonames_grok_title(d["names"])  just let search do it
+        d["locations"] = list()
+        d["externals"] = set()
+        # d["locations"] = self._edh_grok_locations(item)
+        # d["externals"] = self._edh_grok_externals(item)
+        #
         return d
 
     def _geonames_grok_externals(self, data):
@@ -93,36 +113,54 @@ class GeoNames(Gazetteer, Web):
             locations.append(loc)
         return locations
 
-    def _geonames_grok_names(self, data):
+    def _geonames_grok_names(self, geoid):
 
+        names_uri = urlunparse(
+            (
+                "https",
+                "www.geonames.org",
+                "/servlet/geonames",
+                "",
+                urlencode({"geonameId": geoid, "type": "json", "srv": "150"}),
+                "",
+            )
+        )
+        r = self.get(names_uri)
+        if r.status_code != 200:
+            r.raise_for_status()
+        data = r.json()
+
+        candidates = [
+            n for n in data["geonames"] if n["locale"] not in ["link", "iata", "unlc"]
+        ]
         names = list()
-        source = f"https://edh.ub.uni-heidelberg.de/edh/geographie/{data['id']}/json"
-        for k in ["findspot", "findspot_modern"]:
-            try:
-                v = data[k]
-            except KeyError:
-                pass
+        for c in candidates:
+            n = dict()
+            n["source"] = names_uri
+            slug = ""
+            if c["name"]:
+                n["attested"] = c["name"]
+                slug = slugify(c["name"], separator=" ", lowercase=False)
+            n["romanized"] = set()
+            if c["asciiName"]:
+                n["romanized"].add(c["asciiName"])
+            if slug:
+                n["romanized"].add(slug)
+            if c["locale"]:
+                pprint(c, indent=4)
+                lang = tags.language(c["locale"])
+                n["language"] = lang.format
+                if n["attested"]:
+                    if lang.script.format != "Latn":
+                        if is_latin_script(n["attested"]):
+                            raise RuntimeError(pformat(n, indent=4))
             else:
-                if v:
-                    nv = norm(v)
-                    name = {"language": "und", "romanized": list(), "source": source}
-                    name["attested"] = nv
-                    name["romanized"].append(nv)
-                    if k == "findspot_modern":
-                        name["language"] = "de"
-                    name["name_type"] = "geographic"
-                    names.append(name)
-        try:
-            v = data["findspot_ancient"]
-        except KeyError:
-            pass
-        else:
-            if v:
-                nv = norm(v)
-                name = {"language": "und", "romanized": list(), "source": source}
-                name["romanized"].append(nv)
-                name["name_type"] = "geographic"
-                names.append(name)
+                n["language"] = "und"
+            if c["isOfficialName"]:
+                n["official"] = True
+            else:
+                n["official"] = False
+            names.append(n)
         return names
 
     def _massage_params(self, value):
