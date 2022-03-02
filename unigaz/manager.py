@@ -10,6 +10,7 @@ import traceback
 from urllib.parse import urlparse
 from unigaz.edh import EDH
 from unigaz.geonames import GeoNames
+from unigaz.idai import IDAI
 from unigaz.nominatim import Nominatim
 from unigaz.local import Local
 from unigaz.pleiades import Pleiades
@@ -24,6 +25,7 @@ class Manager:
         self.gazetteers = {
             "edh": EDH(user_agent=user_agent),
             "geonames": GeoNames(user_agent=user_agent),
+            "idai": IDAI(user_agent=user_agent),
             "nominatim": Nominatim(user_agent=user_agent),
             "pleiades": Pleiades(user_agent=user_agent),
         }
