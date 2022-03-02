@@ -14,6 +14,7 @@ import logging
 import pinyin
 from pprint import pformat, pprint
 import regex
+from shapely.geometry import shape, Polygon
 from slugify import slugify
 from textnorm import normalize_space, normalize_unicode
 from unigaz.gazetteer import Gazetteer
@@ -86,43 +87,85 @@ class IDAI(Gazetteer, Web):
 
         d["names"] = self._idai_grok_names(data, data_uri)
         d["title"] = self._idai_grok_title(data, data_uri)
-        pprint(d, indent=4)
-        exit()
-        d["locations"] = self._edh_grok_locations(data, data_uri)
-        d["externals"] = self._edh_grok_externals(data, data_uri)
+        d["locations"] = self._idai_grok_locations(data, data_uri)
+        d["externals"] = self._idai_grok_externals(data, data_uri)
         return d
 
-    def _geonames_grok_externals(self, data):
+    def _idai_grok_externals(self, data, data_uri):
         externals = set()
+        bypassed = set()
+        for ident in data["identifiers"]:
+            c = ident["context"]
+            v = ident["value"]
+            if c in ["zenon-systemnr"]:
+                continue
+            elif c == "zenon-thesaurus":
+                externals.add(
+                    urlunparse(
+                        (
+                            "https",
+                            "zenon.dainst.org",
+                            "Search/Results",
+                            "",
+                            urlencode({"lookfor": self._massage_params(v)}),
+                            "",
+                        )
+                    )
+                )
+            elif c == "geonames":
+                externals.add(f"https://www.geonames.org/{v}")
+            elif c == "pleiades":
+                externals.add(f"https://pleiades.stoa.org/places/{v}")
+            else:
+                bypassed.add(c)
+        for link in data["links"]:
+            if link["predicate"] == "owl:sameAs":
+                parts = urlparse(link["object"])
+                if parts.netloc == "sws.geonames.org":
+                    externals.add(
+                        urlunparse(
+                            ("https", "www.geonames.org", parts.path, "", "", "")
+                        )
+                    )
+                elif parts.netloc == "d-nb.info":
+                    externals.add(link["object"])
+                else:
+                    bypassed.add(parts.netloc)
+        if bypassed:
+            logger.warning(
+                f"Bypassed when parsing iDAI externals: {' '.join(list(bypassed))}"
+            )
+        return externals
+
+    def _idai_grok_locations(self, data, source):
+        locations = list()
         try:
-            v = data["wikipediaURL"]
+            geo = data["prefLocation"]
+        except KeyError:
+            return locations
+        try:
+            coords = geo["coordinates"]
         except KeyError:
             pass
         else:
-            if v:
-                if validators.url(v):
-                    externals.add(v)
-        for c in data["alternateNames"]:
-            try:
-                lang = c["lang"]
-            except KeyError:
-                continue
-            else:
-                if lang == "link":
-                    v = c["name"]
-                    if v:
-                        if validators.url(v):
-                            externals.add(v)
-        return externals
-
-    def _geonames_grok_locations(self, data, source):
-        locations = list()
-        loc = {
-            "geometry": f"POINT({data['lng']} {data['lat']})",
-            "title": "GeoNames Coordinates",
-            "source": source,
-        }
-        locations.append(loc)
+            loc = {
+                "title": "iDAI Point Location",
+                "geometry": f"POINT({coords[0]} {coords[1]})",
+                "source": source,
+            }
+            locations.append(loc)
+        try:
+            ishape = geo["shape"]
+        except KeyError:
+            pass
+        else:
+            s = Polygon(ishape[0][0])
+            loc = {
+                "title": f"iDAI Polygon Location",
+                "geometry": s.wkt,
+                "source": source,
+            }
+            locations.append(loc)
         return locations
 
     def _idai_grok_names(self, data, source):
