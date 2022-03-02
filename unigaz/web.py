@@ -9,7 +9,7 @@ import logging
 from textnorm import normalize_space, normalize_unicode
 from webiquette.webi import Webi, DEFAULT_HEADERS
 
-DEFAULT_USER_AGENT = "unigaz/0.0.1"
+DEFAULT_USER_AGENT = "unigaz/0.0.1 (+https://github.com/paregorios/unigaz)"
 logger = logging.getLogger(__name__)
 
 
