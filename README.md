@@ -526,6 +526,7 @@ established a veteran colony there.',
 - [ ] tests!
 - [ ] fetch and merge from externals (unless created from one of them)
 - [ ] mine more externals out of pleiades references ctype=related
+- [ ] refactor and centralize language code parsing, language guessing, and romanization so as to hide package dependencies from all the gazetteer modules and consolidate them in a single place
 - [ ] add support for more external gazetteers
     - [x] pleiades
     - [x] EDH Geo

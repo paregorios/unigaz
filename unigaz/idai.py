@@ -8,8 +8,10 @@ API docs: https://gazetteer.dainst.org/app/#!/help
 
 from copy import deepcopy
 from datetime import timedelta
+from iso639 import Lang as Lang639
 from language_tags import tags
 import logging
+import pinyin
 from pprint import pformat, pprint
 import regex
 from slugify import slugify
@@ -46,23 +48,24 @@ class IDAI(Gazetteer, Web):
             self,
             netloc="gazetteer.dainst.org",
             user_agent=user_agent,
-            respect_robots_txt=True
-            # cache_control=False,
-            # expires=timedelta(hours=24),
+            respect_robots_txt=True,
+            cache_control=False,
+            expires=timedelta(hours=24),
         )
 
     def get_data(self, uri):
         parts = urlparse(uri)
         path_parts = parts.path.split("/")
-        id_part = str(int(path_parts[1]))
-        # https://www.geonames.org/getJSON?id=2491911
+        path_parts = [p for p in path_parts if p.strip()]
+        id_part = str(int(path_parts[-1]))
+        # https://gazetteer.dainst.org/doc/12345
         data_uri = urlunparse(
             (
                 "https",
-                "www.geonames.org",
-                f"getJSON",
+                "gazetteer.dainst.org",
+                f"doc/{id_part}.json",
                 "",
-                urlencode({"id": id_part}),
+                "",
                 "",
             )
         )
@@ -70,23 +73,23 @@ class IDAI(Gazetteer, Web):
         if r.status_code != 200:
             r.raise_for_status()
         data = r.json()
-        groked = self._geonames_grok(data, data_uri, id_part)
+        groked = self._idai_grok(data, data_uri, id_part)
         return (groked, data_uri)
 
-    def _geonames_grok(self, data, data_uri, geoid):
-        """Parse and process GeoNames API output for consumption by unigaz"""
+    def _idai_grok(self, data, data_uri, geoid):
+        """Parse and process iDAI gazetteer API output for consumption by unigaz"""
 
         d = dict()
         d["source"] = data_uri
         d["feature_type"] = "Place"
         d["id"] = geoid
 
-        d["names"] = self._geonames_grok_names(
-            geoid
-        )  # different uri needed for complete name data
-        # d["title"] = self._geonames_grok_title(d["names"])  just let search do it
-        d["locations"] = self._geonames_grok_locations(data, data_uri)
-        d["externals"] = self._geonames_grok_externals(data)
+        d["names"] = self._idai_grok_names(data, data_uri)
+        pprint(d, indent=4)
+        exit()
+        d["title"] = self._edh_grok_title(data, data_uri)
+        d["locations"] = self._edh_grok_locations(data, data_uri)
+        d["externals"] = self._edh_grok_externals(data, data_uri)
         return d
 
     def _geonames_grok_externals(self, data):
@@ -122,52 +125,55 @@ class IDAI(Gazetteer, Web):
         locations.append(loc)
         return locations
 
-    def _geonames_grok_names(self, geoid):
+    def _idai_grok_names(self, data, source):
 
-        names_uri = urlunparse(
-            (
-                "https",
-                "www.geonames.org",
-                "/servlet/geonames",
-                "",
-                urlencode({"geonameId": geoid, "type": "json", "srv": "150"}),
-                "",
-            )
-        )
-        r = self.get(names_uri)
-        if r.status_code != 200:
-            r.raise_for_status()
-        data = r.json()
-
-        candidates = [
-            n for n in data["geonames"] if n["locale"] not in ["link", "iata", "unlc"]
-        ]
+        candidates = [n for n in data["names"]]
+        try:
+            v = data["prefName"]
+        except KeyError:
+            pass
+        else:
+            candidates.append(v)
         names = list()
         for c in candidates:
             n = dict()
-            n["source"] = names_uri
+            n["source"] = source
             slug = ""
-            if c["name"]:
-                n["attested"] = c["name"]
-                slug = slugify(c["name"], separator=" ", lowercase=False)
+            try:
+                ancient = c["ancient"]
+            except KeyError:
+                ancient = False
+            try:
+                language = c["language"]
+            except KeyError:
+                language = "und"
+            else:
+                try:
+                    language = tags.language(Lang639(language).pt1).format
+                except AttributeError:
+                    raise RuntimeError(f"bad language code: {language}")
+            val = c["title"]
+            latn = is_latin_script(val)
             n["romanized"] = set()
-            if c["asciiName"]:
-                n["romanized"].add(c["asciiName"])
+            if latn:
+                n["romanized"].add(val)
+            if latn and ancient and language in ["la", "und"]:
+                n["language"] = "la"
+                n["attested"] = val
+            elif latn and not ancient and language != "und":
+                n["language"] = language
+                if tags.language(language).script.format == "Latn":
+                    n["attested"] = val
+            elif not latn:
+                n["language"] = language
+                n["attested"] = val
+            slug = slugify(val, separator=" ", lowercase=False)
             if slug:
                 n["romanized"].add(slug)
-            if c["locale"]:
-                lang = tags.language(c["locale"])
-                n["language"] = lang.format
-                if n["attested"]:
-                    if lang.script.format != "Latn":
-                        if is_latin_script(n["attested"]):
-                            raise RuntimeError(pformat(n, indent=4))
-            else:
-                n["language"] = "und"
-            if c["isOfficialName"]:
-                n["official"] = True
-            else:
-                n["official"] = False
+            if language in ["cmn", "zh"] and not latn:
+                n["romanized"].add(pinyin.get(val))
+                n["romanized"].add(pinyin.get(val, format="strip", delimiter=" "))
+                n["romanized"].add(pinyin.get(val, format="numerical"))
             names.append(n)
         return names
 
@@ -260,5 +266,8 @@ class IDAI(Gazetteer, Web):
         return {"arguments": kwargs, "query": uri, "hits": hits}
 
     def _idai_summary(self, entry):
-        types = "; ".join([t.replace("-", " ") for t in entry["types"]])
+        try:
+            types = "; ".join([t.replace("-", " ") for t in entry["types"]])
+        except KeyError:
+            return None
         return types.capitalize() + "."
