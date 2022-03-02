@@ -531,15 +531,15 @@ established a veteran colony there.',
     - [x] EDH Geo
     - [x] nominatim
     - [x] GeoNames
-    - [ ] TGAZ/China Historical GIS
-    - [ ] Wikidata
-    - [ ] ToposText
-    - [ ] iDAI Gazetteer
-    - [ ] geo-kima
+    - [ ] TGAZ/China Historical GIS (REST/JSON API)
+    - [ ] iDAI Gazetteer (API: https://gazetteer.dainst.org/app/#!/help)
+    - [ ] geo-kima (REST/JSON API)
+    - [ ] Wikidata (SPARQL query API)
+    - [ ] ToposText (does not have API, but does have bulk dataset download)
     - [ ] Syriac Gazetteer
     - [ ] AdriAtlas
     - [ ] FastiOnline
-    - [ ] Chronique
+    - [ ] Chronique (OAI API seems to be broken)
     - [ ]
 - [ ] save local gazetteer (to pickle? jsonpickle?)
 - [ ] load local gazetteer (from pickle? jsonpickle?)
