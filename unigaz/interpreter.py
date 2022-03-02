@@ -304,7 +304,9 @@ class Interpreter:
                     ).add_to(m)
                 elif isinstance(geometry, Polygon):
                     folium.Polygon(
-                        locations=[(pair[1], pair[0]) for pair in geometry.coords],
+                        locations=[
+                            (pair[1], pair[0]) for pair in geometry.exterior.coords
+                        ],
                         popup=location.title,
                         color="orange",
                         fill_color="orange",
