@@ -85,9 +85,9 @@ class IDAI(Gazetteer, Web):
         d["id"] = geoid
 
         d["names"] = self._idai_grok_names(data, data_uri)
+        d["title"] = self._idai_grok_title(data, data_uri)
         pprint(d, indent=4)
         exit()
-        d["title"] = self._edh_grok_title(data, data_uri)
         d["locations"] = self._edh_grok_locations(data, data_uri)
         d["externals"] = self._edh_grok_externals(data, data_uri)
         return d
@@ -176,6 +176,14 @@ class IDAI(Gazetteer, Web):
                 n["romanized"].add(pinyin.get(val, format="numerical"))
             names.append(n)
         return names
+
+    def _idai_grok_title(self, data, source):
+        try:
+            v = data["prefName"]
+        except KeyError:
+            return None
+        else:
+            return v["title"]
 
     def _massage_params(self, value):
         if isinstance(value, bool):
