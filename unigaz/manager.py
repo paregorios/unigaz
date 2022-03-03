@@ -4,8 +4,12 @@
 Manage the tools
 """
 
+from tkinter.ttk import Separator
+import jsonpickle
 import logging
+from pathlib import Path
 from pprint import pprint
+from slugify import slugify
 import traceback
 from urllib.parse import urlparse
 from unigaz.edh import EDH
@@ -117,10 +121,37 @@ class Manager:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
         return self.local.content
 
+    def local_load(self, local_name):
+        if self.local:
+            raise RuntimeError(f"a local gazetteer is already loaded")
+        path = Path("data/gazetteers")
+        fn = slugify(local_name, separator="_")
+        path = path / f"{fn}.json"
+        path = path.resolve()
+        with open(path, "r", encoding="utf-8") as fp:
+            pickled = fp.read()
+        del fp
+        self.local = jsonpickle.decode(pickled)
+        return f"Loaded local gazetteer {self.local.title} from {path}."
+
     def local_merge(self, source, destination):
         if not self.local:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
         return self.local.merge(source, destination)
+
+    def local_save(self):
+        if not self.local:
+            raise RuntimeError(f"a local gazetteer must be loaded or created first")
+        path = Path("data/gazetteers")
+        path.mkdir(parents=True, exist_ok=True)
+        fn = slugify(self.local.title, separator="_")
+        path = path / f"{fn}.json"
+        path = path.resolve()
+        pickled = jsonpickle.encode(self.local)
+        with open(path, "w", encoding="utf-8") as fp:
+            fp.write(pickled)
+        del fp
+        return f"Saved local gazetteer {self.local.title} to {path}."
 
     def search(self, gazetteer_name, args):
         if self.supported(gazetteer_name):

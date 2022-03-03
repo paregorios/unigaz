@@ -235,6 +235,14 @@ class Interpreter:
             rows=rows,
         )
 
+    def _cmd_load(self, args):
+        """
+        Load a local gazetteer from file
+            > load My Sites
+              (reads in content from data/gazetteers/my_sites.json)
+        """
+        return self.manager.local_load(" ".join(args))
+
     def _cmd_log_debug(self, args):
         """
         Change logging level to DEBUG
@@ -369,43 +377,6 @@ class Interpreter:
         """
         exit()
 
-    def _context_lookup(self, args, command="_context_lookup"):
-        """Do context lookups for various commands like raw and map"""
-        if len(args) != 2:
-            raise UsageError(
-                command, f"invalid number of arguments (expected 2, got {len(args)})"
-            )
-        k = args[0]
-        if k not in {"search", "local"}:
-            raise UsageError(
-                command, f"Invalid subcommand '{k}' (expected 'search' or 'local')"
-            )
-        elif k == "search":
-            context = self.external_context
-        elif k == "local":
-            context = self.local_context
-        i = args[1]
-        try:
-            str(int(i))
-        except ValueError:
-            raise ArgumentError(
-                command, "Invalid context number (expected integer, got '{i}')"
-            )
-        try:
-            v = context[i]
-        except KeyError:
-            if len(context) == 0:
-                raise ArgumentError(
-                    command,
-                    f"No {k} context is defined, so context number {i} is out of range.",
-                )
-            else:
-                raise ArgumentError(
-                    command,
-                    f"Context number {i} is out of range (current {k} context range = 1-{len(context)}.",
-                )
-        return v
-
     def _cmd_raw(self, args):
         """
         Show raw data view of an item in a context list
@@ -453,6 +424,13 @@ class Interpreter:
             except AttributeError:
                 pass
         return Pretty(v)
+
+    def _cmd_save(self, args):
+        """
+        Save local gazetteer for future use
+            > save
+        """
+        return self.manager.local_save()
 
     def _cmd_search(self, args):
         """
@@ -506,6 +484,43 @@ class Interpreter:
         else:
             msg = "\n".join([l.strip() for l in msg.split("\n")[1:]])
         return msg
+
+    def _context_lookup(self, args, command="_context_lookup"):
+        """Do context lookups for various commands like raw and map"""
+        if len(args) != 2:
+            raise UsageError(
+                command, f"invalid number of arguments (expected 2, got {len(args)})"
+            )
+        k = args[0]
+        if k not in {"search", "local"}:
+            raise UsageError(
+                command, f"Invalid subcommand '{k}' (expected 'search' or 'local')"
+            )
+        elif k == "search":
+            context = self.external_context
+        elif k == "local":
+            context = self.local_context
+        i = args[1]
+        try:
+            str(int(i))
+        except ValueError:
+            raise ArgumentError(
+                command, "Invalid context number (expected integer, got '{i}')"
+            )
+        try:
+            v = context[i]
+        except KeyError:
+            if len(context) == 0:
+                raise ArgumentError(
+                    command,
+                    f"No {k} context is defined, so context number {i} is out of range.",
+                )
+            else:
+                raise ArgumentError(
+                    command,
+                    f"Context number {i} is out of range (current {k} context range = 1-{len(context)}.",
+                )
+        return v
 
     def _table(self, columns, rows, title=None):
         """Produce a rich table for output"""

@@ -23,6 +23,7 @@ setuptools.setup(
         "feedparser",
         "folium",
         "iso639-lang",
+        "jsonpickle",
         "language-tags",
         "lxml",
         "pinyin",
