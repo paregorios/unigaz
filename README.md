@@ -549,4 +549,5 @@ established a veteran colony there.',
 - [ ] search/accession from TGAZ/China Historical GIS (REST/JSON API)
 - [ ] search/accession from ToposText (does not have API, but does have bulk dataset download)
 - [ ] search/accession from Wikidata (SPARQL query API)
+- [ ] search/accession from World Historical Gazetteer
 - [ ] tests!
