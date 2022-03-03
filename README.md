@@ -511,45 +511,42 @@ established a veteran colony there.',
 
 ## Next/Later/Maybe
 
+- [x] export to JSON
+    - [x] gazetteer
+    - [ ] place
+- [x] load local gazetteer (jsonpickle)
 - [x] merge local places
-- [x] on place accession, grok names
 - [x] on place accession, grok locations
+- [x] on place accession, grok names
+- [x] save local gazetteer (jsonpickle)
+- [x] search/accession from EDH Geo
+- [x] search/accession from GeoNames
+- [x] search/accession from iDAI Gazetteer (API: https://gazetteer.dainst.org/app/#!/help)
+- [x] search/accession from nominatim (OpenStreetMap)
+- [x] search/accession from pleiades
 - [x] when we have locations for a place: map them (and the horizontal accuracy bubble if there is one)
-- [ ] command to list names
+- [ ] cli: edit individual bits of data with commands like: "set local 1 externals 1 lang=en"
 - [ ] command to list descriptions
 - [ ] command to list externals
-- [ ] command to list locations
 - [ ] command to list full local item (less raw than "raw")
-- [ ] export place, name, or entire local gazetteer to json, teixml, geojson, linked place format json, csv, markdown, html
-    - [x] export to JSON
-        - [x] gazetteer
-        - [ ] place
-    - [ ] export to GeoJSON (verify can import to QGIS)
-    - [ ] export to linked places format JSON
-    - [ ] export to markdown
-    - [ ] export to HTML
-- [ ] tests!
+- [ ] command to list locations
+- [ ] command to list names
+- [ ] export to GeoJSON (verify can import to QGIS)
+- [ ] export to HTML
+- [ ] export to linked places format JSON
+- [ ] export to markdown
 - [ ] fetch and merge from externals (unless created from one of them)
-- [ ] mine more externals out of pleiades references ctype=related
-- [ ] refactor and centralize language code parsing, language guessing, and romanization so as to hide package dependencies from all the gazetteer modules and consolidate them in a single place
-- [ ] add support for more external gazetteers
-    - [x] pleiades
-    - [x] EDH Geo
-    - [x] nominatim
-    - [x] GeoNames
-    - [x] iDAI Gazetteer (API: https://gazetteer.dainst.org/app/#!/help)
-    - [ ] TGAZ/China Historical GIS (REST/JSON API)
-    - [ ] geo-kima (REST/JSON API)
-    - [ ] Wikidata (SPARQL query API)
-    - [ ] ToposText (does not have API, but does have bulk dataset download)
-    - [ ] Syriac Gazetteer (TEI and RDF/XML serializations of individual items; no evident search API)
-    - [ ] AdriAtlas (no evident search API nor alternate serializations)
-    - [ ] FastiOnline
-    - [ ] Chronique (OAI API seems to be broken 2 March 2022)
-    - [ ]
-- [ ] save local gazetteer (to pickle? jsonpickle?)
-- [ ] load local gazetteer (from pickle? jsonpickle?)
-- [ ] map whole local gazetteer
 - [ ] map search result set
-- [ ] cli: edit individual bits of data with commands like: "set local 1 externals 1 lang=en"
+- [ ] map whole local gazetteer
+- [ ] mine more externals out of pleiades references ctype=related
 - [ ] modify error handling so it doesn't swallow real development errors and their associated tracebacks
+- [ ] refactor and centralize language code parsing, language guessing, and romanization so as to hide package dependencies from all the gazetteer modules and consolidate them in a single place
+- [ ] search/accession from AdriAtlas (no evident search API nor alternate serializations)
+- [ ] search/accession from Chronique (OAI API seems to be broken 2 March 2022)
+- [ ] search/accession from FastiOnline
+- [ ] search/accession from geo-kima (REST/JSON API)
+- [ ] search/accession from Syriac Gazetteer (TEI and RDF/XML serializations of individual items; no evident search API)
+- [ ] search/accession from TGAZ/China Historical GIS (REST/JSON API)
+- [ ] search/accession from ToposText (does not have API, but does have bulk dataset download)
+- [ ] search/accession from Wikidata (SPARQL query API)
+- [ ] tests!
