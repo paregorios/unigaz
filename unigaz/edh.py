@@ -73,6 +73,9 @@ class EDH(Gazetteer, Web):
         for k in keys:
             v = normalize_space(data[k])
             if validators.url(v):
+                parts = urlparse(v)
+                if parts.netloc == "geonames.org":
+                    v = f"https://www.geonames.org{parts.path}"
                 externals.add(v)
         return externals
 
