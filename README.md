@@ -515,6 +515,11 @@ established a veteran colony there.',
 - [x] on place accession, grok names
 - [x] on place accession, grok locations
 - [x] when we have locations for a place: map them (and the horizontal accuracy bubble if there is one)
+- [ ] command to list names
+- [ ] command to list descriptions
+- [ ] command to list externals
+- [ ] command to list locations
+- [ ] command to list full local item (less raw than "raw")
 - [ ] export place, name, or entire local gazetteer to json, teixml, geojson, linked place format json, csv, markdown, html
     - [x] export to JSON
         - [x] gazetteer
@@ -532,15 +537,15 @@ established a veteran colony there.',
     - [x] EDH Geo
     - [x] nominatim
     - [x] GeoNames
+    - [x] iDAI Gazetteer (API: https://gazetteer.dainst.org/app/#!/help)
     - [ ] TGAZ/China Historical GIS (REST/JSON API)
-    - [ ] iDAI Gazetteer (API: https://gazetteer.dainst.org/app/#!/help)
     - [ ] geo-kima (REST/JSON API)
     - [ ] Wikidata (SPARQL query API)
     - [ ] ToposText (does not have API, but does have bulk dataset download)
-    - [ ] Syriac Gazetteer
-    - [ ] AdriAtlas
+    - [ ] Syriac Gazetteer (TEI and RDF/XML serializations of individual items; no evident search API)
+    - [ ] AdriAtlas (no evident search API nor alternate serializations)
     - [ ] FastiOnline
-    - [ ] Chronique (OAI API seems to be broken)
+    - [ ] Chronique (OAI API seems to be broken 2 March 2022)
     - [ ]
 - [ ] save local gazetteer (to pickle? jsonpickle?)
 - [ ] load local gazetteer (from pickle? jsonpickle?)
