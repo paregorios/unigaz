@@ -49,6 +49,26 @@ def norm(s: str):
     return normalize_space(normalize_unicode(s))
 
 
+def codify(language_code=None, script_code=None):
+    if language_code:
+        lc = language_code
+    else:
+        lc = "und"
+    logger.debug(f"lc={lc}")
+    if script_code:
+        if lc == "und":
+            code = "-".join((lc, script_code))
+        else:
+            if tags.language(lc).script.format == script_code:
+                code = lc
+            else:
+                code = "-".join((lc, script_code))
+    else:
+        code = lc
+    code = tags.tag(code).format  # ensure proper conventions
+    return code
+
+
 def classify(s: str, language_code=None, script_code=None):
     """Determine language and script and return results."""
     v = norm(s)
@@ -57,7 +77,7 @@ def classify(s: str, language_code=None, script_code=None):
     # language
     if language_code:
         language_tag = tags.language(language_code).format
-    elif len(v.split()) > 5:
+    elif len(v.split()) >= 5:
         threshold = 0.5
         codes = set()
         langid_code, langid_prob = langid.classify(v)
