@@ -233,8 +233,15 @@ class Described:
     def descriptions(self):
         self._descriptions = list()
 
-    def add_description(self, text=None, lang="und", preferred=False, source=None):
-        nl = norm(lang)
+    def add_description(
+        self, text=None, lang=None, preferred=False, source=None, language=None
+    ):
+        if lang:
+            nl = norm(lang)
+        elif language:
+            nl = norm(language)
+        else:
+            nl = "und"
         if nl in ["und", ""]:
             langtag, prob = langid.classify(text)
             if (langtag == "la" and is_latin_script(text)) or langtag != "la":

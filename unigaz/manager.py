@@ -4,7 +4,6 @@
 Manage the tools
 """
 
-from tkinter.ttk import Separator
 import jsonpickle
 import logging
 from pathlib import Path
@@ -15,6 +14,7 @@ from urllib.parse import urlparse
 from unigaz.edh import EDH
 from unigaz.geonames import GeoNames
 from unigaz.idai import IDAI
+from unigaz.importer import Importer
 from unigaz.nominatim import Nominatim
 from unigaz.local import Local
 from unigaz.pleiades import Pleiades
@@ -45,25 +45,43 @@ class Manager:
                 self.gazetteer_lookup_netlocs[lu] = g
         self.local = None
 
-    def local_accession(self, hit):
+    def import_from_file(self, filepath):
+        if isinstance(filepath, str):
+            fp = Path(filepath)
+        else:
+            fp = filepath
+        try:
+            self.file_importer
+        except AttributeError:
+            self.file_importer = Importer()
+        data = self.file_importer.import_data(fp)
+        return data
+
+    def local_accession(self, hit, fetch_data=True):
         if not self.local:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
         uri = hit["uri"]
-        parts = urlparse(uri)
-        try:
-            g = self.gazetteer_netlocs[parts.netloc]
-        except KeyError:
+        if fetch_data:
+            parts = urlparse(uri)
             try:
-                g = self.gazetteer_lookup_netlocs[parts.netloc]
+                g = self.gazetteer_netlocs[parts.netloc]
             except KeyError:
-                raise ValueError(f"Unsupported gazetteer for netloc {parts.netloc}.")
-        try:
-            source_data, source_uri = g.get_data(uri)
-        except Exception as err:
-            logger.debug("fail")
-            tb = traceback.format_exception(err)
-            print("\n".join(tb))
-            exit()
+                try:
+                    g = self.gazetteer_lookup_netlocs[parts.netloc]
+                except KeyError:
+                    raise ValueError(
+                        f"Unsupported gazetteer for netloc {parts.netloc}."
+                    )
+            try:
+                source_data, source_uri = g.get_data(uri)
+            except Exception as err:
+                logger.debug("fail")
+                tb = traceback.format_exception(err)
+                print("\n".join(tb))
+                exit()
+        else:
+            source_data = hit
+            source_uri = hit["uri"]
 
         additional_description = None
         try:

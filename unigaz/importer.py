@@ -10,7 +10,7 @@ import logging
 from pathlib import Path
 from pprint import pformat
 from textnorm import normalize_space, normalize_unicode
-from unigaz.writing import classify, codify
+from unigaz.writing import classify, codify, comprehend
 
 logger = logging.getLogger(__name__)
 
@@ -47,10 +47,25 @@ class Importer:
 
     def _grok_dict(self, input, source):
         result = {"source": source, "feature_type": "Place"}
-        for k in ["id", "title", "description", "names", "locations", "references"]:
+        for k in [
+            "id",
+            "title",
+            "description",
+            "names",
+            "locations",
+            "references",
+            "connects_to",
+            "uri",
+        ]:
             part = getattr(self, f"_grok_dict_{k}")(input, source)
             result[k] = part
         return result
+
+    def _grok_dict_connects_to(self, input, source):
+        try:
+            return self._grok_dict_field_by_keys(input, ["connects_to"])
+        except KeyError as err:
+            return None
 
     def _grok_dict_field_by_keys(self, input, keys):
         result = None
@@ -73,9 +88,8 @@ class Importer:
                 input, ["description", "summary", "abstract"]
             )
         except KeyError as err:
-            msg = f"Import failure for 'description' ({str(err)})"
-            raise ValueError(msg)
-        attested, romanized, lang, script = classify(val)
+            return None
+        lang, script = classify(val)
         d = {"text": val, "language": codify(lang, script)}
         return d
 
@@ -92,13 +106,11 @@ class Importer:
                 input, ["lon", "long", "lng", "longitude", "x"]
             )
         except KeyError as err:
-            msg = f"Import failure for 'location (longitude)' ({str(err)})"
-            raise ValueError(msg)
+            return list()
         try:
             lat = self._grok_dict_field_by_keys(input, ["lat", "latitude", "y"])
         except KeyError as err:
-            msg = f"Import failure for 'location (latitude)' ({str(err)})"
-            raise ValueError(msg)
+            return list()
         loc = {"geometry": f"POINT({lon} {lat})", "title": f"{source} coordinates"}
         return [
             loc,
@@ -118,7 +130,7 @@ class Importer:
         else:
             raise NotImplementedError(f"names: {type(results)}")
         for v in results:
-            attested, romanized, lang_code, script_code = classify(v)
+            attested, romanized, lang_code, script_code = comprehend(v)
             name = dict()
             if attested:
                 name["attested"] = attested
@@ -128,7 +140,10 @@ class Importer:
         return names
 
     def _grok_dict_references(self, input, source):
-        return input["references"]
+        try:
+            return input["references"]
+        except KeyError:
+            return list()
 
     def _grok_dict_title(self, input, source):
         try:
@@ -137,11 +152,20 @@ class Importer:
             msg = f"Import failure for 'title' ({str(err)})"
             raise ValueError(msg)
 
+    def _grok_dict_uri(self, input, source):
+        try:
+            return self._grok_dict_field_by_keys(input, ["uri"])
+        except KeyError as err:
+            return None
+
     def _import_json(self, filepath):
         with open(filepath, "r", encoding="utf-8") as fp:
             data = json.load(fp)
         del fp
-        source = filepath.basename()
+        try:
+            source = data["source"]
+        except KeyError:
+            source = str(filepath.resolve())
         features = None
         if isinstance(data, dict):
             if len(data) == 1:
@@ -153,6 +177,7 @@ class Importer:
             features = data
         groked = list()
         for feature in features:
+            logger.debug(pformat(feature, indent=4))
             if isinstance(feature, dict):
                 groked.append(self._grok_dict(feature, source))
             else:

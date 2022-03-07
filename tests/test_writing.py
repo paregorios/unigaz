@@ -6,13 +6,13 @@ Test the unigaz.writing module
 
 import logging
 import pinyin
-from unigaz.writing import classify
+from unigaz.writing import classify, comprehend
 
 
 class TestWriting:
     def test_arabic(self):
         s = "قفز الثعلب البني السريع فوق الكلب الكسول."
-        attested, romanized, lang_code, script_code = classify(s)
+        attested, romanized, lang_code, script_code = comprehend(s)
         assert attested == s
         s_romanized = set()
         for r in [
@@ -26,7 +26,7 @@ class TestWriting:
 
     def test_chinese(self):
         s = "敏捷的棕色狐狸跳過了懶惰的狗。"
-        attested, romanized, lang_code, script_code = classify(s)
+        attested, romanized, lang_code, script_code = comprehend(s)
         assert attested == s
         s_romanized = set()
         s_romanized.add(
@@ -39,7 +39,7 @@ class TestWriting:
 
     def test_english(self):
         s = "The quick brown fox jumped over the lazy dog."
-        attested, romanized, lang_code, script_code = classify(s)
+        attested, romanized, lang_code, script_code = comprehend(s)
         assert attested == s
         s_romanized = set()
         s_romanized.add(s)
@@ -51,7 +51,7 @@ class TestWriting:
 
     def test_french(self):
         s = "Le rapide renard brun sauta par dessus le chien paresseux."
-        attested, romanized, lang_code, script_code = classify(s)
+        attested, romanized, lang_code, script_code = comprehend(s)
         assert attested == s
         s_romanized = set()
         s_romanized.add(s)
@@ -63,7 +63,7 @@ class TestWriting:
 
     def test_greek_modern(self):
         s = "Η γρήγορη καφέ αλεπού πήδηξε πάνω από το τεμπέλικο σκυλί."
-        attested, romanized, lang_code, script_code = classify(s)
+        attested, romanized, lang_code, script_code = comprehend(s)
         assert attested == s
         s_romanized = set()
         for r in [
@@ -78,7 +78,7 @@ class TestWriting:
 
     def test_russian(self):
         s = "Быстрая, коричневая лиса, перепрыгнула через ленивого пса."
-        attested, romanized, lang_code, script_code = classify(s)
+        attested, romanized, lang_code, script_code = comprehend(s)
         assert attested == s
         s_romanized = set()
         for r in [
@@ -92,7 +92,7 @@ class TestWriting:
 
     def test_turkish(self):
         s = "Hızlı kahverengi tilki tembel köpeğin üzerinden atladı."
-        attested, romanized, lang_code, script_code = classify(s)
+        attested, romanized, lang_code, script_code = comprehend(s)
         assert attested == s
         s_romanized = set()
         s_romanized.add(s)
@@ -104,7 +104,7 @@ class TestWriting:
 
     def test_ukranian(self):
         s = "Швидкий бурий лис перестрибнув через ледачого пса."
-        attested, romanized, lang_code, script_code = classify(s)
+        attested, romanized, lang_code, script_code = comprehend(s)
         assert attested == s
         s_romanized = set()
         for r in [

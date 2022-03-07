@@ -87,6 +87,7 @@ class Interpreter:
 
         self.external_context = dict()
         self.local_context = dict()
+        self.import_context = dict()
 
     def parse(self, raw_input):
         parts = shlex.split(raw_input)
@@ -101,10 +102,10 @@ class Interpreter:
 
     def _cmd_accession(self, args):
         """
-        Accession an item from search results into local
+        Accession an item from search or import results into local
             > accession search 1
         """
-        expected = ["search"]
+        expected = ["search", "import"]
         if len(args) != 2 or args[0] not in expected:
             expected = [f"'{e}'" for e in expected]
             raise ArgumentError(
@@ -116,7 +117,14 @@ class Interpreter:
                 hit = self.external_context[i]
             except KeyError:
                 raise ArgumentError(f"Number {i} not in external search context.")
-        result = self.manager.local_accession(hit)
+            result = self.manager.local_accession(hit)
+        elif args[0] == "import":
+            try:
+                hit = self.import_context[i]
+            except KeyError:
+                raise ArgumentError(f"Number {i} not in imported context.")
+            result = self.manager.local_accession(hit, fetch_data=False)
+
         return f"Created {result.__class__.__name__} '{result.title}' from external source.'"
 
     def _cmd_create(self, args):
@@ -192,6 +200,44 @@ class Interpreter:
             entries.sort(key=lambda x: x[0])
             return self._table(columns=("command", "documentation"), rows=entries)
 
+    def _cmd_import(self, args):
+        """
+        Import data from a file.
+            > import /path/to/file/of/awesomeness.json
+        """
+        filepath = args[0]
+        try:
+            results = self.manager.import_from_file(filepath=filepath)
+        except ValueError as err:
+            raise ArgumentError("import", str(err))
+        msgs = [filepath]
+        rows = list()
+        self.import_context = dict()
+        for i, hit in enumerate(results):
+            try:
+                desc = hit["description"]["text"]
+            except TypeError:
+                desc = ""
+            rows.append(
+                (
+                    f"{i+1}",
+                    (
+                        f"[bold]{hit['feature_type']}: "
+                        f"{hit['title']}[/bold]\n"
+                        f"[italic]{hit['uri']}[/italic]\n{desc}"
+                    ),
+                )
+            )
+            self.import_context[str(i + 1)] = hit
+        msgs.append(
+            self._table(
+                ("context", "summary"),
+                rows,
+                title=f"Imported items: {len(results)}",
+            )
+        )
+        return msgs
+
     def _cmd_list(self, args):
         """
         List contents of collections
@@ -211,8 +257,8 @@ class Interpreter:
             self.local_context = dict()
             context = self.local_context
             content_title = self.manager.local.title
-        elif args[0] == "search":
-            raise NotImplementedError("list search")
+        elif args[0] in ["search", "import"]:
+            raise NotImplementedError(f"list {args[0]}")
         content_list.sort(key=lambda o: o.sort_key)
         rows = list()
         for i, o in enumerate(content_list):
@@ -390,7 +436,7 @@ class Interpreter:
                 "raw", f"invalid number of arguments (expected 2, got {len(args)})"
             )
         k = args[0]
-        if k not in {"search", "local"}:
+        if k not in {"search", "local", "import"}:
             raise UsageError(
                 "raw", f"Invalid subcommand '{k}' (expected 'search' or 'local')"
             )
@@ -398,6 +444,8 @@ class Interpreter:
             context = self.external_context
         elif k == "local":
             context = self.local_context
+        elif k == "import":
+            context = self.import_context
         i = args[1]
         try:
             str(int(i))
@@ -492,7 +540,7 @@ class Interpreter:
                 command, f"invalid number of arguments (expected 2, got {len(args)})"
             )
         k = args[0]
-        if k not in {"search", "local"}:
+        if k not in {"search", "local", "import"}:
             raise UsageError(
                 command, f"Invalid subcommand '{k}' (expected 'search' or 'local')"
             )
@@ -500,6 +548,8 @@ class Interpreter:
             context = self.external_context
         elif k == "local":
             context = self.local_context
+        elif k == "import":
+            context = self.import_context
         i = args[1]
         try:
             str(int(i))

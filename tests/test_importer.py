@@ -20,11 +20,50 @@ class TestInit:
 
 
 class TestImportJSON:
-    def test_import_dict(self):
+    def test_import_mithraea(self):
         i = Importer()
         fn = "mithraea.json"
         filepath = datapath / fn
-        i.import_data(filepath)
+        data = i.import_data(filepath)
+        assert isinstance(data, list)
+        assert len(data) == 162
+        for item in data:
+            assert isinstance(item, dict)
+        thermae = [
+            item for item in data if item["title"] == "Mitreo delle terme di Mitra"
+        ]
+        assert len(thermae) == 1
+        item = thermae[0]
+        logger.debug(f">>>{item['source']}<<<")
+        assert item["source"].endswith(f"mithraea.json: mithraea")
+        assert item["id"] == "1"
+        assert len(item["names"]) == 1
+        name = item["names"][0]
+        sought = {
+            "attested": "Mitreo delle terme di Mitra",
+            "romanized": {"Mitreo delle terme di Mitra", "mitreo delle terme di mitra"},
+            "language": "it",
+        }
+        assert sought == name
+        sought = {
+            "text": "The Mithraeum of the terms of Mithras takes its name from being installed in the service area of the Baths of Mithras.",
+            "language": "en",
+        }
+        assert sought == item["description"]
+        sought = [
+            {
+                "bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+                "citation_detail": "229",
+            }
+        ]
+        assert sought == item["references"]
+        assert len(item["locations"]) == 1
+        geometry = item["locations"][0]["geometry"]
+        sought = f"POINT(41.754227 12.285019)"
+        assert sought == geometry
+        assert item["feature_type"] == "Place"
+        sought = [{"ctype": "at", "name": "Ostia"}]
+        assert item["connects_to"] == sought
 
 
 class TestGrokDict:
@@ -67,6 +106,7 @@ class TestGrokDict:
                 }
             ],
             "references": input["references"],
+            "connects_to": [{"ctype": "at", "name": "Ostia"}],
         }
         i = Importer()
         result = i._grok_dict(input, source=source)

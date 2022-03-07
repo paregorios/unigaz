@@ -4,6 +4,7 @@
 Languages and writing systems
 """
 
+from re import L
 import aaransia
 import cyrtranslit
 import ftlangdetect
@@ -69,6 +70,44 @@ def codify(language_code=None, script_code=None):
     return code
 
 
+def comprehend(s: str, language_code=None, script_code=None):
+    v = norm(s)
+    language_code_final, script_code_final = classify(
+        s, language_code=language_code, script_code=script_code
+    )
+    # attested
+    attested = None
+    if script_code_final != "Latn":
+        attested = v
+    elif language_code_final != "und" and script_code_final != "und":
+        if tags.language(language_code_final).script.format == script_code_final:
+            attested = v
+
+    # romanized
+    romanized = set()
+    slug = slugify(v, separator=" ", lowercase=False)
+    romanized.add(slug)
+    script_code_from_string = check_script(v)
+    if script_code_from_string:
+        if script_code_from_string == "Latn":
+            romanized.add(v)
+    if language_code_final in get_available_language_codes():
+        romanized.add(translit(v, language_code_final, reversed=True))
+    if language_code_final in ["cmn", "zh"] and script_code_final in ["Hans", "Hant"]:
+        romanized.add(pinyin.get(v))
+        romanized.add(pinyin.get(v, format="strip", delimiter=" "))
+        romanized.add(pinyin.get(v, format="numerical"))
+    if script_code_final == "Cyrl" and language_code_final in cyrtranslit.supported():
+        romanized.add(cyrtranslit.to_latin(v, language_code_final))
+    if language_code_final in aaransia.get_alphabets_codes():
+        try:
+            romanized.add(aaransia.transliterate(v, language_code_final, "en"))
+        except aaransia.exceptions.SourceLanguageError:
+            pass
+
+    return (attested, romanized, language_code_final, script_code_final)
+
+
 def classify(s: str, language_code=None, script_code=None):
     """Determine language and script and return results."""
     v = norm(s)
@@ -83,7 +122,8 @@ def classify(s: str, language_code=None, script_code=None):
         langid_code, langid_prob = langid.classify(v)
         if langid_prob >= threshold:
             codes.add(langid_code)
-        codes.add(langdetect.detect(v))
+        langdetect_code = langdetect.detect(v)
+        codes.add(langdetect_code)
         ft_result = ftlangdetect.detect(v)
         ft_code = ft_result["lang"]
         ft_prob = ft_result["score"]
@@ -93,9 +133,14 @@ def classify(s: str, language_code=None, script_code=None):
             if ft_code != langid_code:
                 language_tag = tags.language(
                     ft_code
-                )  # langid mis-identifies "uk" as "ru"
+                )  # langid and langdetect both mis-identify "uk" as "ru"
+            elif ft_code == langid_code:
+                language_tag = tags.language(
+                    ft_code
+                )  # higher confidence in these models than langdetect alone
             else:
-                raise RuntimeError(f"langconflict: {codes}")
+                language_tag = tags.language("und")
+
         elif len(codes) == 1:
             language_tag = tags.language(list(codes)[0])
         else:
@@ -109,7 +154,7 @@ def classify(s: str, language_code=None, script_code=None):
     logger.debug(f"language_code_final={language_code_final}")
 
     # script
-    script_code_from_string = check_script(s)
+    script_code_from_string = check_script(v)
     logger.debug(f"script_code_from_string={script_code_from_string}")
     if script_code:
         script_tag = tags.tag(script_code)
@@ -131,30 +176,4 @@ def classify(s: str, language_code=None, script_code=None):
     if script_code_final == "Hani" and language_code_final == "und":
         language_code_final = "zh"
 
-    # attested
-    attested = None
-    if script_code_final != "Latn":
-        attested = v
-    elif language_code_final != "und" and script_code_final != "und":
-        if tags.language(language_code_final).script.format == script_code_final:
-            attested = v
-
-    # romanized
-    romanized = set()
-    slug = slugify(v, separator=" ", lowercase=False)
-    romanized.add(slug)
-    if script_code_from_string:
-        if script_code_from_string == "Latn":
-            romanized.add(v)
-    if language_code_final in get_available_language_codes():
-        romanized.add(translit(v, language_code_final, reversed=True))
-    if language_code_final in ["cmn", "zh"] and script_code_final in ["Hans", "Hant"]:
-        romanized.add(pinyin.get(v))
-        romanized.add(pinyin.get(v, format="strip", delimiter=" "))
-        romanized.add(pinyin.get(v, format="numerical"))
-    if script_code_final == "Cyrl" and language_code_final in cyrtranslit.supported():
-        romanized.add(cyrtranslit.to_latin(v, language_code_final))
-    if language_code_final in aaransia.get_alphabets_codes():
-        romanized.add(aaransia.transliterate(v, language_code_final, "en"))
-
-    return (attested, romanized, language_code_final, script_code_final)
+    return (language_code_final, script_code_final)
