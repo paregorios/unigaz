@@ -47,6 +47,7 @@ class Manager:
         self.local = None
 
     def import_from_file(self, filepath):
+        """Import features from a file."""
         if isinstance(filepath, str):
             fp = Path(filepath)
         else:
@@ -59,6 +60,7 @@ class Manager:
         return data
 
     def local_accession(self, hit, fetch_data=True):
+        """Accession an item from search or other external context into the local gazetteer."""
         if not self.local:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
         uri = hit["uri"]
@@ -133,12 +135,14 @@ class Manager:
         return result
 
     def local_create(self, name):
+        """Create a local gazetteer."""
         if self.local:
             raise NotImplementedError("already got one")
         self.local = Local(title=name)
         return f"Created local gazetteer with title '{self.local.title}'."
 
     def local_duplicate(self, feature, fieldname, sequence=1, *args):
+        """Duplicate a local field on feature."""
         if isinstance(sequence, str):
             i = int(sequence)
         elif isinstance(sequence, int):
@@ -166,11 +170,13 @@ class Manager:
         return f"Duplicated {fieldname} {sequence} on {feature.title}."
 
     def local_list(self, args):
+        """List the contents of the local gazetteer."""
         if not self.local:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
         return self.local.content
 
     def local_load(self, local_name):
+        """Load a previously saved local gazetteer."""
         if self.local:
             raise RuntimeError(f"a local gazetteer is already loaded")
         path = Path("data/gazetteers")
@@ -184,11 +190,13 @@ class Manager:
         return f"Loaded local gazetteer {self.local.title} from {path}."
 
     def local_merge(self, source, destination):
+        """Merge two items in a local gazetteer."""
         if not self.local:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
         return self.local.merge(source, destination)
 
     def local_save(self):
+        """Save the local gazetteer."""
         if not self.local:
             raise RuntimeError(f"a local gazetteer must be loaded or created first")
         path = Path("data/gazetteers")
@@ -203,6 +211,7 @@ class Manager:
         return f"Saved local gazetteer {self.local.title} to {path}."
 
     def search(self, gazetteer_name, args):
+        """Search for features in supported external gazetteer sources."""
         if self.supported(gazetteer_name):
             g = self.gazetteers[gazetteer_name]
             kwargs = {"text": set()}
