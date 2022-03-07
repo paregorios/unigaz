@@ -525,6 +525,8 @@ established a veteran colony there.',
 - [x] search/accession from nominatim (OpenStreetMap)
 - [x] search/accession from pleiades
 - [x] when we have locations for a place: map them (and the horizontal accuracy bubble if there is one)
+- [x] import from JSON
+- [ ] accession all from import/search context
 - [ ] cli: edit individual bits of data with commands like: "set local 1 externals 1 lang=en"
 - [ ] command to list descriptions
 - [ ] command to list externals
