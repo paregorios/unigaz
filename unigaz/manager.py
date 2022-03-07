@@ -4,6 +4,7 @@
 Manage the tools
 """
 
+from copy import deepcopy
 import jsonpickle
 import logging
 from pathlib import Path
@@ -136,6 +137,33 @@ class Manager:
             raise NotImplementedError("already got one")
         self.local = Local(title=name)
         return f"Created local gazetteer with title '{self.local.title}'."
+
+    def local_duplicate(self, feature, fieldname, sequence=1, *args):
+        if isinstance(sequence, str):
+            i = int(sequence)
+        elif isinstance(sequence, int):
+            i = sequence
+        else:
+            raise TypeError(f"For sequence expected str or int. Got {type(sequence)}.")
+        i = i - 1
+        try:
+            source = getattr(feature, fieldname)
+        except AttributeError:
+            try:
+                source = getattr(feature, f"{fieldname}s")
+            except AttributeError:
+                raise
+        if isinstance(source, list):
+            new = deepcopy(source[i])
+            if isinstance(new, dict):
+                getattr(feature, f"add_{fieldname}")(**new)
+            else:
+                raise NotImplementedError(f"new type={type(new)}")
+        else:
+            raise NotImplementedError(
+                f"duplicate source {fieldname} of type {type(source)}"
+            )
+        return f"Duplicated {fieldname} {sequence} on {feature.title}."
 
     def local_list(self, args):
         if not self.local:

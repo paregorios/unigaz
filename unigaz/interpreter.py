@@ -420,6 +420,42 @@ class Interpreter:
                 )
         return self.manager.local_merge(*entries)
 
+    def _cmd_modify(self, args):
+        """
+        Modify field(s) in content
+            > modify local 3 duplicate description 1
+            > modify local 3 change description 2 text "This place is old and scary."
+            > modify local 3 change description 2 language en
+            > modify local 3 change description 1 preferred false
+            > modify local 3 change description 2 preferred true
+        """
+        if args[0] != "local":
+            raise UsageError("modify", f"Expected 'local', but got {args[1]}.")
+        sub_commands = {
+            "duplicate": {"min-length": 5, "max-length": 6},
+            "change": {"min-length": 7, "max-length": 8},
+        }
+        try:
+            sub_command = sub_commands[args[2]]
+        except KeyError:
+            raise UsageError("modify", f"unrecognized subcommand {args[2]}")
+        else:
+            if (
+                len(args) < sub_command["min-length"]
+                or len(args) > sub_command["max-length"]
+            ):
+                if sub_command["min-length"] == sub_command["max-length"]:
+                    expectation = f"Expected {sub_command['min-length']}"
+                else:
+                    expectation = f"Expected a value between {sub_command['min-length']} and {sub_command['max-length']}"
+                raise UsageError(
+                    f"modify: {args[2]}",
+                    f"incorrect number of arguments {len(args)}. {expectation}.",
+                )
+            else:
+                hit = self.local_context[args[1]]
+                return getattr(self.manager, f"local_{args[2]}")(hit, *args[3:])
+
     def _cmd_quit(self, args):
         """
         Quit interactive interface.
