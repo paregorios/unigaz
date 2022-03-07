@@ -59,7 +59,7 @@ class TestImportJSON:
         assert sought == item["references"]
         assert len(item["locations"]) == 1
         geometry = item["locations"][0]["geometry"]
-        sought = f"POINT(41.754227 12.285019)"
+        sought = f"POINT(12.285019 41.754227)"
         assert sought == geometry
         assert item["feature_type"] == "Place"
         sought = [{"ctype": "at", "name": "Ostia"}]
@@ -82,11 +82,12 @@ class TestGrokDict:
                 }
             ],
             "connects_to": [{"ctype": "at", "name": "Ostia"}],
-            "longitude": "41.754227",
-            "latitude": "12.285019",
+            "latitude": "41.754227",
+            "longitude": "12.285019",
         }
         expected = {
             "id": input["id"],
+            "uri": input["uri"],
             "source": source,
             "title": input["name"],
             # "description": input["description"],
