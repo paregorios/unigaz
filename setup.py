@@ -18,8 +18,11 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
+        "aaransia",
         "airtight",
         "beautifulsoup4",
+        "cyrtranslit",
+        "fasttext-langdetect",
         "feedparser",
         "folium",
         "iso639-lang",
@@ -33,8 +36,10 @@ setuptools.setup(
         "rich",
         "shapely",
         "textnorm",
+        "transliterate",
         "validators",
         "webiquette @ git+https://github.com/paregorios/webiquette.git",
+        "wget",
     ],
     python_requires=">=3.10.2",
 )

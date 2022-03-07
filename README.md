@@ -551,3 +551,4 @@ established a veteran colony there.',
 - [ ] search/accession from Wikidata (SPARQL query API)
 - [ ] search/accession from World Historical Gazetteer
 - [ ] tests!
+- [ ] add camel-tools support for better Arabic romanization, but can't do this until its dependency (pytorch) releases python 3.10 support (https://github.com/pytorch/pytorch/issues/66424)
