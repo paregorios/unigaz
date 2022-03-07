@@ -134,6 +134,45 @@ class Manager:
             result.add_description(additional_description, source=uri)
         return result
 
+    def local_change(self, feature, fieldname, sequence, *args):
+        """Modify a local field on a feature."""
+        if isinstance(sequence, str):
+            i = int(sequence)
+        elif isinstance(sequence, int):
+            i = sequence
+        else:
+            raise TypeError(f"For sequence expected str or int. Got {type(sequence)}.")
+        i = i - 1
+        fn = fieldname
+        try:
+            field = getattr(feature, fn)
+        except AttributeError:
+            fn = f"{fieldname}s"
+            try:
+                field = getattr(feature, f"{fn}")
+            except AttributeError:
+                raise
+        if isinstance(field, list):
+            field_item = field[i]
+            if len(args) != 2:
+                raise ValueError(f"len(args)={len(args)}. Expected 2.")
+            if isinstance(field_item, dict):
+                if args[1].lower() == "false":
+                    new_value = False
+                elif args[1].lower() == "true":
+                    new_value = True
+                else:
+                    new_value = args[1]
+                old_value = field_item[args[0]]
+                field_item[args[0]] = new_value
+            else:
+                raise NotImplementedError(
+                    f"field_item {fn}[{i}] type={type(field_item)}"
+                )
+        else:
+            raise NotImplementedError(f"field {fn} type={type(field)}")
+        return f"Changed {fn} {sequence} on {feature.title} from {args[0]}={old_value} to {args[0]}={new_value}."
+
     def local_create(self, name):
         """Create a local gazetteer."""
         if self.local:
@@ -141,7 +180,7 @@ class Manager:
         self.local = Local(title=name)
         return f"Created local gazetteer with title '{self.local.title}'."
 
-    def local_duplicate(self, feature, fieldname, sequence=1, *args):
+    def local_duplicate(self, feature, fieldname, sequence, *args):
         """Duplicate a local field on feature."""
         if isinstance(sequence, str):
             i = int(sequence)
