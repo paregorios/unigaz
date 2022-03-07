@@ -107,7 +107,10 @@ class Manager:
             logger.warning(
                 f"No summary/description found in data, so using content from search result."
             )
-            source_data["summary"] = hit["summary"]
+            try:
+                source_data["summary"] = hit["summary"]
+            except KeyError:
+                pass
 
         try:
             source_data["externals"]

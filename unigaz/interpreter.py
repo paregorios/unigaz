@@ -103,7 +103,8 @@ class Interpreter:
     def _cmd_accession(self, args):
         """
         Accession an item from search or import results into local
-            > accession search 1
+            > accession search 2
+            > accession import all
         """
         expected = ["search", "import"]
         if len(args) != 2 or args[0] not in expected:
@@ -111,21 +112,25 @@ class Interpreter:
             raise ArgumentError(
                 "accession", f"expected {' or '.join(expected)}, got {' '.join(args)}"
             )
-        i = args[1]
         if args[0] == "search":
-            try:
-                hit = self.external_context[i]
-            except KeyError:
-                raise ArgumentError(f"Number {i} not in external search context.")
-            result = self.manager.local_accession(hit)
+            context = self.external_context
+            fetch_data = True
         elif args[0] == "import":
+            context = self.import_context
+            fetch_data = False
+        i = args[1]
+        if i == "all":
+            results = list()
+            for i, hit in context.items():
+                results.append(self.manager.local_accession(hit, fetch_data=fetch_data))
+            return f"Created {len(results)} local entries from {args[0]} sources."
+        else:
             try:
-                hit = self.import_context[i]
+                hit = context[i]
             except KeyError:
-                raise ArgumentError(f"Number {i} not in imported context.")
-            result = self.manager.local_accession(hit, fetch_data=False)
-
-        return f"Created {result.__class__.__name__} '{result.title}' from external source.'"
+                raise ArgumentError(f"Number {i} not in {args[0]} context.")
+            result = self.manager.local_accession(hit, fetch_data=fetch_data)
+            return f"Created {result.__class__.__name__} '{result.title}' from {args[0]} source.'"
 
     def _cmd_create(self, args):
         """
