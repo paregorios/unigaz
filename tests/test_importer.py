@@ -66,6 +66,7 @@ class TestGrokDict:
                     "title": f"{source} coordinates",
                 }
             ],
+            "references": input["references"],
         }
         i = Importer()
         result = i._grok_dict(input, source=source)

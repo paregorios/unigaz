@@ -47,7 +47,7 @@ class Importer:
 
     def _grok_dict(self, input, source):
         result = {"source": source, "feature_type": "Place"}
-        for k in ["id", "title", "description", "names", "locations"]:
+        for k in ["id", "title", "description", "names", "locations", "references"]:
             part = getattr(self, f"_grok_dict_{k}")(input, source)
             result[k] = part
         return result
@@ -126,6 +126,9 @@ class Importer:
             name["language"] = codify(lang_code, script_code)
             names.append(name)
         return names
+
+    def _grok_dict_references(self, input, source):
+        return input["references"]
 
     def _grok_dict_title(self, input, source):
         try:
