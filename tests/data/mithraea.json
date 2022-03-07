@@ -1,0 +1,4440 @@
+{
+	"mithraea": [
+		{
+			"id": "1",
+			"uri": "https://www.mithraeum.eu/monument/1",
+			"pubDate": "2010-04-27 23:01:38",
+			"lastBuildDate": "2022-02-22 17:54:15",
+			"name": "Mitreo delle terme di Mitra",
+			"description": "The Mithraeum of the terms of Mithras takes its name from being installed in the service area of the Baths of Mithras.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mtm_termas.jpg",
+				"caption": "Vista de la entrada del mitreo delle terme di Mitra",
+				"author": "The New Mithraeum / Andreu Abuín (CC BY-NC-SA)"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "229"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.754227",
+			"latitude": "12.285019"
+		},
+		{
+			"id": "2",
+			"uri": "https://www.mithraeum.eu/monument/2",
+			"pubDate": "2010-04-27 23:10:44",
+			"lastBuildDate": "2022-02-03 20:10:11",
+			"name": "Mitreo delle Pareti Dipinte",
+			"description": "The House of the Mithraeum of the Painted Walls was built in the second half of the 2nd century BC (opus incertum) and modified during the Augustan period.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/pareti_dipenti_006.jpg",
+				"caption": "Interior view of the Mitreo delle Pareti Dipinte",
+				"author": "The New Mithraeum / Andreu Abuín (CC BY-NC-SA)"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "264"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.753216",
+			"latitude": "12.286345"
+		},
+		{
+			"id": "3",
+			"uri": "https://www.mithraeum.eu/monument/3",
+			"pubDate": "2009-07-19 19:29:35",
+			"lastBuildDate": "2021-05-24 21:17:06",
+			"name": "Mitreo degli Animali",
+			"description": "The Mithraeum of the Animals was decorated with a mosaic depicting a naked man, a cock, a raven, an scorpion, a snake and the head of the bull.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_animali_079.jpg",
+				"caption": "Central corridor of the Mitreo degli Animali.",
+				"author": "Andreu Abuín"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "278"
+				}
+			],
+			"oriLocation": "Ostia Antica",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.752302",
+			"latitude": "12.290226"
+		},
+		{
+			"id": "4",
+			"uri": "https://www.mithraeum.eu/monument/4",
+			"pubDate": "2010-04-27 23:35:08",
+			"lastBuildDate": "2022-01-20 05:56:27",
+			"name": "Mitreo delle Sette Porte",
+			"description": "The name of the Mithraeum of the Seven Gates refers to the doors depicted in the mosaic that decorates the floor, symbolising the seven planets through which the souls of the initiates have to pass.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_setteporte_075.jpg",
+				"caption": "General view of the Mithraeum of the Seven Gates",
+				"author": "Olivier-Antoine Reÿnès"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "287"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.752785",
+			"latitude": "12.287457"
+		},
+		{
+			"id": "5",
+			"uri": "https://www.mithraeum.eu/monument/5",
+			"pubDate": "2010-04-27 23:35:08",
+			"lastBuildDate": "2022-02-03 19:03:41",
+			"name": "Mitreo del Caseggiato di Diana",
+			"description": "The Mithraeum of the House of Diana was installed in two Antonine halls, northeast corner of the House of Diana, in the late 2nd or early 3rd century.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_diana_084.jpg",
+				"caption": "The altar and aedicula in the northern room",
+				"author": "Eric Taylor"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "216"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.75521",
+			"latitude": "12.288734"
+		},
+		{
+			"id": "6",
+			"uri": "https://www.mithraeum.eu/monument/6",
+			"pubDate": "2010-04-27 23:35:08",
+			"lastBuildDate": "2021-08-18 03:44:46",
+			"name": "Mitreo di Lucretius Menandro",
+			"description": "The Mithraeum of Lucretius Menander was installed in the early 3rd century in an alley to the east of a Hadrianic building named after the solar god temple.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_menandro_005.jpg"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "224"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.755602",
+			"latitude": "12.288551"
+		},
+		{
+			"id": "7",
+			"uri": "https://www.mithraeum.eu/monument/7",
+			"pubDate": "2010-04-27 23:35:08",
+			"lastBuildDate": "2022-01-27 01:25:33",
+			"name": "Mitreo di Felicissimo",
+			"description": "The Mithraeum Felicissimus has a floor mosaic depicting the seven mithraic grades.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/9-1.gif",
+				"caption": "Plan of the shrine. North is to the left. SO II, fig. 22.",
+				"author": "Ostia-antica.org"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "299"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.754512",
+			"latitude": "12.291534"
+		},
+		{
+			"id": "8",
+			"uri": "https://www.mithraeum.eu/monument/8",
+			"pubDate": "2010-04-27 23:35:08",
+			"lastBuildDate": "2021-08-18 04:11:17",
+			"name": "Mitreo dei Serpenti",
+			"description": "The Mithraeum of the Snakes preserves paintings of serpents, representing Genius Loci, part of an older private sanctuary, which were respected in the temple of Mithras.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_serpenti_055.jpg",
+				"author": "Andreu Abuín"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "294"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.754994",
+			"latitude": "12.29045"
+		},
+		{
+			"id": "9",
+			"uri": "https://www.mithraeum.eu/monument/9",
+			"pubDate": "2010-04-27 23:35:08",
+			"lastBuildDate": "2022-01-20 05:47:50",
+			"name": "Mitreo delle Sette Sfere",
+			"description": "The Mithraeum of the Seven Spheres is of great importance for the understanding of the cult, because of its black-and-white mosaics depicting the planets, the zodiac and related elements.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_sette_esfere_007.jpg",
+				"caption": "General view of the Mitraeum of the Seven Spheres",
+				"author": "Andreu Abuín"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "239"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.755888",
+			"latitude": "12.290602"
+		},
+		{
+			"id": "10",
+			"uri": "https://www.mithraeum.eu/monument/10",
+			"pubDate": "2010-04-27 23:35:08",
+			"lastBuildDate": "2022-02-03 20:12:48",
+			"name": "Sabazeo",
+			"description": "The Mithraeum was found in one of the rooms of the Horrea built in the years 120 - 125 AD. The installation of the shrine may have taken place in the first half of the third century.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/12-3_4.jpg",
+				"caption": "The Mithras&#039;s shrine seen from the west.",
+				"author": "SAOA B3141"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "300"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.755842",
+			"latitude": "12.293182"
+		},
+		{
+			"id": "11",
+			"uri": "https://www.mithraeum.eu/monument/11",
+			"pubDate": "2007-05-15 23:09:00",
+			"lastBuildDate": "2022-02-01 02:27:19",
+			"name": "Mithraeum of Sidon",
+			"description": "The Mithraeum of Sidon escaped destruction because the followers of Mithras walled off the   entrance to the underground sanctuary.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/0000231700_OG.JPG",
+				"caption": "Sculptures from Sidon at Musée du Louvre",
+				"author": "1967 Musée du Louvre / Maurice et Pierre Chuzeville"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "74"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Sidon"
+				}
+			],
+			"oriCountry": "Syria",
+			"longitude": "33.562416",
+			"latitude": "35.370108"
+		},
+		{
+			"id": "12",
+			"uri": "https://www.mithraeum.eu/monument/12",
+			"pubDate": "2007-05-17 10:41:00",
+			"lastBuildDate": "2022-01-22 05:41:07",
+			"name": "Mitreo di Santa Prisca",
+			"description": "The Mithraeum of Santa Prisca houses remarkable frescoes showing the initiates in procession.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Santa-Prisca.jpg",
+				"caption": "General view of the Mithraeum of Sant Prisca"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "476"
+				}
+			],
+			"oriLocation": "Chiesa di Santa Prisca",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.883213",
+			"latitude": "12.483655"
+		},
+		{
+			"id": "13",
+			"uri": "https://www.mithraeum.eu/monument/13",
+			"pubDate": "2007-05-17 10:44:00",
+			"lastBuildDate": "2022-01-31 09:02:18",
+			"name": "Mitreo di San Clemente",
+			"description": "The Mithraeum under the Basilica of San Clemente made part of a notable Roman house.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_sanclemente_054.jpg",
+				"caption": "Interior view of the Mithraeum of San Clemente."
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "338"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.889675",
+			"latitude": "12.497281"
+		},
+		{
+			"id": "14",
+			"uri": "https://www.mithraeum.eu/monument/14",
+			"pubDate": "2007-05-17 10:48:00",
+			"lastBuildDate": "2022-01-31 03:39:51",
+			"name": "Mitreo Barberini",
+			"description": "The Barberini Mithraeum was discovered in 1936 in the garden of the Palazzo Barberini, owned by Conte A. Savorgnan di Brazza.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/DSC_2451.jpg",
+				"caption": "General view of the Mitreo de Barberini",
+				"author": "WantedinRome.com"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "389"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.902964",
+			"latitude": "12.4891"
+		},
+		{
+			"id": "15",
+			"uri": "https://www.mithraeum.eu/monument/15",
+			"pubDate": "2007-05-17 10:50:00",
+			"lastBuildDate": "2022-01-29 19:47:14",
+			"name": "Mitreo del Circo Massimo",
+			"description": "The Mithraeum of the Circus Maximus was discovered in 1931 during work carried out to create a storage area for the scenes and costumes of the Opera House within the Museums of Rome building.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/circo_massimo_069.jpg"
+			},
+			"oriLocation": "Circo Massimo",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.887958",
+			"latitude": "12.482781"
+		},
+		{
+			"id": "16",
+			"uri": "https://www.mithraeum.eu/monument/16",
+			"pubDate": "2007-05-17 10:51:00",
+			"lastBuildDate": "2022-02-03 00:29:52",
+			"name": "Mithraeum of the Baths of Caracalla",
+			"description": "The Mitreo delle terme di Caracalla is one of the largest temple devoted to Mithras found in Rome so far.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Baths-of-Caracalla4.jpg",
+				"caption": "General view of the Mitreo delle Terme di Caracalla"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "457"
+				}
+			],
+			"oriLocation": "Terme di Caracalla",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Roma"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.879922",
+			"latitude": "12.493118"
+		},
+		{
+			"id": "17",
+			"uri": "https://www.mithraeum.eu/monument/17",
+			"pubDate": "2007-05-17 10:56:00",
+			"lastBuildDate": "2022-01-29 03:11:01",
+			"name": "Mitreo di Santo Stefano Rotondo",
+			"description": "The pagan temple was discovered under the church of Santo Stefano Rotondo in Rome, in one of the buildings of Casta Peregrinorum.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/supp_stephano_plan1.png",
+				"caption": "Map of the buildings under S. Stefano Rotondo",
+				"author": "Tertullian.org"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.884655",
+			"latitude": "12.496744"
+		},
+		{
+			"id": "18",
+			"uri": "https://www.mithraeum.eu/monument/18",
+			"pubDate": "2007-05-20 09:04:00",
+			"lastBuildDate": "2022-01-15 08:25:40",
+			"name": "Mithraeum de Bordeaux",
+			"description": "C’est en 1986, à l’occasion de la restructuration de l’ancien magasin Parunis, qu’une fouille de sauvetage archéologique fut réalisée cours Victor Hugo.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/rnord_0035-2624_1991_num_73_292_T1_0053_0000_1.png",
+				"caption": "Plan of the Mithraeum of Bordeaux",
+				"author": "Revue du Nord"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Bordeaux"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "44.834764",
+			"latitude": "-0.573687"
+		},
+		{
+			"id": "19",
+			"uri": "https://www.mithraeum.eu/monument/19",
+			"pubDate": "2007-05-20 09:44:00",
+			"lastBuildDate": "2022-01-18 03:07:34",
+			"name": "Mitreo di Spoleto",
+			"description": "The Mithraeum of Spoleto was found in 1878 by the professor Fabio Gori on behalf of Marquis Filippo Marignoli, owner of the land.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/spoleto-plano.jpg",
+				"caption": "Plan of the Mithraeum of Spoleto",
+				"author": "CIMRM"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "673"
+				}
+			],
+			"oriLocation": "I Casini",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Spoleto"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "42.748927",
+			"latitude": "12.737682"
+		},
+		{
+			"id": "20",
+			"uri": "https://www.mithraeum.eu/monument/20",
+			"pubDate": "2007-05-20 09:44:00",
+			"lastBuildDate": "2022-01-18 03:10:51",
+			"name": "Mitreo di Vulci",
+			"description": "The Mithraeum of Vulci is remarkable because of his high benches and the arches below them.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/vulci_mitreo_092.jpg",
+				"caption": "General view of the Vulci Mithraeum",
+				"author": "mararie"
+			},
+			"oriLocation": "Canino",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Vulci"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "42.466336",
+			"latitude": "11.753011"
+		},
+		{
+			"id": "21",
+			"uri": "https://www.mithraeum.eu/monument/21",
+			"pubDate": "2007-05-20 09:45:00",
+			"lastBuildDate": "2022-01-18 03:14:15",
+			"name": "Mitreo di Sutri",
+			"description": "The Mithraeum of Sutri was built inside a rocky hill that also hosted the Roman theatre of the city.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_sutri_int_052.jpg"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "653"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Sutri"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "42.258201",
+			"latitude": "12.162994"
+		},
+		{
+			"id": "22",
+			"uri": "https://www.mithraeum.eu/monument/22",
+			"pubDate": "2007-05-20 09:46:00",
+			"lastBuildDate": "2022-02-03 03:26:04",
+			"name": "Mitreo di Marino",
+			"description": "The Mithraeum of Marino is the longest temple devoted to Mithras know hitherto.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo-di-marino.jpg",
+				"caption": "Mitreo di Marino"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Marino"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.769369",
+			"latitude": "12.65559"
+		},
+		{
+			"id": "23",
+			"uri": "https://www.mithraeum.eu/monument/23",
+			"pubDate": "2009-07-19 19:29:35",
+			"lastBuildDate": "2022-01-23 06:39:32",
+			"name": "Mitreo di Santa Maria Capua Vetere",
+			"description": "The Mithraeum of Santa Maria Capua Vetere preserves frescoes depicting several scenes of the initiation rites.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/f3abb8928657d6b057467d3422c99900.jpg",
+				"caption": "Interior of the Capua Mithraeum",
+				"author": "The New Mithraeum / Andreu Abuín (CC BY-NC-SA)"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "180"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Santa Maria Capua Vetere"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.080050",
+			"latitude": "14.252140"
+		},
+		{
+			"id": "24",
+			"uri": "https://www.mithraeum.eu/monument/24",
+			"pubDate": "2007-05-20 10:04:00",
+			"lastBuildDate": "2022-01-16 18:37:16",
+			"name": "Mitreo del Campidoglio «lo perso»",
+			"description": "This temple of Mithras on the north side of the Capitoline Hill in Rome no longer exists.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "414"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.89291",
+			"latitude": "12.482628"
+		},
+		{
+			"id": "25",
+			"uri": "https://www.mithraeum.eu/monument/25",
+			"pubDate": "2010-04-27 23:35:52",
+			"lastBuildDate": "2022-02-03 23:15:50",
+			"name": "Mithraeum of London",
+			"description": "The London Mithraeum has been contextualized and relocated in its original emplacement in 2016.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/metalocus_london_mithraeum_museum_london_08_123.jpg"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "814"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "London"
+				}
+			],
+			"oriCountry": "United Kingdom",
+			"longitude": "51.512722",
+			"latitude": "-0.091675"
+		},
+		{
+			"id": "26",
+			"uri": "https://www.mithraeum.eu/monument/26",
+			"pubDate": "2007-05-20 11:56:00",
+			"lastBuildDate": "2022-01-18 03:17:32",
+			"name": "Mithraeum of Carrawburgh (Brocolita)",
+			"description": "The temple of Mithras of Carrawburgh disclosed three main stages of development, the second exhibiting two reconstructions.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Brocolitiamithraeum_093.jpg",
+				"author": "Putney9"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "844"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Carrawburgh"
+				}
+			],
+			"oriCountry": "United Kingdom",
+			"longitude": "55.033896",
+			"latitude": "-2.222532"
+		},
+		{
+			"id": "27",
+			"uri": "https://www.mithraeum.eu/monument/27",
+			"pubDate": "2007-05-20 11:58:00",
+			"lastBuildDate": "2022-01-28 08:31:16",
+			"name": "Mitreo de Lugo",
+			"description": "The exploration of an old pazo, a manor house, near the Roman wall, in Lugo, led to the discovery of a Roman domus, which existed continuously from the beginnings of the Christian Era until the Late Empire.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Museo_Universitario_A_Domus_do_Mitreo_03.jpg",
+				"caption": "Vista del mitreo de Lugo integrado en el Museo Universitario A Domus do Mitreo",
+				"author": "Nacho Illán"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Lugo"
+				}
+			],
+			"oriCountry": "Spain",
+			"longitude": "43.009121",
+			"latitude": "-7.559042"
+		},
+		{
+			"id": "28",
+			"uri": "https://www.mithraeum.eu/monument/28",
+			"pubDate": "2007-05-20 12:00:00",
+			"lastBuildDate": "2021-01-17 07:07:58",
+			"name": "Mitreo de San Juan de la Isla",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "San Juan de la Isla"
+				}
+			],
+			"oriCountry": "Spain",
+			"longitude": "43.479476",
+			"latitude": "-5.226767"
+		},
+		{
+			"id": "29",
+			"uri": "https://www.mithraeum.eu/monument/29",
+			"pubDate": "2010-04-27 23:35:52",
+			"lastBuildDate": "2022-01-27 02:43:19",
+			"name": "Casa del Mitreo de Mérida",
+			"description": "Although this building is not a Mithraeum, archaeologists have found several monuments related to the cult of Mithras.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_merida_063.jpg",
+				"caption": "Vista interior de la Casa del Mitreo"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "772"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Mérida"
+				}
+			],
+			"oriCountry": "Spain",
+			"longitude": "38.911168",
+			"latitude": "-6.341273"
+		},
+		{
+			"id": "30",
+			"uri": "https://www.mithraeum.eu/monument/30",
+			"pubDate": "2007-05-20 12:02:00",
+			"lastBuildDate": "2022-02-12 03:39:33",
+			"name": "Mitreo de Cabrera de Mar",
+			"description": "The Roman villa of Can Molodell had a sanctuary that has been related to the cult of Mithras.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/17860eb6a333cf52cd29124ca0d7c1b4bf610db7.jpg",
+				"caption": "View of the remains of Can Modolell",
+				"author": "Gaudeix Cabrera de Mar"
+			},
+			"oriLocation": "Can Modolell",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Cabrera de Mar"
+				}
+			],
+			"oriCountry": "Spain",
+			"longitude": "41.530746",
+			"latitude": "2.390267"
+		},
+		{
+			"id": "31",
+			"uri": "https://www.mithraeum.eu/monument/31",
+			"pubDate": "2007-05-20 12:04:00",
+			"lastBuildDate": "2022-01-24 01:33:21",
+			"name": "Mitreo dels Munts",
+			"description": "The Mithraeum of Els Munts, near Tarragona, is one of the biggest known, together with the Mitreo delle terme di Caracalla.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/18192dji0956.jpg",
+				"caption": "General view of the site.",
+				"author": "MNAT"
+			},
+			"oriLocation": "Vil·la romana dels Munts",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Altafulla"
+				}
+			],
+			"oriCountry": "Spain",
+			"longitude": "41.139235",
+			"latitude": "1.388097"
+		},
+		{
+			"id": "32",
+			"uri": "https://www.mithraeum.eu/monument/32",
+			"pubDate": "2007-05-20 13:40:00",
+			"lastBuildDate": "2021-07-08 04:24:18",
+			"name": "Mithraeum of Ša‘āra",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mithraeum_sara_int_029.jpg"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ša‘āra"
+				}
+			],
+			"oriCountry": "Syria",
+			"longitude": "33.128351",
+			"latitude": "36.353931"
+		},
+		{
+			"id": "33",
+			"uri": "https://www.mithraeum.eu/monument/33",
+			"pubDate": "2007-05-20 14:00:00",
+			"lastBuildDate": "2022-01-21 06:16:37",
+			"name": "Mithraeum of Caesarea Maritima",
+			"description": "This shrine developed towards the end of 2nd century and remained active until beginning 4th.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/caesarea_maritima-7.jpg",
+				"caption": "Caesarea Martimia Mithraeum, interior",
+				"author": "Following Hadrian"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Caesarea Maritima"
+				}
+			],
+			"oriCountry": "Israel",
+			"longitude": "32.499049",
+			"latitude": "34.894466"
+		},
+		{
+			"id": "34",
+			"uri": "https://www.mithraeum.eu/monument/34",
+			"pubDate": "2007-05-20 14:42:00",
+			"lastBuildDate": "2022-01-31 04:46:26",
+			"name": "Mithraeum of Dura Europos",
+			"description": "The most emblematic of the Syrian Mithraea was discovered in 1933 by a team led by the Russian historian Mikhaïl Rostovtzeff.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/dura-g852a~01mithrasScholars.jpg",
+				"caption": "Franz Cumont poses in front of the main altar at the Mithraeum of Dura Europos",
+				"author": "Yale University"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "34"
+				}
+			],
+			"oriLocation": "Dura Europos",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Tal hal Hariri / Es-Sâlihiyeh / As Salhiyah"
+				}
+			],
+			"oriCountry": "Syria",
+			"longitude": "34.746514",
+			"latitude": "40.727799"
+		},
+		{
+			"id": "36",
+			"uri": "https://www.mithraeum.eu/monument/36",
+			"pubDate": "2007-05-20 15:06:00",
+			"lastBuildDate": "2022-03-03 01:37:26",
+			"name": "Mithraeum of Fertőrákos",
+			"description": "The temple of Mithras in Fertorakos was constructed by soldiers from the Carnuntum legion at the beginning of the 3rd century AD.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Mithraeum_-_Fertorakos_092.jpg",
+				"caption": "External view of the Fertőrákos Mithraeum",
+				"author": "Fekist"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Fertőrákos"
+				}
+			],
+			"oriCountry": "Hungary",
+			"longitude": "47.741481",
+			"latitude": "16.656666"
+		},
+		{
+			"id": "37",
+			"uri": "https://www.mithraeum.eu/monument/37",
+			"pubDate": "2007-05-20 15:21:00",
+			"lastBuildDate": "2022-01-27 01:38:37",
+			"name": "Mithraeum of Rožanec",
+			"description": "According to Hitzinger remnants of animal bones were found in front of the relief of the Mithraeum at Rozanec.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/rozanec_090.jpg",
+				"caption": "Relieve de Mitra en Rožanec, Slovenia",
+				"author": "Rude"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1481"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rožanec"
+				}
+			],
+			"oriCountry": "Slovenia",
+			"longitude": "45.612056",
+			"latitude": "15.177505"
+		},
+		{
+			"id": "38",
+			"uri": "https://www.mithraeum.eu/monument/38",
+			"pubDate": "2007-05-20 15:35:00",
+			"lastBuildDate": "2022-01-24 01:41:04",
+			"name": "Mithräum von Güglingen",
+			"description": "Mithraeum in Güglingen, Landkreis Heilbronn (Baden-Württemberg).",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mithraeum_guglingen_028.jpg"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Güglingen"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.06679",
+			"latitude": "8.999173"
+		},
+		{
+			"id": "39",
+			"uri": "https://www.mithraeum.eu/monument/39",
+			"pubDate": "2007-05-20 16:11:00",
+			"lastBuildDate": "2022-01-24 01:43:19",
+			"name": "La grotta del Mitreo",
+			"description": "The site was destroyed in the 5th century but some elements, including the benches, can still been seen.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_duino_franco_109.jpg",
+				"caption": "Vista general del Mitreo de Duino",
+				"author": "Franco"
+			},
+			"oriLocation": "San Giovanni al Timavo",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Duino"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "45.789114",
+			"latitude": "13.590443"
+		},
+		{
+			"id": "40",
+			"uri": "https://www.mithraeum.eu/monument/40",
+			"pubDate": "2007-05-20 19:29:00",
+			"lastBuildDate": "2022-02-03 20:45:29",
+			"name": "Mitreo di Fructosus",
+			"description": "The Mithraeum of Frutosus was in a temple assigned to the guild of the stuppatores.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/10-4_1.jpeg",
+				"caption": "View through the vestibule towards the courtyard. From the west.",
+				"author": "Ostia-antica.org / Daniel González Acuña"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "226"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.753305",
+			"latitude": "12.2878"
+		},
+		{
+			"id": "41",
+			"uri": "https://www.mithraeum.eu/monument/41",
+			"pubDate": "2007-05-20 19:30:00",
+			"lastBuildDate": "2022-01-22 03:46:35",
+			"name": "Mitreo presso Porta Romana",
+			"description": "The Mithraeum near Porta Romana was connected to a Sacello, but the door was blocked.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/2-5_1-1642819495.jpeg",
+				"caption": "Mithraeum seen from the north",
+				"author": "Ostia-Antia / Jan Theo Bakker."
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.757607",
+			"latitude": "12.295418"
+		},
+		{
+			"id": "42",
+			"uri": "https://www.mithraeum.eu/monument/42",
+			"pubDate": "2007-05-20 19:31:00",
+			"lastBuildDate": "2021-01-05 02:19:08",
+			"name": "Mitreo Aldobrandini",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_aldobrandini_013.jpg",
+				"caption": "Vista del santuario desde el sur",
+				"author": "Ostia-antica.org"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "232"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.7591",
+			"latitude": "12.294801"
+		},
+		{
+			"id": "43",
+			"uri": "https://www.mithraeum.eu/monument/43",
+			"pubDate": "2007-05-28 15:20:00",
+			"lastBuildDate": "2022-01-17 06:28:30",
+			"name": "Mithraeum of Carnuntum I",
+			"description": "According to the scarcely detailed design of von Sacken, the lay-out of the temple must have been nearly semi-circular.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1664"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Bad Deutsch-Altenburg"
+				}
+			],
+			"oriCountry": "Austria",
+			"longitude": "48.122664",
+			"latitude": "16.886525"
+		},
+		{
+			"id": "44",
+			"uri": "https://www.mithraeum.eu/monument/44",
+			"pubDate": "2007-05-28 15:37:00",
+			"lastBuildDate": "2022-01-12 07:02:57",
+			"name": "Mithraeum of Memphis (Kom Dafbaby)",
+			"description": "At about a mile&#039;s distance from the village of Mit-Rahine near Memphis a Mithraeum has been discovered, which itself has not yet been described.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "91"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Memphis"
+				}
+			],
+			"oriCountry": "Egypt",
+			"longitude": "29.849667",
+			"latitude": "31.254278"
+		},
+		{
+			"id": "45",
+			"uri": "https://www.mithraeum.eu/monument/45",
+			"pubDate": "2007-05-28 16:03:00",
+			"lastBuildDate": "2022-01-24 01:47:57",
+			"name": "Mitreo de Sarrebourg",
+			"description": "The Mithraeum of Sarrebourg was discovered during operatoins for military buldings.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "965"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Sarrebourg"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "48.73028",
+			"latitude": "7.053751"
+		},
+		{
+			"id": "46",
+			"uri": "https://www.mithraeum.eu/monument/46",
+			"pubDate": "2007-06-10 10:39:00",
+			"lastBuildDate": "2022-01-18 02:55:58",
+			"name": "Hatra Temple",
+			"description": "The city of Hatra was famed for its fusion of several civilization cults, which several temples devoted to gods from all Indo-European world.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Hatra_ruins_088.jpg",
+				"author": "Denniss"
+			},
+			"oriLocation": "Hatra District",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Nineveh Governorate"
+				}
+			],
+			"oriCountry": "Iraq",
+			"longitude": "36.311855",
+			"latitude": "43.089927"
+		},
+		{
+			"id": "47",
+			"uri": "https://www.mithraeum.eu/monument/47",
+			"pubDate": "2009-06-02 02:11:00",
+			"lastBuildDate": "2022-01-24 01:55:20",
+			"name": "Mithräum von Saarbrücken",
+			"description": "The Mithraeum in Halberg hill, near Saarbrücken, is one of the oldest historical places in the area.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/35367683816_87f1905735_k.jpg",
+				"caption": "General view of the Mithraeum of Halberg",
+				"author": "Carole Raddato"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1001"
+				}
+			],
+			"oriLocation": "Halberg hill",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Saarbrücken"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.298487",
+			"latitude": "9.590893"
+		},
+		{
+			"id": "48",
+			"uri": "https://www.mithraeum.eu/monument/48",
+			"pubDate": "2009-06-02 02:13:00",
+			"lastBuildDate": "2022-01-18 06:13:56",
+			"name": "Mithräum von Neuenheim",
+			"description": "Only a small part of the Neuenheim Mithraeum has been excavated.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1282"
+				}
+			],
+			"oriLocation": "Neuenheim",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Heidelberg"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.413926",
+			"latitude": "8.693908"
+		},
+		{
+			"id": "49",
+			"uri": "https://www.mithraeum.eu/monument/49",
+			"pubDate": "2009-06-02 02:15:00",
+			"lastBuildDate": "2022-01-18 07:12:42",
+			"name": "Mithräum von Gimmeldingen",
+			"description": "The few remains of the Mithraeum of Gimmeldingen are preserved at the Historical Museum of the Palatinate, in Speyer, Germany.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Steindenkmaeler_Gimmeldingen_Museum_Speyer-gross.jpg",
+				"caption": "Stone monuments from the Mithras sanctuary in Gimmeldingen",
+				"author": "Haselburg-Müller"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1313"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Gimmeldingen"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.373767",
+			"latitude": "8.154345"
+		},
+		{
+			"id": "50",
+			"uri": "https://www.mithraeum.eu/monument/50",
+			"pubDate": "2009-06-02 02:17:00",
+			"lastBuildDate": "2021-01-17 07:07:58",
+			"name": "Mithräum von Karlsruhe",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Karlsruhe"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.010852",
+			"latitude": "8.419819"
+		},
+		{
+			"id": "51",
+			"uri": "https://www.mithraeum.eu/monument/51",
+			"pubDate": "2009-06-02 02:19:00",
+			"lastBuildDate": "2022-01-12 22:51:04",
+			"name": "Mithräum von Mundelsheim",
+			"description": "The two altars found in the Mithraeum of Mundelsheim, one of Sol and the other of Luna, are exposed in situ.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/2013_05_01022.jpg",
+				"caption": "Mithraeum of Mundelsheim general view",
+				"author": "Andreas Hillebrecht"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Mundelsheim"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.00922",
+			"latitude": "9.211736"
+		},
+		{
+			"id": "52",
+			"uri": "https://www.mithraeum.eu/monument/52",
+			"pubDate": "2009-06-02 02:20:00",
+			"lastBuildDate": "2022-01-17 03:44:41",
+			"name": "Mithräum von Königsbrunn",
+			"description": "The Mithraeum of Königsbrunn is the only one preserved in the ancient Roman province of Raetia.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/konigsbrunn_121.jpg",
+				"caption": "Vista general del Mitreo de Königsbrunn"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Königsbrunn"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "48.266169",
+			"latitude": "10.907021"
+		},
+		{
+			"id": "53",
+			"uri": "https://www.mithraeum.eu/monument/53",
+			"pubDate": "2009-06-02 02:22:00",
+			"lastBuildDate": "2021-05-18 05:00:49",
+			"name": "Mithräum von Linz",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Linz",
+			"oriCountry": "Germany",
+			"longitude": "48.574737",
+			"latitude": "13.470773"
+		},
+		{
+			"id": "54",
+			"uri": "https://www.mithraeum.eu/monument/54",
+			"pubDate": "2009-06-02 02:23:00",
+			"lastBuildDate": "2022-01-15 07:46:48",
+			"name": "Mithräum von Riegel",
+			"description": "A votive altar referring to the cult of Mithras was found more than forty years before the site was excavated and the Mithrhaeum discovered.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Riegel22.jpg",
+				"caption": "Mithras-Tempel von Riegel",
+				"author": "Jolli"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Riegel"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "48.149481",
+			"latitude": "7.783813"
+		},
+		{
+			"id": "55",
+			"uri": "https://www.mithraeum.eu/monument/55",
+			"pubDate": "2009-06-02 02:28:00",
+			"lastBuildDate": "2022-01-19 06:50:04",
+			"name": "Mithraeum of Prilep",
+			"description": "The Mithras temple of Prilep is in a small grotto under the castle of Markovi-Kuli.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "2341"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Prilep"
+				}
+			],
+			"oriCountry": "North Macedonia",
+			"longitude": "41.350333",
+			"latitude": "21.567364"
+		},
+		{
+			"id": "56",
+			"uri": "https://www.mithraeum.eu/monument/56",
+			"pubDate": "2009-06-02 02:32:00",
+			"lastBuildDate": "2021-01-17 07:07:58",
+			"name": "Mithraeum of Sofia",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Sofia"
+				}
+			],
+			"oriCountry": "Bulgaria",
+			"longitude": "42.687104",
+			"latitude": "23.303375"
+		},
+		{
+			"id": "57",
+			"uri": "https://www.mithraeum.eu/monument/57",
+			"pubDate": "2009-06-02 02:34:00",
+			"lastBuildDate": "2022-01-20 03:50:48",
+			"name": "Mithraeum of Sarmizegetusa",
+			"description": "The large number of monuments found at the Mithraeum of Sarmizegetusa and the sheer size of the temple are unusual.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mithraeum_sarmizegetusa.jpg",
+				"caption": "Plan of the sanctuary with the position of the small finds",
+				"author": "Csaba Szabó after Király 1886"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Sarmizegetusa"
+				}
+			],
+			"oriCountry": "Romania",
+			"longitude": "45.505866",
+			"latitude": "22.817917"
+		},
+		{
+			"id": "58",
+			"uri": "https://www.mithraeum.eu/monument/58",
+			"pubDate": "2009-06-02 02:38:00",
+			"lastBuildDate": "2022-01-25 04:56:15",
+			"name": "Mithraeum of Močići",
+			"description": "The Mithraeum of Mocici was situated in a grotto at one hour&#039;s walk fomr the ancient Epidaurum.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mocici_mithraeum_108.jpg",
+				"caption": "Tauroctonia de Močići",
+				"author": "Ivana"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1882"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Močići"
+				}
+			],
+			"oriCountry": "Croatia",
+			"longitude": "42.561363",
+			"latitude": "18.253108"
+		},
+		{
+			"id": "59",
+			"uri": "https://www.mithraeum.eu/monument/59",
+			"pubDate": "2009-06-02 02:43:00",
+			"lastBuildDate": "2022-01-25 04:58:41",
+			"name": "Mithraeum of Prozor",
+			"description": "The Mithraea in the territory of Arupium were first mentioned by Š. Ljubić in 1882",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Prozor"
+				}
+			],
+			"oriCountry": "Bosnia and Herzegovina"
+		},
+		{
+			"id": "60",
+			"uri": "https://www.mithraeum.eu/monument/60",
+			"pubDate": "2009-06-02 02:53:00",
+			"lastBuildDate": "2022-01-17 02:54:46",
+			"name": "Mithraeum of Ptuj III",
+			"description": "Mithraeum III in Ptuj was built in two periods: the original walls were made of pebbles, while the extension of a later period was made of brick.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/ptuj_mithraeum_046.jpg"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1578"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ptuj"
+				}
+			],
+			"oriCountry": "Slovenia",
+			"longitude": "46.420531",
+			"latitude": "15.865384"
+		},
+		{
+			"id": "61",
+			"uri": "https://www.mithraeum.eu/monument/61",
+			"pubDate": "2009-06-02 02:56:00",
+			"lastBuildDate": "2021-05-18 03:03:20",
+			"name": "Mithraeum de Aubeterre-sur-Dronne",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Aubeterre-sur-Dronne",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Aubeterre-sur-Dronne"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "45.272229",
+			"latitude": "0.171146"
+		},
+		{
+			"id": "62",
+			"uri": "https://www.mithraeum.eu/monument/62",
+			"pubDate": "2009-06-02 02:59:00",
+			"lastBuildDate": "2022-02-03 20:46:52",
+			"name": "Mithraeum of Bourg-Saint-Andéol",
+			"description": "The Mithréum de Bourg-Saint-Andéol was built against a rock where the main Tauroctony was chiseled.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/relief_bourg-st-andeol_2_031.jpg",
+				"caption": "Tarjeta postal de Bourg-saint-Andéol"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "895"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Bourg-Saint-Andéol"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "44.374177",
+			"latitude": "4.649448"
+		},
+		{
+			"id": "63",
+			"uri": "https://www.mithraeum.eu/monument/63",
+			"pubDate": "2009-06-02 16:22:00",
+			"lastBuildDate": "2022-01-17 04:01:12",
+			"name": "Mithraeum of Jajce",
+			"description": "The remains of the Jajački Mithraeum were discovered accidentally during excavation for the construction of a private house in 1931.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/1440px-Muzej_Boga_Mitre_Jajce.jpg",
+				"caption": "Entrance to the Mithras Museum in Jajce",
+				"author": "Zavičajac"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1901"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Jajce"
+				}
+			],
+			"oriCountry": "Bosnia and Herzegovina",
+			"longitude": "44.35896",
+			"latitude": "17.267761"
+		},
+		{
+			"id": "64",
+			"uri": "https://www.mithraeum.eu/monument/64",
+			"pubDate": "2009-06-02 20:13:00",
+			"lastBuildDate": "2022-01-20 03:01:50",
+			"name": "Mithräum von Moosham",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Moosham",
+			"oriCountry": "Austria",
+			"longitude": "48.270826",
+			"latitude": "13.265262"
+		},
+		{
+			"id": "65",
+			"uri": "https://www.mithraeum.eu/monument/65",
+			"pubDate": "2009-06-03 04:44:00",
+			"lastBuildDate": "2022-01-18 07:02:53",
+			"name": "Mithraeum de Martigny",
+			"description": "The Mithraeum of Martigny is the first temple devoted to Mithras found in  Switzerland.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mithraeum-martigny.jpg",
+				"caption": "Vue de l&#039;ensemble muséisé",
+				"author": "Ville de Martigny"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Martigny"
+				}
+			],
+			"oriCountry": "Switzerland",
+			"longitude": "46.096268",
+			"latitude": "7.070319"
+		},
+		{
+			"id": "66",
+			"uri": "https://www.mithraeum.eu/monument/66",
+			"pubDate": "2009-06-03 13:26:00",
+			"lastBuildDate": "2022-01-17 19:47:11",
+			"name": "Mithräum von Wiesloch",
+			"description": "The first members of the Wiesloch Mithraeum may have been veterans from Ladenburg and Heidelberg.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/wiesloch_mithraum_119.jpg"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Wiesloch"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.296919",
+			"latitude": "8.697996"
+		},
+		{
+			"id": "68",
+			"uri": "https://www.mithraeum.eu/monument/68",
+			"pubDate": "2009-06-03 15:27:00",
+			"lastBuildDate": "2021-01-17 07:07:58",
+			"name": "Mithraeum de Mackwiller",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Mackwiller",
+			"oriCountry": "France",
+			"longitude": "48.926239",
+			"latitude": "7.177511"
+		},
+		{
+			"id": "70",
+			"uri": "https://www.mithraeum.eu/monument/70",
+			"pubDate": "2009-06-04 01:21:00",
+			"lastBuildDate": "2022-01-17 03:14:22",
+			"name": "Mithräum von Osterburken",
+			"description": "The Mithraeum of Osterburken could not be excavated bodily owing to the water of a well in the immediate neighbourhood. The monument had been covered carefully with sand.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/welzheim_ostkastell_091.jpg",
+				"caption": "Reconstrucción de una ceremonia mitráica en el Mitreo de Osterburken",
+				"author": "Aymar"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1291"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Osterburken"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.42997",
+			"latitude": "9.424896"
+		},
+		{
+			"id": "71",
+			"uri": "https://www.mithraeum.eu/monument/71",
+			"pubDate": "2009-06-04 01:24:00",
+			"lastBuildDate": "2021-01-17 07:07:58",
+			"name": "Mithräum von Ladenburg",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ladenburg"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.473465",
+			"latitude": "8.612595"
+		},
+		{
+			"id": "72",
+			"uri": "https://www.mithraeum.eu/monument/72",
+			"pubDate": "2009-06-04 03:23:00",
+			"lastBuildDate": "2022-01-19 23:54:59",
+			"name": "Mitreo de Puente Genil",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/puente_genil_035.jpg"
+			},
+			"oriLocation": "Villa Romana de Fuente Álamo",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Puente Genil (Córdoba)"
+				}
+			],
+			"oriCountry": "Spain",
+			"longitude": "37.419441",
+			"latitude": "-4.721568"
+		},
+		{
+			"id": "73",
+			"uri": "https://www.mithraeum.eu/monument/73",
+			"pubDate": "2009-06-04 14:25:00",
+			"lastBuildDate": "2021-08-24 01:37:46",
+			"name": "Mithraeum of Colchester",
+			"description": "One of the rooms in a sustantive masonry building in Hollytrees Meadow was considered to be a Mithreum, a theory that has now been discarded.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "829"
+				}
+			],
+			"oriLocation": "Castle Park, Colchester, Essex",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Colchester"
+				}
+			],
+			"oriCountry": "United Kingdom",
+			"longitude": "51.890986",
+			"latitude": "0.904942"
+		},
+		{
+			"id": "74",
+			"uri": "https://www.mithraeum.eu/monument/74",
+			"pubDate": "2009-06-04 15:12:00",
+			"lastBuildDate": "2022-01-18 07:27:44",
+			"name": "Mithraeum of Slăveni",
+			"description": "The Mithraeum of Slaveni was discovered in 1837 on the right bank of the river Olt, in Romanati district.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Slăveni"
+				}
+			],
+			"oriCountry": "Romania",
+			"longitude": "44.082838",
+			"latitude": "24.535475"
+		},
+		{
+			"id": "75",
+			"uri": "https://www.mithraeum.eu/monument/75",
+			"pubDate": "2009-06-04 15:23:00",
+			"lastBuildDate": "2021-05-18 03:41:05",
+			"name": "Mitreo di Cosa",
+			"description": "The Mithraeum was inserted into the basement of the basilica-theater by the 3rd century.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_di_cosa_120.jpg",
+				"caption": "Vista general del Mitreo di Cosa"
+			},
+			"oriLocation": "Cosa",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ortobello"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "42.410948",
+			"latitude": "11.286628"
+		},
+		{
+			"id": "76",
+			"uri": "https://www.mithraeum.eu/monument/76",
+			"pubDate": "2009-06-05 03:11:00",
+			"lastBuildDate": "2021-01-22 12:28:48",
+			"name": "Villa del Mitra (Cabra)",
+			"description": "The Villa del Mitra or Casa del Mitra takes its name from the discovery of a Mithras Tauroctonus in the vicinity.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/VM3.jpg",
+				"caption": "General view",
+				"author": "arqueolugares.blogspot.com.es"
+			},
+			"oriLocation": "Cabra",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Cabra"
+				}
+			],
+			"oriCountry": "Spain",
+			"longitude": "37.490081",
+			"latitude": "-4.460878"
+		},
+		{
+			"id": "77",
+			"uri": "https://www.mithraeum.eu/monument/77",
+			"pubDate": "2009-07-19 19:29:35",
+			"lastBuildDate": "2022-01-20 00:59:47",
+			"name": "Mithraeum of Caernarfon",
+			"description": "The Mithraeum of Caernarfon, in Walles, was built in three phases during the 3rd century, and destroyed at the end of the 4th.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/cimrm2372_plan.png",
+				"caption": "General plan of the Caernarfon Mithraeum",
+				"author": "CIMRM - From Tertullian.org"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "2374"
+				}
+			],
+			"oriLocation": "Roman castra of Segontium",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Caernarfon"
+				}
+			],
+			"oriCountry": "United Kingdom",
+			"longitude": "53.14502",
+			"latitude": "-4.238319"
+		},
+		{
+			"id": "78",
+			"uri": "https://www.mithraeum.eu/monument/78",
+			"pubDate": "2009-06-09 20:23:00",
+			"lastBuildDate": "2021-08-16 05:50:19",
+			"name": "Mithraeum of Rudchester",
+			"description": "The Mithraeum of Rudchester was discovered in 1844 on the brow of the hill outside the roman station.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/cimrm838_rudchester_plan.jpg",
+				"caption": "Plan of the Mithraeum of Rudchester",
+				"author": "JSTOR / Tertullian.org"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "838"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rudchester (Northumberland)"
+				}
+			],
+			"oriCountry": "United Kingdom",
+			"longitude": "55.004499",
+			"latitude": "-1.824074"
+		},
+		{
+			"id": "79",
+			"uri": "https://www.mithraeum.eu/monument/79",
+			"pubDate": "2009-06-09 20:28:00",
+			"lastBuildDate": "2022-01-18 06:52:59",
+			"name": "Nemrut Dağı",
+			"description": "Mount Nemrut or Nemrud is one of the highest peaks in the eastern Taurus Mountains, southeastern Turkey. On its summit large statues stand around what is supposed to be a royal tomb from the 1st century BC.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/1080px-NemrudOstThrone.jpg",
+				"caption": "View of Nemrut Dag",
+				"author": "Klaus-Peter Simon"
+			},
+			"oriLocation": "Nemrut Dağı",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Adıyaman"
+				}
+			],
+			"oriCountry": "Turkey",
+			"longitude": "37.982786",
+			"latitude": "38.744595"
+		},
+		{
+			"id": "81",
+			"uri": "https://www.mithraeum.eu/monument/81",
+			"pubDate": "2009-06-09 20:42:00",
+			"lastBuildDate": "2022-02-03 20:56:53",
+			"name": "Mithraeum des Bolards",
+			"description": "The Mithraeum des Bolards was integrated into a therapeutic cultural complex related to healing waters.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/bolards_033.jpg",
+				"caption": "En primer plano, el Mitreo. Detrás, las salas anexas y el muro curvo del peribolio.",
+				"author": "Archéologia"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "917"
+				}
+			],
+			"oriLocation": "Les Bolards",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Nuits-Saint-Georges"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "47.138242",
+			"latitude": "4.949856"
+		},
+		{
+			"id": "82",
+			"uri": "https://www.mithraeum.eu/monument/82",
+			"pubDate": "2009-06-09 20:44:00",
+			"lastBuildDate": "2022-01-17 07:02:06",
+			"name": "Mitreo di Angera",
+			"description": "The Mithraeum of Angera (or Wolf&#039;s Den as this cave is popularly called) is the only temple devoted to Mithras known to date in Lombardy.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Musei_Vaticani_-_Mithra_-_Sol_invictus_01136_126.jpg",
+				"caption": "Relieve del Mitreo de Angera",
+				"author": "Wikipedia"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Angera"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "45.773584",
+			"latitude": "8.570032"
+		},
+		{
+			"id": "83",
+			"uri": "https://www.mithraeum.eu/monument/83",
+			"pubDate": "2009-06-09 23:21:00",
+			"lastBuildDate": "2022-01-12 06:58:45",
+			"name": "Mitreo dell&#039;Esquilino",
+			"description": "In a house from the time of Constantine, a Lararium was found with a statue of Isis-Fortuna. The Mithraeum was a door next to it, on a lower room.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_esquilino_004.jpg",
+				"caption": "Bull. della comm. arch. comm., 1885, p. 27 et pl. IV-V; cf. Lanciani, Ancient Rome, 1890, p. 192. Fig. 25. [TMFMM]",
+				"author": "Franz Cumont. Cf. caption"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "356"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Roma"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.894894",
+			"latitude": "12.501063"
+		},
+		{
+			"id": "84",
+			"uri": "https://www.mithraeum.eu/monument/84",
+			"pubDate": "2009-06-10 00:33:00",
+			"lastBuildDate": "2022-02-02 00:38:55",
+			"name": "Mithraeum of Aquincum II in Victorinus&#039;s house",
+			"description": "The temple of Mithras in Aquincum was located within the private house of the decurio Marcus Antonius Victorinus.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/victorinus_092.jpg",
+				"caption": "Vista desde el oeste del Mitreo de Victorinus, Aquincum.",
+				"author": "A. Pegler"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1750"
+				}
+			],
+			"oriLocation": "Óbuda",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Budapest"
+				}
+			],
+			"oriCountry": "Hungary",
+			"longitude": "47.56375",
+			"latitude": "19.050489"
+		},
+		{
+			"id": "85",
+			"uri": "https://www.mithraeum.eu/monument/85",
+			"pubDate": "2009-06-10 00:34:00",
+			"lastBuildDate": "2021-08-27 18:37:42",
+			"name": "Mithraeum of Symphorus",
+			"description": "The 4th Mithraeum of Óbuda, Budapest, has been restored to public view in 2004 and, while well presented, it has been heavily restored.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1767"
+				}
+			],
+			"oriLocation": "Óbuda",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Budapest"
+				}
+			],
+			"oriCountry": "Hungary",
+			"longitude": "47.56282",
+			"latitude": "19.04858"
+		},
+		{
+			"id": "86",
+			"uri": "https://www.mithraeum.eu/monument/86",
+			"pubDate": "2009-06-10 01:28:00",
+			"lastBuildDate": "2022-01-20 02:54:57",
+			"name": "Mithraeum of Stixneusiedl",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Stixneusiedl"
+				}
+			],
+			"oriCountry": "Austria",
+			"longitude": "48.042341",
+			"latitude": "16.675615"
+		},
+		{
+			"id": "87",
+			"uri": "https://www.mithraeum.eu/monument/87",
+			"pubDate": "2009-06-10 01:56:00",
+			"lastBuildDate": "2021-05-18 06:32:58",
+			"name": "Mithräum von Friedberg",
+			"description": "There have probably been three mithräen discovered at Friedberg.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Friedberg",
+			"oriCountry": "Germany",
+			"longitude": "50.337216",
+			"latitude": "8.766403"
+		},
+		{
+			"id": "88",
+			"uri": "https://www.mithraeum.eu/monument/88",
+			"pubDate": "2009-06-10 02:05:00",
+			"lastBuildDate": "2021-01-17 07:07:58",
+			"name": "Mithräum von Ober-Florstadt",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Ober-Florstadt",
+			"oriCountry": "Germany",
+			"longitude": "50.322779",
+			"latitude": "8.876438"
+		},
+		{
+			"id": "90",
+			"uri": "https://www.mithraeum.eu/monument/90",
+			"pubDate": "2009-06-10 02:21:00",
+			"lastBuildDate": "2022-02-26 19:01:24",
+			"name": "Mithräum von Schwarzerden",
+			"description": "The Mithraeum of Schwarzerden was carved on the rock.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mithrastempel_reichweiler_047-1621310461.jpg",
+				"caption": "Vista exterior del edificio que protege al Mitreo de Reichweiler.",
+				"author": "EDV - Training Ralf Weyand"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1280"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Schwarzerden"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.53709",
+			"latitude": "7.28219"
+		},
+		{
+			"id": "91",
+			"uri": "https://www.mithraeum.eu/monument/91",
+			"pubDate": "2011-01-23 03:46:31",
+			"lastBuildDate": "2022-01-16 23:21:35",
+			"name": "Mithräum von Dormagen",
+			"description": "Workman digging in a field near Dormagen found a vault. Against one of the walls were found two monuments related to Mithras.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/dormagen-findings.jpg",
+				"caption": "Findings from the Mithraeum of Dormagen",
+				"author": "From Jost Auler&#039;s paper"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Dormagen"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "51.0961920",
+			"latitude": "6.83933300"
+		},
+		{
+			"id": "92",
+			"uri": "https://www.mithraeum.eu/monument/92",
+			"pubDate": "2009-06-10 02:58:00",
+			"lastBuildDate": "2022-01-15 20:59:50",
+			"name": "Mithraeum of Skikda",
+			"description": "Many of the inscriptions and sculptures of the site were kept in a museum which has been destroyed.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "121"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Skikda (Rusicada)"
+				}
+			],
+			"oriCountry": "Algeria",
+			"longitude": "36.672109",
+			"latitude": "6.835143"
+		},
+		{
+			"id": "93",
+			"uri": "https://www.mithraeum.eu/monument/93",
+			"pubDate": "2009-06-14 00:12:00",
+			"lastBuildDate": "2021-01-17 07:07:58",
+			"name": "Mithraeum de Vieu",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Vieu (Vieux-en-Valromey)"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "45.896997",
+			"latitude": "5.683279"
+		},
+		{
+			"id": "94",
+			"uri": "https://www.mithraeum.eu/monument/94",
+			"pubDate": "2009-06-14 04:03:00",
+			"lastBuildDate": "2021-05-18 03:34:26",
+			"name": "Mitreo della Planta Pedis",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mitreo_planta_pedis_019.jpg"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.752849",
+			"latitude": "12.283903"
+		},
+		{
+			"id": "95",
+			"uri": "https://www.mithraeum.eu/monument/95",
+			"pubDate": "2009-06-15 23:52:00",
+			"lastBuildDate": "2022-01-11 23:49:32",
+			"name": "Mithräum von Saalburg",
+			"description": "In the 1900s a model Mithraeum was built in Saalburg in the mistaken belief that there was an original temple of Mithras in an ancient Roman building.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mithrastempel_saalburg_032.jpg"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Saalburg"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "50.271267",
+			"latitude": "8.566718"
+		},
+		{
+			"id": "96",
+			"uri": "https://www.mithraeum.eu/monument/96",
+			"pubDate": "2009-06-19 00:02:00",
+			"lastBuildDate": "2021-08-20 05:00:33",
+			"name": "Mitreo di Ponza",
+			"description": "The Mithraeum of Ponza was discovered in 1866. It contained the remains of a zodiac investigated by Vermaseren in 1989.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/ponza_mithraeum1.jpg",
+				"caption": "Plan of Ponza Mithraeum",
+				"author": "Vermaseren / Tertullian.org"
+			},
+			"oriLocation": "Palazzo Tagliamonte",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ponza"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "40.903872",
+			"latitude": "12.954894"
+		},
+		{
+			"id": "97",
+			"uri": "https://www.mithraeum.eu/monument/97",
+			"pubDate": "2009-06-19 02:47:00",
+			"lastBuildDate": "2022-02-03 21:30:41",
+			"name": "Mitreo del Palazzo Imperiale",
+			"description": "A mosaic by Silvanus, dated to the time of Commodus, was found in a niche in a nearby room of the Mithraeum in the Imperial Palace at Ostia.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/ostia_palazzoimperiale_065.jpg",
+				"caption": "The shrine seen from the south",
+				"author": "Jan Theo Bakker / Ostia-antica.org"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "250"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.75368",
+			"latitude": "12.281379"
+		},
+		{
+			"id": "98",
+			"uri": "https://www.mithraeum.eu/monument/98",
+			"pubDate": "2009-06-19 02:55:00",
+			"lastBuildDate": "2022-01-27 08:17:33",
+			"name": "Mitreo Fagan",
+			"description": "The Mitreo Fagan revealed remarkable sculptures of leon-headed figures now exposed at the Vatican Museum.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "309"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.753371",
+			"latitude": "12.279992"
+		},
+		{
+			"id": "99",
+			"uri": "https://www.mithraeum.eu/monument/99",
+			"pubDate": "2009-06-21 21:21:00",
+			"lastBuildDate": "2022-01-20 00:29:20",
+			"name": "Mitreo d&#039;Orazio Muti",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.89981",
+			"latitude": "12.485662"
+		},
+		{
+			"id": "100",
+			"uri": "https://www.mithraeum.eu/monument/100",
+			"pubDate": "2009-07-16 03:07:30",
+			"lastBuildDate": "2022-01-18 02:52:02",
+			"name": "Temple of Garni",
+			"description": "After Christianity was adopted, most pagan monuments were destroyed or abandoned. Garni, however, was preserved at the request of the sister of King Tiridates II and used as a summer residence for Armenian royalty.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Garni_094.jpg",
+				"author": "Vigen Hakhverdyan"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Garni"
+				}
+			],
+			"oriCountry": "Armenia",
+			"longitude": "40.11258",
+			"latitude": "44.7301"
+		},
+		{
+			"id": "101",
+			"uri": "https://www.mithraeum.eu/monument/101",
+			"pubDate": "2009-07-05 05:22:00",
+			"lastBuildDate": "2022-02-09 03:39:28",
+			"name": "Mithraeum of Lambaesis",
+			"description": "The Mithraeum of Tazoult / Lambèse is one of the best preserved Mithras&#039;s temples in Africa.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/crai_0065-0536_1954_num_98_3_T1_0270_0000_1.png",
+				"caption": "Plan of the Mithraeum of Lambèse",
+				"author": "Marcel Le Glay"
+			},
+			"oriLocation": "Lambèse",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Tazoult تازولت"
+				}
+			],
+			"oriCountry": "Algeria",
+			"longitude": "35.491145",
+			"latitude": "6.254976"
+		},
+		{
+			"id": "102",
+			"uri": "https://www.mithraeum.eu/monument/102",
+			"pubDate": "2009-07-05 05:44:00",
+			"lastBuildDate": "2022-01-12 02:48:54",
+			"name": "Mitreo de Tróia",
+			"description": "García y Bellido proposed the existence of a mithraeum in a narrow, elongated room where the Troia mithraic relief was found.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Tróia",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Setúbal"
+				}
+			],
+			"oriCountry": "Portugal",
+			"longitude": "38.491723",
+			"latitude": "-8.900342"
+		},
+		{
+			"id": "171",
+			"uri": "https://www.mithraeum.eu/monument/171",
+			"pubDate": "2009-07-19 19:29:35",
+			"lastBuildDate": "2022-01-29 04:10:43",
+			"name": "Mithraeum of Duhok",
+			"description": "There is no solid evidences of the finding of a Mithraic temple in Duhok, Iraq.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Duhuk"
+				}
+			],
+			"oriCountry": "Iraq",
+			"longitude": "36.86447",
+			"latitude": "43.011689"
+		},
+		{
+			"id": "172",
+			"uri": "https://www.mithraeum.eu/monument/172",
+			"pubDate": "2009-07-17 04:06:25",
+			"lastBuildDate": "2022-02-10 21:51:26",
+			"name": "Mithraea of Dülük",
+			"description": "The Mithraea of Doliche, ancient Dülük, Turkey, are unique in that they represent two distinct shrines on the same site.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mithraeum_duluk_05_113.jpg",
+				"caption": "Entrada al Mitreo de Dülük",
+				"author": "Hakatani Tenfu"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Dülük / Doluk"
+				}
+			],
+			"oriCountry": "Turkey",
+			"longitude": "37.155195",
+			"latitude": "37.360087"
+		},
+		{
+			"id": "182",
+			"uri": "https://www.mithraeum.eu/monument/182",
+			"pubDate": "2010-04-22 23:22:10",
+			"lastBuildDate": "2022-01-20 03:50:10",
+			"name": "Mithraeum of Tienen",
+			"description": "The temple contained hundreds of ceramic vessels and animal bones, which may indicated that a grand Mithraic feast was celebrated before its closing.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Tienen"
+				}
+			],
+			"oriCountry": "Belgium",
+			"longitude": "50.826758",
+			"latitude": "4.943848"
+		},
+		{
+			"id": "183",
+			"uri": "https://www.mithraeum.eu/monument/183",
+			"pubDate": "2010-04-22 23:59:30",
+			"lastBuildDate": "2021-08-24 03:19:59",
+			"name": "Mitreo della Crypta Balbi",
+			"description": "The Mithraeum of the Crypta Balbi was locted in the middle of a densely populated insula near the theatre of Cornelius Balbus.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Disegno Ricostruttivo della cerimonia Mitraica-1629767982.JPG",
+				"caption": "Vista lateral del Mitreo de la Cripta de Balbo",
+				"author": "Dssa Laura Vendittelli"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Roma"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.898252",
+			"latitude": "12.47858"
+		},
+		{
+			"id": "185",
+			"uri": "https://www.mithraeum.eu/monument/185",
+			"pubDate": "2010-04-25 23:25:39",
+			"lastBuildDate": "2022-01-17 02:57:55",
+			"name": "Mithraeum of Ptuj I",
+			"description": "The Mithraeum I of Ptuj contains the foundation, altars, reliefs and cult imagery found in it.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/3_Mitreji-1024x727.jpg",
+				"caption": "Mithraeum I of Ptuj, general view",
+				"author": "Visit Ptuj"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1487"
+				}
+			],
+			"oriLocation": "(Poetovio)",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ptuj"
+				}
+			],
+			"oriCountry": "Slovenia",
+			"longitude": "46.413452",
+			"latitude": "15.839818"
+		},
+		{
+			"id": "187",
+			"uri": "https://www.mithraeum.eu/monument/187",
+			"pubDate": "2010-04-26 00:51:59",
+			"lastBuildDate": "2022-01-17 02:56:57",
+			"name": "Mithraeum of Ptuj II",
+			"description": "Mithraeum II was found at Ptuj at a distance of 20 m south of the Mithraeum I in 1901.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1509"
+				}
+			],
+			"oriLocation": "Spodnja Hajdina",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ptuj"
+				}
+			],
+			"oriCountry": "Slovenia",
+			"longitude": "46.412505",
+			"latitude": "15.839796"
+		},
+		{
+			"id": "188",
+			"uri": "https://www.mithraeum.eu/monument/188",
+			"pubDate": "2010-04-28 01:01:35",
+			"lastBuildDate": "2022-01-20 00:30:21",
+			"name": "Mithraeum de Chardonchamp",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/chardonchamp_int_104.jpg",
+				"caption": "Vista interior del Mitreo de Chardonchamp.",
+				"author": "La Main Rouge"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Migné-Auxances (Poitou-Charentes)"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "46.628159",
+			"latitude": "0.332792"
+		},
+		{
+			"id": "190",
+			"uri": "https://www.mithraeum.eu/monument/190",
+			"pubDate": "2010-04-30 01:13:01",
+			"lastBuildDate": "2022-02-22 17:51:40",
+			"name": "Mithraeum of Carnuntum II",
+			"description": "The second temple devoted to Mithras in Carnuntum is situated besides a Jupiter&#039;s temple.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1681"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Petronell-Carnuntum"
+				}
+			],
+			"oriCountry": "Austria",
+			"longitude": "48.113013",
+			"latitude": "16.861541"
+		},
+		{
+			"id": "191",
+			"uri": "https://www.mithraeum.eu/monument/191",
+			"pubDate": "2010-04-30 01:28:10",
+			"lastBuildDate": "2022-02-04 00:49:21",
+			"name": "Mithraeum of Carnuntum III",
+			"description": "Mithraeum III found in the west part of Petronell near Hintausried in August 1894 by J. Dell and C. Tragau.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1682"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Petronell-Carnuntum"
+				}
+			],
+			"oriCountry": "Austria",
+			"longitude": "48.112777",
+			"latitude": "16.862758"
+		},
+		{
+			"id": "197",
+			"uri": "https://www.mithraeum.eu/monument/197",
+			"pubDate": "2010-05-07 18:20:09",
+			"lastBuildDate": "2022-01-17 22:02:08",
+			"name": "Mithraea of Heddernheim",
+			"description": "Since 1826, four mithraea have been found at Nida-Heddernheim.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Heddernheim",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Frankfurt"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "50.159855",
+			"latitude": "8.647656"
+		},
+		{
+			"id": "199",
+			"uri": "https://www.mithraeum.eu/monument/199",
+			"pubDate": "2010-05-08 04:45:27",
+			"lastBuildDate": "2022-01-28 21:07:42",
+			"name": "Mithraeum of Angers",
+			"description": "The Mithréum d&#039;Angers contained numerous objects, including coins, oil lamps and a ceramic vessel engraved with a votive inscription to the invincible god Mithras.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/2724_vignette_dsc-0107.jpg",
+				"caption": "General view o the site where the Mithraeum of Angers has been found",
+				"author": "Hervé Paitier/Inrap"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Angers"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "47.46735",
+			"latitude": "-0.559058"
+		},
+		{
+			"id": "202",
+			"uri": "https://www.mithraeum.eu/monument/202",
+			"pubDate": "2010-05-09 15:40:00",
+			"lastBuildDate": "2022-01-26 01:37:40",
+			"name": "Mithraeum of Thermes",
+			"description": "The Mithraeum of Thermes in Greece was discovered in 1915 by Bogdan Filov.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/1082px-20100911_Relief_of_Mithras_Kato_Thermes_Xanthi_Prefecture_Thrace_Greece_close_up.jpg",
+				"caption": "Relief of Mithras - close-up, Kato Thermes village, Xanthi Prefecture, Thrace, Greece.",
+				"author": "Ggia - CC BY-SA 3.0"
+			},
+			"oriLocation": "Rodopi Mountains",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Thermes"
+				}
+			],
+			"oriCountry": "Greece",
+			"longitude": "41.356453",
+			"latitude": "24.98909"
+		},
+		{
+			"id": "206",
+			"uri": "https://www.mithraeum.eu/monument/206",
+			"pubDate": "2010-08-24 23:07:56",
+			"lastBuildDate": "2021-05-18 04:12:25",
+			"name": "Mithraeum of Savaria/Szombathely",
+			"description": "The ruins of the Mithraeum of Savaria are kept under a new plaza.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Savaria",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Szombathely"
+				}
+			],
+			"oriCountry": "Hungary",
+			"longitude": "47.23551",
+			"latitude": "16.621928"
+		},
+		{
+			"id": "212",
+			"uri": "https://www.mithraeum.eu/monument/212",
+			"pubDate": "2017-12-05 14:51:44",
+			"lastBuildDate": "2021-08-17 01:57:09",
+			"name": "Mithraeum of Lucciana, Corsica",
+			"description": "For the first time, a Mithraeum has been discovered in Corsica, at the site of Mariana, Lucciana (Haute-Corse).",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/dji_0768.jpg",
+				"caption": "Vue aérienne du mithraeum et de ses annexes. À droite, un bâtiment postérieur.",
+				"author": "Denis Gliksman, Inrap"
+			},
+			"oriLocation": "Lucciana (Mariana site)",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Corsica"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "42.5496338",
+			"latitude": "9.4408679"
+		},
+		{
+			"id": "217",
+			"uri": "https://www.mithraeum.eu/monument/217",
+			"pubDate": "2020-12-23 07:50:37",
+			"lastBuildDate": "2022-01-16 23:04:28",
+			"name": "Mithraeum de Koenigshoffen",
+			"description": "Lors de la construction de l’église Saint-Paul en 1911, un mithraeum a été mis au jour à Koenigshoffen/Königshoffen, vicus gallo-romain situé aux abords du camp légionnaire de Strasbourg-Argentorate.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/koenigshoffen_mithraeum_mas_mb.jpg",
+				"caption": "Mithraeum, époque romaine, Musée Archéologique / Musées de Strasbourg /",
+				"author": "M. Bertola"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1335"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Koenigshoffen"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "48.5782494",
+			"latitude": "7.71451880"
+		},
+		{
+			"id": "218",
+			"uri": "https://www.mithraeum.eu/monument/218",
+			"pubDate": "2020-12-24 07:00:56",
+			"lastBuildDate": "2022-01-18 02:53:32",
+			"name": "Mithraeum of Zerzevan",
+			"description": "A Mithraeum was discovered in 2007, during the excavations at the Zerzevan Castle.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/d5d0c5a7ba3e44d6aefbb0f239439dcb.jpg",
+				"caption": "General view of the remains of the Castle.",
+				"author": "Yeni Şafak"
+			},
+			"oriLocation": "Zerzevan Castle",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Diyarbakır&#039;s Çınar"
+				}
+			],
+			"oriCountry": "Turkey",
+			"longitude": "37.6098134",
+			"latitude": "40.4987078"
+		},
+		{
+			"id": "219",
+			"uri": "https://www.mithraeum.eu/monument/219",
+			"pubDate": "2020-12-24 08:14:24",
+			"lastBuildDate": "2022-01-17 06:14:39",
+			"name": "Mithraeum of Naples",
+			"description": "The Mitreo della crypta neapolitana was used a des legends about its use, from a cult place devoted to Priapus to celebrate Aphrodite.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/717px-Parco_della_Grotta_di_Posillipo10.jpg",
+				"caption": "Entrance to the Crypta Neapolitana.",
+				"author": "Armando Mancini"
+			},
+			"oriLocation": "Grotta di Pozzuoli a Posillipo",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Napoli"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "40.8296261",
+			"latitude": "14.2173868"
+		},
+		{
+			"id": "221",
+			"uri": "https://www.mithraeum.eu/monument/221",
+			"pubDate": "2020-12-28 00:45:42",
+			"lastBuildDate": "2022-02-10 19:20:04",
+			"name": "Mithraeum of Hawarti",
+			"description": "The Mithraeum of Hauarte or Hawarte, which preserves colourful frescoes, it&#039;s the latest know and used.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/supp_22Xmwidok_sali_glownej1.jpg",
+				"caption": "View of the niche of the Mithraeum of Hawarte"
+			},
+			"oriLocation": "Hawarte - Huarte - Hawarti - Haouarte - Hauarte",
+			"oriCountry": "Syria",
+			"longitude": "35.6003690",
+			"latitude": "36.3894650"
+		},
+		{
+			"id": "229",
+			"uri": "https://www.mithraeum.eu/monument/229",
+			"pubDate": "2020-12-30 07:45:37",
+			"lastBuildDate": "2022-01-17 06:12:51",
+			"name": "Domus del Mitreo of Tarquinia",
+			"description": "The discovery of the Mithraeum of Tarquinia is due to the Department for Protection of Cultural Heritage of the Carabinieri, who noticed some clandestine excavations near the Ara della Regina.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/domus_del_mitreo_webthumb_7131.jpg",
+				"caption": "Aerial view of the Domus of Tarquinia",
+				"author": "Tusciaweb.eu from Tertullian.org"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Tarquinia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "42.2541846",
+			"latitude": "11.7575683"
+		},
+		{
+			"id": "232",
+			"uri": "https://www.mithraeum.eu/monument/232",
+			"pubDate": "2020-12-31 01:07:08",
+			"lastBuildDate": "2022-01-29 05:20:20",
+			"name": "Mithräum von Dieburg",
+			"description": "There are references to two places of worship from Dieburg, whereby the Mithraeum, discovered in 1926.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/cimrm1246_fig322.jpg",
+				"caption": "Plan of the Mithraeum of Dieburg",
+				"author": "Tertullian.org"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1246"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Dieburg"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.8996674",
+			"latitude": "8.83848150"
+		},
+		{
+			"id": "233",
+			"uri": "https://www.mithraeum.eu/monument/233",
+			"pubDate": "2020-12-31 02:19:56",
+			"lastBuildDate": "2022-01-12 02:24:52",
+			"name": "Mithraeum of the Coloured Marble",
+			"description": "The Mitreo dei Marmi Colorati takes its name after the discovery of a black-and-white mosaic of Pan fighting with Eros.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/pPUPvF.jpg",
+				"caption": "In this reconstruction of the Mithraeum of Colored Marbles the spelaeum, the most important room in the mithraeum, is shown on the bottom level.",
+				"author": "G. Albertini"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ostia"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.7518668",
+			"latitude": "12.2804241"
+		},
+		{
+			"id": "236",
+			"uri": "https://www.mithraeum.eu/monument/236",
+			"pubDate": "2020-12-31 06:08:53",
+			"lastBuildDate": "2022-01-17 06:37:42",
+			"name": "Mithraeum of Alba Iulia III (Apulum)",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/DSC07589-1024x768.jpg",
+				"caption": "The Mithraeum in 2008",
+				"author": "Apulum Mithraeum III Project"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Alba Iulia"
+				}
+			],
+			"oriCountry": "Romania",
+			"longitude": "46.0732724",
+			"latitude": "23.5798020"
+		},
+		{
+			"id": "244",
+			"uri": "https://www.mithraeum.eu/monument/244",
+			"pubDate": "2021-05-12 02:44:42",
+			"lastBuildDate": "2022-01-17 06:18:47",
+			"name": "Mitreo de la calle Espronceda",
+			"description": "The Mithraeum at Espronceda Street, in Merida, was discovered in 2000. It is a semi-subterranean temple.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/5c03814ba029880c73c299cac71b9ce9cb8e08ec.png",
+				"author": "Universidad Carlos III de Madrid"
+			},
+			"oriLocation": "Calle Espronceda",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Mérida"
+				}
+			],
+			"oriCountry": "Spain",
+			"longitude": "38.9126937",
+			"latitude": "-6.3421261"
+		},
+		{
+			"id": "260",
+			"uri": "https://www.mithraeum.eu/monument/260",
+			"pubDate": "2021-05-18 00:38:05",
+			"lastBuildDate": "2022-01-17 06:22:32",
+			"name": "Mitreo d&#039;Orbe-Boscéaz",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Orbe-Boscéaz"
+				}
+			],
+			"oriCountry": "Switzerland",
+			"longitude": "46.7418044",
+			"latitude": "6.53673770"
+		},
+		{
+			"id": "261",
+			"uri": "https://www.mithraeum.eu/monument/261",
+			"pubDate": "2021-05-18 00:55:36",
+			"lastBuildDate": "2022-02-03 03:51:34",
+			"name": "Mithräum von Kempraten",
+			"description": "The Kempraten Mithraeum was unexpectedly discovered during the 2015 excavations near the vicus.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Kempraten"
+				}
+			],
+			"oriCountry": "Switzerland",
+			"longitude": "47.2333329",
+			"latitude": "8.81666699"
+		},
+		{
+			"id": "262",
+			"uri": "https://www.mithraeum.eu/monument/262",
+			"pubDate": "2021-05-18 07:15:03",
+			"lastBuildDate": "2022-01-24 01:41:54",
+			"name": "Mithräum von Güglingen II",
+			"description": "Two Mithras sanctuaries, which were located on the edge of the settlement, were excavated in Güglingen.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Güglingen_Mithräum_II_Front.jpg",
+				"caption": "Entrance of the Mithräum II in Güglingen",
+				"author": "Xocolatl"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Güglingen"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "49.0667950",
+			"latitude": "8.99896100"
+		},
+		{
+			"id": "269",
+			"uri": "https://www.mithraeum.eu/monument/269",
+			"pubDate": "2021-05-21 01:40:36",
+			"lastBuildDate": "2022-01-15 08:18:13",
+			"name": "Mithraeum of Tiddis",
+			"description": "The Mithraeum has been in the cave. The vault is almost dome-shaped and in front of the cave there is room enough for a possible adjacent temple.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/EQMh48RUUAEb-s4c.jpg",
+				"caption": "Entrance to the Mithraeum of Tiddis",
+				"author": "James Patterson"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "162"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Tiddis"
+				}
+			],
+			"oriCountry": "Algeria",
+			"longitude": "36.4629338",
+			"latitude": "6.48378929"
+		},
+		{
+			"id": "285",
+			"uri": "https://www.mithraeum.eu/monument/285",
+			"pubDate": "2021-05-26 06:35:53",
+			"lastBuildDate": "2021-08-13 05:57:58",
+			"name": "Mithraeum de Biesheim-Kunheim",
+			"description": "The Mithraeum of Biesheim-Kunheim was located in the ancient village of Altkirch, near the Rhin.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/rnord_0035-2624_1991_num_73_292_T1_0060_0000_3.png",
+				"caption": "Biesheim. Vue d&#039;ensemble des vestiges du mithraeum."
+			},
+			"oriLocation": "Oedenburg",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Altkirch (Vieille Eglise)"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "47.6203909",
+			"latitude": "7.24303599"
+		},
+		{
+			"id": "287",
+			"uri": "https://www.mithraeum.eu/monument/287",
+			"pubDate": "2021-05-27 02:57:46",
+			"lastBuildDate": "2022-01-20 00:29:31",
+			"name": "Mithraeum de Septeuil",
+			"description": "The Mithraeum of Septeuil, Yvelines, was accommodated at the 4th century in an oldest sanctuary of the source.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/4_illustration_mithraeum.jpg",
+				"caption": "Proposition de restitution du sanctuaire.",
+				"author": "Marion Baudrand"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Septeuil"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "48.8977784",
+			"latitude": "1.67124959"
+		},
+		{
+			"id": "289",
+			"uri": "https://www.mithraeum.eu/monument/289",
+			"pubDate": "2021-05-27 03:59:13",
+			"lastBuildDate": "2022-01-15 08:00:00",
+			"name": "Mitreo de la Tumba del Elefante",
+			"description": "The Mithraeum of the Elephant tomb is located in Roman necropolis. In one of the burials the statue of an elephant was found.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Tumba-del-Elefante-de-Carmona-tnm.jpg",
+				"caption": "The sun gets directly inside during the equinoxes",
+				"author": "Universidad Pablo de Olavide"
+			},
+			"oriLocation": "La Tumba del Elefante",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Carmona"
+				}
+			],
+			"oriCountry": "Spain",
+			"longitude": "37.4687280",
+			"latitude": "-5.6505382"
+		},
+		{
+			"id": "293",
+			"uri": "https://www.mithraeum.eu/monument/293",
+			"pubDate": "2021-06-01 21:08:01",
+			"lastBuildDate": "2021-08-13 05:54:33",
+			"name": "Mithraeum de Vienne",
+			"description": "Emperor Julian may have been initiated into the cult of the god Mithras at the Mithraeum of Vienne, France, according to Turcan.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Vienne"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "45.525587",
+			"latitude": "4.87433899"
+		},
+		{
+			"id": "294",
+			"uri": "https://www.mithraeum.eu/monument/294",
+			"pubDate": "2021-06-01 21:48:32",
+			"lastBuildDate": "2021-08-13 05:53:12",
+			"name": "Mithraeum of Scarbantia",
+			"description": "Emperor Julian is supposed to have presided over a human sacrifice in the Mithraeum of Scarbantia, according to N. Massalsky.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Sopron"
+				}
+			],
+			"oriCountry": "Hungary",
+			"longitude": "47.6816618",
+			"latitude": "16.5844794"
+		},
+		{
+			"id": "295",
+			"uri": "https://www.mithraeum.eu/monument/295",
+			"pubDate": "2021-06-02 00:24:54",
+			"lastBuildDate": "2022-01-29 04:13:38",
+			"name": "Mithraeum de Valromey",
+			"description": "This temple of Mithras has been discovered under the Church in Vieux-en-Val-Romey, in 1869.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "909"
+				}
+			],
+			"oriLocation": "Vieux-en-Val-Romey",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Valromey"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "45.8976748",
+			"latitude": "5.6827476"
+		},
+		{
+			"id": "309",
+			"uri": "https://www.mithraeum.eu/monument/309",
+			"pubDate": "2021-08-12 18:38:18",
+			"lastBuildDate": "2022-01-18 06:38:05",
+			"name": "Mithraeum of Housesteads",
+			"description": "The Housesteads Mithraeum is an underground temple, now burried, discovered in 1822 in a slope of the Chapel Hill, outside of the Roman Fort at the Hadrian&#039;s Wall.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/15451.png",
+				"caption": "Mithraeum of Housesteads - Vercovicium, Hadrian&#039;s Wall",
+				"author": "Sascha Rennhofer - Creative Commons Attribution-ShareAlike 3.0"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "852"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Housesteads"
+				}
+			],
+			"oriCountry": "United Kingdom",
+			"longitude": "55.0133701",
+			"latitude": "-2.3315601"
+		},
+		{
+			"id": "331",
+			"uri": "https://www.mithraeum.eu/monument/331",
+			"pubDate": "2021-08-19 00:24:12",
+			"lastBuildDate": "2022-01-29 23:38:36",
+			"name": "Mithraeum of Inveresk",
+			"description": "The Mithraeum of Inveresk, East Lothian, is the first found in Scotland, and the earliest securely dated example from Britain.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/14-pole-view-of-altars.jpg",
+				"caption": "Altars to the Mithras and Sol of the Mithraeum of Inveresk",
+				"author": "Current Archaeology"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Inveresk"
+				}
+			],
+			"oriCountry": "United Kingdom",
+			"longitude": "55.936541",
+			"latitude": "-3.054664"
+		},
+		{
+			"id": "332",
+			"uri": "https://www.mithraeum.eu/monument/332",
+			"pubDate": "2021-08-19 01:11:14",
+			"lastBuildDate": "2021-08-19 01:22:31",
+			"name": "Mithraeum of Heviz",
+			"description": "The Mithraeum has found in a Roman building at the end of Attila Road, in Hévíz, Egregy",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mithraeum-heviz.jpg",
+				"caption": "General view of the site of the Mithraeum of Hévíz",
+				"author": "Müller Róbert"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Hévíz"
+				}
+			],
+			"oriCountry": "Hungary",
+			"longitude": "46.8018766",
+			"latitude": "17.1891315"
+		},
+		{
+			"id": "339",
+			"uri": "https://www.mithraeum.eu/monument/339",
+			"pubDate": "2021-08-21 01:11:14",
+			"lastBuildDate": "2022-01-16 19:47:57",
+			"name": "Mithraeum of St. Egyden",
+			"description": "The &#039;Mithraic cave&#039; in the Gradische/Gradišče massif near St. Egidio contained vessels decorated with snakes and the remains of chicken bones and other animals that were consumed during Mithraic ceremonies.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/csm_Gradisce_Mahlzeiten_1_b3d337497d.jpg",
+				"caption": "Austrian Archaeological Institute",
+				"author": "Gleirscher, LM f. Kärnten"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "St. Egyden"
+				}
+			],
+			"oriCountry": "Austria",
+			"longitude": "46.57631",
+			"latitude": "14.06922"
+		},
+		{
+			"id": "345",
+			"uri": "https://www.mithraeum.eu/monument/345",
+			"pubDate": "2021-08-22 04:09:33",
+			"lastBuildDate": "2022-01-19 00:22:37",
+			"name": "Mithraeum of Dunaújváros (Intercisa)",
+			"description": "The Dunaújváros Mithraeum was discovered in 1973.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Dunaújváros"
+				}
+			],
+			"oriCountry": "Hungary",
+			"longitude": "46.96478",
+			"latitude": "18.94121"
+		},
+		{
+			"id": "347",
+			"uri": "https://www.mithraeum.eu/monument/347",
+			"pubDate": "2021-08-23 07:12:47",
+			"lastBuildDate": "2021-08-23 07:27:15",
+			"name": "Mithraeum of Dyo",
+			"description": "A statue and a relief of Cautes have been found in an ancient Gallo-Roman site in the commune of Dyo.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Dyo"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "45.52901",
+			"latitude": "4.87079"
+		},
+		{
+			"id": "348",
+			"uri": "https://www.mithraeum.eu/monument/348",
+			"pubDate": "2021-08-23 20:35:00",
+			"lastBuildDate": "2022-01-18 02:51:31",
+			"name": "Mithraeum of Nush-i Jan",
+			"description": "The Nushijan Mithraeum testifies to the worship of Mithra in the region since before the Zoroastrian reform.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/640px-Abdoli.jpg",
+				"caption": "Exterior view of the Mithraeum of Nushijan",
+				"author": "Shinse110"
+			},
+			"oriLocation": "Nushijan",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Nush-i Jan"
+				}
+			],
+			"oriCountry": "Iran",
+			"longitude": "34.36541",
+			"latitude": "48.63306"
+		},
+		{
+			"id": "349",
+			"uri": "https://www.mithraeum.eu/monument/349",
+			"pubDate": "2021-08-24 00:57:01",
+			"lastBuildDate": "2021-08-24 01:07:47",
+			"name": "Mithraeum of Ay-Todor",
+			"description": "The site of Ay-Todor in the Crimea revealed a Roman camp, a temple with votive offerings and a Mithraeum.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "10"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Ay-Todor"
+				}
+			],
+			"oriCountry": "Ukraine",
+			"longitude": "44.5371",
+			"latitude": "33.68098"
+		},
+		{
+			"id": "350",
+			"uri": "https://www.mithraeum.eu/monument/350",
+			"pubDate": "2021-08-24 01:05:47",
+			"lastBuildDate": "2021-08-24 01:07:11",
+			"name": "Mithraeum of Qasr Ibn Wardan",
+			"description": "About the foundation of the castle of Quasr-ibn-Wardan the Bedouins tell a legend from which Nöldeke concluded that there was a Mithraeum there, but this interpretation is very doubtful.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "73"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Qasr Ibn Wardan"
+				}
+			],
+			"oriCountry": "Syria",
+			"longitude": "35.37343",
+			"latitude": "37.24742"
+		},
+		{
+			"id": "352",
+			"uri": "https://www.mithraeum.eu/monument/352",
+			"pubDate": "2021-08-24 01:43:33",
+			"lastBuildDate": "2021-08-24 01:55:46",
+			"name": "Mithräum von Köln I",
+			"description": "The Mithraeum I of Cologne is situated amid a block of buildings. It was impossible to narrowly determine its construction and lay-out.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1018"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Köln"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "50.93884",
+			"latitude": "6.94779"
+		},
+		{
+			"id": "353",
+			"uri": "https://www.mithraeum.eu/monument/353",
+			"pubDate": "2021-08-24 01:51:15",
+			"lastBuildDate": "2021-08-24 01:51:15",
+			"name": "Mithräum von Köln II",
+			"description": "A second Mithraeum was found in Cologne described by R. L. Grodon as of &#039;small importance&#039;.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Köln",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Cologne"
+				}
+			],
+			"oriCountry": "Germany"
+		},
+		{
+			"id": "354",
+			"uri": "https://www.mithraeum.eu/monument/354",
+			"pubDate": "2021-08-24 02:09:50",
+			"lastBuildDate": "2022-01-19 01:01:14",
+			"name": "Mithräum von Bingen II",
+			"description": "A possible Mithraeum II was found in Bingen, but the few remains are not sufficient to prove it.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1245"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Bingen"
+				}
+			],
+			"oriCountry": "Germany"
+		},
+		{
+			"id": "355",
+			"uri": "https://www.mithraeum.eu/monument/355",
+			"pubDate": "2021-08-24 02:20:23",
+			"lastBuildDate": "2022-01-16 23:37:05",
+			"name": "Mithraeum of Szőny",
+			"description": "The Mithraeum of Szony has the form of a grotto and the entrance is on the west side.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1723"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Szőny"
+				}
+			],
+			"oriCountry": "Slovenia"
+		},
+		{
+			"id": "356",
+			"uri": "https://www.mithraeum.eu/monument/356",
+			"pubDate": "2021-08-24 02:26:39",
+			"lastBuildDate": "2021-08-24 02:26:39",
+			"name": "Mithraeum of Aquincum I",
+			"description": "The Mithraeum of Aquincum I existed in the potter&#039;s quarter of the ancient city of Budapest.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "1742"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Budapest"
+				}
+			],
+			"oriCountry": "Hungary"
+		},
+		{
+			"id": "357",
+			"uri": "https://www.mithraeum.eu/monument/357",
+			"pubDate": "2021-08-24 02:32:31",
+			"lastBuildDate": "2021-08-24 05:23:20",
+			"name": "Mithräum von Künzing",
+			"description": "The Mithraeum of Kunzing was an underground building, oriented east-west. The entrance was probably on the east.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/by_kuenzing_mithrastempel_roland_rossner_1_981x715.jpg",
+				"caption": "Blade and other objects found in the Mithraeum of Künzing",
+				"author": "R. Rossner"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Künzing"
+				}
+			],
+			"oriCountry": "Germany",
+			"longitude": "48.66856",
+			"latitude": "13.08424"
+		},
+		{
+			"id": "358",
+			"uri": "https://www.mithraeum.eu/monument/358",
+			"pubDate": "2021-08-24 03:46:42",
+			"lastBuildDate": "2021-08-27 22:21:24",
+			"name": "Mitreo de Carminiello ai Mannesi",
+			"description": "The Mithraeum of Carminiello ai Mannesi was installed in two rooms of a 1st century BC domus.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/CyCzn6MXAAQPYLM.jpeg",
+				"caption": "Tauroctony of the Mitreo de Carminiello ai Mannesi",
+				"author": "Mylius Mylius"
+			},
+			"oriLocation": "Carminiello ai Mannesi",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Naples"
+				}
+			],
+			"oriCountry": "Italy"
+		},
+		{
+			"id": "359",
+			"uri": "https://www.mithraeum.eu/monument/359",
+			"pubDate": "2021-08-24 05:31:13",
+			"lastBuildDate": "2022-02-13 02:56:19",
+			"name": "Mithräum von Mainz",
+			"description": "The Mithraeum of Mainz, was discovered outside the Roman legionary fortress. Unfortunately the site was destroyed without being recorded.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Ballplatz",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Mainz"
+				}
+			],
+			"oriCountry": "Germany",
+			"latitude": "49.99286"
+		},
+		{
+			"id": "360",
+			"uri": "https://www.mithraeum.eu/monument/360",
+			"pubDate": "2021-08-24 05:49:33",
+			"lastBuildDate": "2022-01-16 22:46:51",
+			"name": "Mithraeum of Aigio",
+			"description": "The underground cave which served as temple was cut into the conglomerate rock of the area, and a flight of eight steps of stone slabs led to it.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Mitreo-Aigio.jpg",
+				"caption": "Access to the underground Mithraeum of Aigio",
+				"author": "Ερωφίλη- ́Ιρις ΚολΙα"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Aigio"
+				}
+			],
+			"oriCountry": "Greece",
+			"longitude": "38.25054",
+			"latitude": "22.08109"
+		},
+		{
+			"id": "370",
+			"uri": "https://www.mithraeum.eu/monument/370",
+			"pubDate": "2021-08-29 02:21:20",
+			"lastBuildDate": "2022-01-17 03:52:52",
+			"name": "Zeus Brontoon sanctuary near Villa dei Quintili",
+			"description": "Mithras and other oriental gods were worshipped in the shrine of Zeus near the Villa of the Quintilians in Rome.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Rossini_-_viaggio_pittoresco_tav19_-_veduta_di_Roma_vecchia.jpg",
+				"caption": "Veduta di Roma Vecchia dal Viaggio pittoresco da Roma a Napoli",
+				"author": "Luigi Rossini"
+			},
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "634"
+				}
+			],
+			"oriLocation": "Villa dei Quintili",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.83133",
+			"latitude": "12.55449"
+		},
+		{
+			"id": "371",
+			"uri": "https://www.mithraeum.eu/monument/371",
+			"pubDate": "2021-08-29 02:55:58",
+			"lastBuildDate": "2022-01-18 02:51:01",
+			"name": "Mithra temple of Marāgheh",
+			"description": "The Mithra Temple of Maragheh, also referred to as the Mithra Temple of Verjuy or simply Mehr Temple, is the oldest surviving Mithraic temple in Iran known to date.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/Niayeshmehr22.jpg",
+				"caption": "Mehr Temple",
+				"author": "Behrad09"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Maragheh"
+				}
+			],
+			"oriCountry": "Iran",
+			"longitude": "37.39585",
+			"latitude": "46.20921"
+		},
+		{
+			"id": "373",
+			"uri": "https://www.mithraeum.eu/monument/373",
+			"pubDate": "2021-10-14 01:36:12",
+			"lastBuildDate": "2022-01-15 08:40:15",
+			"name": "Mithraeum of Eleusis",
+			"description": "A Mithraeum has been identified in Eleusis where the last Hierophant form thespia had the rank of Father in the Mithraic Mysteries.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/mithraeum-eleusis.jpg",
+				"caption": "Mithraeum of Eleusis",
+				"author": "Ephorate of Antiquities of West Attica"
+			},
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Eleusis"
+				}
+			],
+			"oriCountry": "Greece",
+			"longitude": "38.039894",
+			"latitude": "23.538412"
+		},
+		{
+			"id": "379",
+			"uri": "https://www.mithraeum.eu/monument/379",
+			"pubDate": "2022-01-12 06:35:18",
+			"lastBuildDate": "2022-01-12 07:13:49",
+			"name": "Mitreo della Piazza Dante",
+			"description": "The Mithraeum located in Piazza Dante in Rome was discovered in 1874 along with a series of monuments dedicated by a Pater named Primus.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "349"
+				}
+			],
+			"oriLocation": "Esquiline hill",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.89225",
+			"latitude": "12.50384"
+		},
+		{
+			"id": "400",
+			"uri": "https://www.mithraeum.eu/monument/400",
+			"pubDate": "2022-01-16 02:16:56",
+			"lastBuildDate": "2022-02-01 20:49:52",
+			"name": "Mithraeum of Stockstadt I",
+			"description": "The Mithraeum I of Stockstadt was located in the Saalburg Roman Fort.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Saalburg Roman Fort",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Stockstadt am Main"
+				}
+			],
+			"oriCountry": "Germany"
+		},
+		{
+			"id": "401",
+			"uri": "https://www.mithraeum.eu/monument/401",
+			"pubDate": "2022-01-16 18:57:16",
+			"lastBuildDate": "2022-01-29 02:12:37",
+			"name": "Mithraeum of Virunum",
+			"description": "A bronze plaque records the existence of a mithraeum at Virunum that collapsed and was rebuilt by members of the community.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Zollfeld"
+				}
+			],
+			"oriCountry": "Austria"
+		},
+		{
+			"id": "417",
+			"uri": "https://www.mithraeum.eu/monument/417",
+			"pubDate": "2022-01-21 22:04:55",
+			"lastBuildDate": "2022-01-21 23:00:06",
+			"name": "Mithraeum of Cyrene",
+			"description": "The Mithraeum of Cyrene is preserved among the remarkable ruins of the ancient capital of the Roman province of Cyrene.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"image": {
+				"file": "https://www.mithraeum.eu/album/monumenta/cyrene_downtown_mithraeum.jpg",
+				"caption": "Mithraeum of Cyrene",
+				"author": "Jona Lendering"
+			},
+			"oriLocation": "Ruines of Cyrene",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Shahhat"
+				}
+			],
+			"oriCountry": "Libya",
+			"longitude": "32.82334",
+			"latitude": "21.85306"
+		},
+		{
+			"id": "438",
+			"uri": "https://www.mithraeum.eu/monument/438",
+			"pubDate": "2022-01-26 07:04:58",
+			"lastBuildDate": "2022-01-27 19:54:55",
+			"name": "Mithraeum under the Basilica of S. Lorenzo",
+			"description": "In 1938 this Mithraeum was found 3.45 mtrs under the Basilica of S. Lorenzo in Damaso, in a cellar near the Sacrament&#039;s Chapel.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "421"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.89649",
+			"latitude": "12.47186"
+		},
+		{
+			"id": "442",
+			"uri": "https://www.mithraeum.eu/monument/442",
+			"pubDate": "2022-01-27 20:00:20",
+			"lastBuildDate": "2022-01-27 20:14:31",
+			"name": "Mitreo all&#039;Arco di San Lazzaro",
+			"description": "Three mithraic monuments were found in 1931, suggesting that a mithraeum probably existed in the area.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "472"
+				}
+			],
+			"oriLocation": "Avetine",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.88193",
+			"latitude": "12.47704"
+		},
+		{
+			"id": "446",
+			"uri": "https://www.mithraeum.eu/monument/446",
+			"pubDate": "2022-01-27 22:32:12",
+			"lastBuildDate": "2022-01-28 00:31:46",
+			"name": "Mitreo di Piazza S. Silvestro in Capite",
+			"description": "This Mithraic temple was discovered in the 15th century in Rome, although traces have been lost except for a few monuments with remarkable inscriptions.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"references": [
+				{
+					"bibliographic_uri": "https://www.zotero.org/groups/2533/items/HC8VWRRL",
+					"citation_detail": "399"
+				}
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Rome"
+				}
+			],
+			"oriCountry": "Italy",
+			"longitude": "41.90291",
+			"latitude": "12.48075"
+		},
+		{
+			"id": "485",
+			"uri": "https://www.mithraeum.eu/monument/485",
+			"pubDate": "2022-02-02 22:04:23",
+			"lastBuildDate": "2022-02-02 23:12:04",
+			"name": "Mitreo di Carsulae",
+			"description": "Epigraphic monuments reveal the presence of a Mithraeum in the ancient municiple of Carsulae, in Umbria.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriCountry": "Italy",
+			"longitude": "42.63974",
+			"latitude": "12.55738"
+		},
+		{
+			"id": "499",
+			"uri": "https://www.mithraeum.eu/monument/499",
+			"pubDate": "2022-02-09 00:15:55",
+			"lastBuildDate": "2022-03-03 00:32:59",
+			"name": "Mithraeum of La Bâtie-Montsaléon",
+			"description": "During the excavations of 1804-1805, a series of monuments dedicated to Mithras and a temple were discovered at ancient Mons Seleucus.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Site gallo-romain de Lauchau",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "La Bâtie-Montsaléon"
+				}
+			],
+			"oriCountry": "France",
+			"longitude": "44.45605",
+			"latitude": "5.74942"
+		},
+		{
+			"id": "501",
+			"uri": "https://www.mithraeum.eu/monument/501",
+			"pubDate": "2022-02-09 00:44:19",
+			"lastBuildDate": "2022-02-10 21:16:37",
+			"name": "Mithraeum of Aquincum V",
+			"description": "The fifth mithraeum from Aquincum has been found in the house of a military tribune.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"oriLocation": "Óbuda",
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Budapest"
+				}
+			],
+			"oriCountry": "Hungary"
+		},
+		{
+			"id": "508",
+			"uri": "https://www.mithraeum.eu/monument/508",
+			"pubDate": "2022-02-10 21:33:04",
+			"lastBuildDate": "2022-03-03 05:06:07",
+			"name": "Mithraeum of Perge",
+			"description": "The Mithraeum of Pamphylia was cut back into the rock to form a cave, with a separate relief of Mithras killing the bull.",
+			"types": [
+				"mithraeum",
+				"place",
+				"sanctuary"
+			],
+			"connects_to": [
+				{
+					"ctype": "at",
+					"name": "Perge"
+				}
+			],
+			"oriCountry": "Turkey",
+			"longitude": "36.95749",
+			"latitude": "30.85218"
+		}
+	]
+}
