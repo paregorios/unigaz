@@ -8,11 +8,12 @@ from copy import deepcopy
 import jsonpickle
 import logging
 from pathlib import Path
-from pprint import pprint
+from pprint import pprint, pformat
 from slugify import slugify
 import traceback
 from urllib.parse import urlparse
 from unigaz.edh import EDH
+from unigaz.geo import axes, bubble
 from unigaz.geonames import GeoNames
 from unigaz.idai import IDAI
 from unigaz.importer import Importer
@@ -133,6 +134,45 @@ class Manager:
         if additional_description:
             result.add_description(additional_description, source=uri)
         return result
+
+    def local_align(self, gazetteer_name, tolerance=5000.0, limit=1):
+        """Align to designated gazetteer."""
+        if self.supported(gazetteer_name):
+            for p in self.local.content:
+                g = self.gazetteers[gazetteer_name]
+                strings = set()
+                for n in p.names:
+                    if n.attested_form:
+                        strings.add(n.attested_form)
+                    for r in list(n.romanized_forms):
+                        strings.add(r)
+                if len(strings) == 0:
+                    strings.add(p.title)
+                kwargs = {"text": strings}
+                if p.locations:
+                    bounds = bubble(p.convex_hull(), tolerance).bounds
+                    bounds = [f"{b:.5f}" for b in bounds]
+                    logger.debug(f"bounds: {pformat(bounds, indent=4)}")
+                    kwargs["lowerLeft"] = ",".join(bounds[0:2])
+                    kwargs["upperRight"] = ",".join(bounds[2:4])
+                    kwargs["predicate"] = "intersection"
+                    kwargs["locationPrecision:list"] = "precise"
+                logger.debug(pformat(kwargs, indent=4))
+                try:
+                    results = g.search(**kwargs)
+                except SearchParameterError as err:
+                    raise ValueError(f"search parameter error: {str(err)}")
+                else:
+                    if len(results["hits"]) == limit:
+                        print("VICTORY!")
+                        pprint(results["hits"], indent=4)
+                    elif len(results["hits"]) == 0:
+                        print("MISS!")
+                    else:
+                        print(f"YOU HAVE BEEN DEFEATED (HITS={len(results['hits'])})")
+
+        else:
+            raise ValueError(f"gazetteer '{gazetteer_name}' is not supported.")
 
     def local_change(self, feature, fieldname, sequence, *args):
         """Modify a local field on a feature."""

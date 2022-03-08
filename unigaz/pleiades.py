@@ -63,7 +63,9 @@ class Pleiades(Gazetteer, Web):
         params = dict()
         for k, v in kwargs.items():
             try:
-                cooked_k, cooked_v = getattr(self, f"_prep_param_{k.lower()}")(v)
+                cooked_k, cooked_v = getattr(
+                    self, f"_prep_param_{k.lower().replace(':', '_')}"
+                )(v)
             except AttributeError:
                 raise SearchParameterError("pleiades", f"Unknown param '{k}':{v}.")
             else:
@@ -72,22 +74,39 @@ class Pleiades(Gazetteer, Web):
         params = urlencode(params)
         return params
 
+    def _prep_param_locationprecision_list(self, value):
+        type_check("locationPrecision parameter", value, str)
+        return ("locationPrecision:list", value)
+
+    def _prep_param_lowerleft(self, value):
+        type_check("lowerLeft parameter", value, str)
+        return ("lowerLeft", value)
+
+    def _prep_param_predicate(self, value):
+        type_check("predicate parameter", value, str)
+        return ("predicate", value)
+
     def _prep_param_searchabletext(self, value):
         if isinstance(value, str):
             vals = list()
             vals.append(value)
         else:
             vals = value
-        vals = "+".join([norm(v) for v in vals])
+        vals = " OR ".join([norm(v) for v in vals])
         return ("SearchableText", vals)
 
     def _prep_param_text(self, value):
         return self._prep_param_searchabletext(value)
 
+    def _prep_param_upperright(self, value):
+        type_check("upperRight parameter", value, str)
+        return ("upperRight", value)
+
     def _search_rss(self, **kwargs):
         """Use Pleiades RSS search interface since it gives us back structured data."""
         params = self._prep_params(**kwargs)
         uri = urlunparse(("https", "pleiades.stoa.org", "/search_rss", "", params, ""))
+        logger.debug(uri)
         r = self.get(uri)
         hits = list()
         data = feedparser.parse(r.text)

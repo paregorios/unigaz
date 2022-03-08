@@ -132,6 +132,18 @@ class Interpreter:
             result = self.manager.local_accession(hit, fetch_data=fetch_data)
             return f"Created {result.__class__.__name__} '{result.title}' from {args[0]} source.'"
 
+    def _cmd_align(self, args):
+        """
+        Try to align all places in the local gazetteer with places in the specified external gazetteer.
+            > align pleiades
+        """
+        if len(args) != 1:
+            raise UsageError(
+                "export",
+                f"expected 1 argument (gazetteer name), got {len(args)}: {args}",
+            )
+        return self.manager.local_align(args[0])
+
     def _cmd_create(self, args):
         """
         Create a local gazetteer.
